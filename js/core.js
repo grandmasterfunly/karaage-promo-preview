@@ -8,7 +8,30 @@
     rand: function (a, b) { return a + Math.random() * (b - a); },
     pick: function (arr) { return arr[Math.floor(Math.random() * arr.length)]; },
     onMotionChange: [],
-    say: function (el, msg) { if (!el) return; el.textContent = ''; setTimeout(function () { el.textContent = msg; }, 60); }
+    say: function (el, msg) { if (!el) return; el.textContent = ''; setTimeout(function () { el.textContent = msg; }, 60); },
+    /* Ignore iOS toolbar show/hide: those fire resize / ResizeObserver with no width change. */
+    onWidthChange: function (fn) {
+      var w = window.innerWidth;
+      return function () {
+        var nw = window.innerWidth;
+        if (nw === w) return;
+        w = nw;
+        fn.apply(this, arguments);
+      };
+    },
+    onWidthChangeRO: function (fn) {
+      var prev = typeof WeakMap !== 'undefined' ? new WeakMap() : null;
+      return function (entries) {
+        var changed = !prev;
+        if (prev && entries && entries.length) {
+          entries.forEach(function (en) {
+            var nw = Math.round(en.contentRect.width);
+            if (prev.get(en.target) !== nw) { prev.set(en.target, nw); changed = true; }
+          });
+        }
+        if (changed) fn.apply(this, arguments);
+      };
+    }
   };
   mqReduce.addEventListener && mqReduce.addEventListener('change', function () { KP.onMotionChange.forEach(function (f) { f(); }); });
 
@@ -47,7 +70,7 @@
   var labels = { hero: 'Karaage', combat: 'Combat', enter: 'Enter', soba: 'Soba', hustle: 'Hustle', fighters: 'Fighters', lineup: 'The lineup', closer: 'Appetizer', app: 'Appetizer' };
   function setOpen(o) { nav.classList.toggle('is-open', o); toggle.setAttribute('aria-expanded', o ? 'true' : 'false'); }
   toggle.addEventListener('click', function () { setOpen(!nav.classList.contains('is-open')); });
-  nav.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('is-open')) { setOpen(false); toggle.focus(); } });
+  nav.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('is-open')) { setOpen(false); toggle.focus({ preventScroll: true }); } });
   document.addEventListener('click', function (e) { if (!nav.contains(e.target)) setOpen(false); });
   nav.querySelectorAll('a').forEach(function (a) { a.addEventListener('click', function () { setOpen(false); }); });
   var current = null;
@@ -68,33 +91,8 @@
   }, { threshold: [0, .15, .3, .5, .7, .9] });
   chapters.forEach(function (c) { io.observe(c); });
 
-  /* ---------- Scroll-tied effects ---------- */
-  var wipes = [].slice.call(document.querySelectorAll('.wipe'));
-  var giants = [].slice.call(document.querySelectorAll('.enter__giant'));
-  var ticking = false;
-  function onScroll() {
-    if (ticking) return; ticking = true;
-    requestAnimationFrame(function () {
-      ticking = false;
-      var vh = window.innerHeight;
-      var mo = KP.motionOK();
-      wipes.forEach(function (w) {
-        var r = w.getBoundingClientRect();
-        var p = mo ? Math.min(1, Math.max(0, (vh - r.top) / (vh * 0.6))) : 1;
-        w.style.setProperty('--p', p.toFixed(3));
-      });
-      giants.forEach(function (g, i) {
-        if (!mo) { g.style.setProperty('--gx', '0px'); return; }
-        var r = g.getBoundingClientRect();
-        var c = (r.top + r.height / 2 - vh / 2) / vh;
-        g.style.setProperty('--gx', ((i ? 1 : -1) * c * 80).toFixed(1) + 'px');
-      });
-    });
-  }
-  window.addEventListener('scroll', onScroll, { passive: true });
-  window.addEventListener('resize', onScroll);
-  KP.onMotionChange.push(onScroll);
-  onScroll();
+  /* Wipes and giant kanji are static. A previous scroll listener wrote --p / --gx
+     on every frame (and on resize, which iOS fires when the toolbar moves). */
 
   /* slam-in comic panels + soba entrance */
   var slamIO = new IntersectionObserver(function (ents) {
@@ -132,7 +130,7 @@
   var ctx = cv.getContext('2d');
   var parts = [], heroOn = true, dpr = Math.min(2, window.devicePixelRatio || 1);
   function sizeCv() { cv.width = cv.clientWidth * dpr; cv.height = cv.clientHeight * dpr; }
-  sizeCv(); window.addEventListener('resize', sizeCv);
+  sizeCv(); window.addEventListener('resize', KP.onWidthChange(sizeCv));
   for (var i = 0; i < 70; i++) parts.push(newP(true));
   function newP(init) {
     return { x: KP.rand(0.35, 1), y: init ? Math.random() : 1.05, r: KP.rand(1, 3.2), vy: KP.rand(0.0006, 0.0018), vx: KP.rand(-0.0004, 0.0004), a: KP.rand(.3, .9), hue: KP.rand(22, 45), ph: Math.random() * 6 };

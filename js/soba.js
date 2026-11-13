@@ -224,7 +224,9 @@
   mist.addEventListener('pointerup', endStroke);
   mist.addEventListener('pointercancel', endStroke);
   mist.addEventListener('touchmove', function (e) {
-    if (!revealed) e.preventDefault();
+    /* Only lock scrolling while the pointer is actually brushing. Preventing
+       every touchmove over the mist was hijacking page scroll on iOS. */
+    if (!revealed && painting) e.preventDefault();
   }, { passive: false });
 
   var revealBtns = sec.querySelectorAll('[data-reveal]'), seal = $('[data-seal]'), prompt = $('[data-soba-prompt]');
@@ -271,7 +273,7 @@
   var kp = sec.querySelector('[data-kanji]');
   if (kp) { try { var kl = Math.ceil(kp.getTotalLength()); kp.style.strokeDasharray = kl; kp.style.strokeDashoffset = kl; kp.style.setProperty('--kl', kl); } catch (e) {} }
   function sizeAll() { paintLandscape(); if (!revealed) paintMist(); }
-  var rT; new ResizeObserver(function () { clearTimeout(rT); rT = setTimeout(sizeAll, 120); }).observe(sec);
+  var rT; new ResizeObserver(KP.onWidthChangeRO(function () { clearTimeout(rT); rT = setTimeout(sizeAll, 120); })).observe(sec);
   sizeAll();
   window.KP_soba = { reveal: reveal, stroke: function (pts) { var r = brushR(); hint.classList.add('is-gone'); for (var i = 1; i < pts.length; i++) line({ x: pts[i - 1][0] * mist.width, y: pts[i - 1][1] * mist.height }, { x: pts[i][0] * mist.width, y: pts[i][1] * mist.height }, r); }, cleared: cleared };
 })();

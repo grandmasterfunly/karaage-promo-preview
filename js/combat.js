@@ -83,7 +83,7 @@
   var startBtn = $('[data-press-start]');
   function focusFloor() {
     setState('select');
-    if (floor) floor.scrollIntoView({ behavior: KP.motionOK() ? 'smooth' : 'auto', block: 'nearest' });
+    if (floor) floor.scrollIntoView({ behavior: 'auto', block: 'nearest' });
     KP.say(live, 'Ninja Karaage is waiting on the dojo floor. Choose your ingredient, then press Fight.');
     var c = grid.querySelector('input:checked'); if (c) c.focus({ preventScroll: true });
   }
@@ -197,9 +197,9 @@
   if (cb) {
     function scheduleLines() { clearTimeout(cb._r); cb._r = setTimeout(drawLines, 40); }
     drawLines();
-    window.addEventListener('resize', scheduleLines);
+    window.addEventListener('resize', KP.onWidthChange(scheduleLines));
     if (window.ResizeObserver) {
-      var ro = new ResizeObserver(scheduleLines);
+      var ro = new ResizeObserver(KP.onWidthChangeRO(scheduleLines));
       ro.observe(stage);
       var bowlImg = stage.querySelector('img');
       if (bowlImg) ro.observe(bowlImg);
@@ -250,7 +250,7 @@
   function startFight() {
     clearTimers();
     setState('fight');
-    score = 0; hp1 = 100; hp2 = 100; sp = 0; combo = 0; lastHit = 0; cd = 0; winding = false; fighting = true;
+    score = 0; hp1 = 100; hp2 = 150; sp = 0; combo = 0; lastHit = 0; cd = 0; winding = false; fighting = true;
     cpuBlocking = false; playerBlocking = false; cpuKind = null;
     setPlayerBlock(false);
     if (f2) f2.classList.remove('is-block', 'is-wind');
@@ -261,11 +261,11 @@
     showCall('Fight!');
     KP.say(live, 'Fight! Press J to punch, K to kick, L for ' + chosen.special + ', B to block. Strike after Ninja Karaage attacks. Do not spam into its block.');
     sec.querySelector('[data-move="punch"]').focus({ preventScroll: true });
-    scheduleCpu(easyMode ? 2600 : 1800);
+    scheduleCpu(easyMode ? 1400 : 700);
   }
   function showCall(t) { call.textContent = t; call.classList.remove('is-on'); void call.offsetWidth; call.classList.add('is-on'); }
   function render() {
-    hpEl1.style.width = Math.max(0, hp1) + '%'; hpEl2.style.width = Math.max(0, hp2) + '%';
+    hpEl1.style.width = Math.min(100, Math.max(0, hp1)) + '%'; hpEl2.style.width = Math.min(100, Math.max(0, hp2) * 100 / 150) + '%';
     spEl.style.width = Math.min(100, sp) + '%';
     var ready = sp >= 100;
     spBtn.disabled = !ready; spBtn.classList.toggle('is-ready', ready);
@@ -293,7 +293,7 @@
   }
   function anim(el, cls, ms) { el.classList.remove('is-idle'); el.classList.add(cls); setTimeout(function () { el.classList.remove(cls); if (fighting) el.classList.add('is-idle'); }, ms); }
   var MOVES = { punch: { dmg: 7, cd: 240, label: 'Punch' }, kick: { dmg: 11, cd: 420, label: 'Kick' }, special: { dmg: 30, cd: 700, label: 'Special' } };
-  var CPU_MOVES = { punch: { dmg: 8, label: 'Punch' }, kick: { dmg: 12, label: 'Kick' }, special: { dmg: 18, label: 'Special' } };
+  var CPU_MOVES = { punch: { dmg: 25, label: 'Punch' }, kick: { dmg: 28, label: 'Kick' }, special: { dmg: 35, label: 'Special' } };
   var playerBlocking = false, cpuBlocking = false, cpuKind = null, easyMode = false;
 
   function setPlayerBlock(on) {
@@ -317,17 +317,17 @@
     anim(f1, 'is-' + kind, kind === 'special' ? 560 : 160);
     var dmg = m.dmg + Math.round(KP.rand(-1, 2));
     var countered = winding && !cpuBlocking;
-    if (countered) { dmg += 4; winding = false; f2.classList.remove('is-wind'); clearTimeout(cpuT); scheduleCpu(easyMode ? 2000 : 1400); }
+    if (countered) { dmg += 4; winding = false; f2.classList.remove('is-wind'); clearTimeout(cpuT); scheduleCpu(easyMode ? 1100 : 500); }
     var blocked = cpuBlocking && !countered;
     if (blocked) {
       dmg = (kind === 'special') ? 6 : 0; /* chip only on special */
     }
-    combo = blocked ? 0 : ((now - lastHit < 1200) ? combo + 1 : 1);
+    combo = blocked ? 0 : ((now - lastHit < 560) ? combo + 1 : 1);
     if (!blocked) lastHit = now;
     if (combo >= 3) dmg += 2;
     hp2 = Math.max(0, hp2 - dmg);
     if (!blocked) score += dmg * 100 * Math.max(1, combo);
-    if (kind !== 'special') sp += Math.max(0, dmg) * 1.9;
+    if (kind !== 'special') sp += Math.max(0, dmg) * 0.7;
     setTimeout(function () {
       var c = center(f2);
       if (blocked) {
@@ -354,7 +354,7 @@
 
   function scheduleCpu(ms) {
     clearTimeout(cpuT);
-    var wait = ms || (easyMode ? KP.rand(2200, 3400) : KP.rand(1100, 2000));
+    var wait = ms || (easyMode ? KP.rand(1200, 2000) : KP.rand(400, 700));
     cpuT = setTimeout(cpuTurn, wait);
   }
   function cpuTurn() {
@@ -363,9 +363,9 @@
     /* pick an action: block or a telegraphed attack */
     var roll = Math.random();
     if (easyMode) {
-      cpuKind = roll < .2 ? 'block' : (roll < .7 ? 'punch' : (roll < .9 ? 'kick' : 'special'));
+      cpuKind = roll < .32 ? 'block' : (roll < .72 ? 'punch' : (roll < .9 ? 'kick' : 'special'));
     } else {
-      cpuKind = roll < .28 ? 'block' : (roll < .58 ? 'punch' : (roll < .84 ? 'kick' : 'special'));
+      cpuKind = roll < .50 ? 'block' : (roll < .75 ? 'punch' : (roll < .90 ? 'kick' : 'special'));
     }
     if (cpuKind === 'block') {
       cpuBlocking = true;
@@ -375,22 +375,22 @@
       cpuT = setTimeout(function () {
         cpuBlocking = false;
         if (f2) f2.classList.remove('is-block');
-        scheduleCpu(easyMode ? 1600 : 900);
-      }, easyMode ? 700 : 900);
+        scheduleCpu(easyMode ? 900 : 350);
+      }, easyMode ? 600 : 450);
       return;
     }
     winding = true; cpuBlocking = false;
     f2.classList.add('is-wind');
     f2.classList.remove('is-block');
     narrate('Ninja Karaage winds up a ' + cpuKind + '. Block or counter!');
-    var wind = easyMode ? 900 : (cpuKind === 'special' ? 700 : 520);
+    var wind = easyMode ? 580 : (cpuKind === 'special' ? 320 : 300);
     cpuT = setTimeout(function () {
       if (!winding || !fighting) return;
       winding = false; f2.classList.remove('is-wind');
       var kind = cpuKind;
       anim(f2, 'is-' + (kind === 'kick' ? 'kick' : 'attack'), kind === 'special' ? 400 : 180);
       var base = CPU_MOVES[kind].dmg;
-      if (easyMode) base = Math.max(4, Math.round(base * 0.6));
+      if (easyMode) base = Math.max(6, Math.round(base * 0.45));
       var blocked = playerBlocking;
       var dmg = blocked ? (kind === 'special' ? 5 : 0) : base;
       hp1 = Math.max(0, hp1 - dmg);
@@ -410,7 +410,7 @@
         ? (dmg ? 'You blocked the special, but took chip damage. Your health ' + Math.round(hp1) + ' percent.'
                : 'You blocked the ' + kind + '. Strike now.')
         : ('Ninja Karaage hits you with a ' + kind + '. Your health ' + Math.round(hp1) + ' percent. Strike while it recovers.'));
-      scheduleCpu(easyMode ? 2000 : 1200);
+      scheduleCpu(easyMode ? 1100 : 450);
     }, wind);
   }
 
@@ -473,7 +473,7 @@
   $('[data-rematch]').addEventListener('click', enterAndFight);
   $('[data-reselect]').addEventListener('click', function () {
     resetToWait();
-    var c = grid.querySelector('input:checked'); if (c) c.focus();
+    var c = grid.querySelector('input:checked'); if (c) c.focus({ preventScroll: true });
     KP.say(live, 'Ninja Karaage is waiting. Choose your ingredient.');
   });
   var pauseBtn = $('[data-fight-pause]');
@@ -501,7 +501,7 @@
     function cmenuSelect(i, moveFocus) {
       i = (i + cOpts.length) % cOpts.length;
       cOpts.forEach(function (o, n) { o.classList.toggle('is-on', n === i); });
-      if (moveFocus) cOpts[i].focus();
+      if (moveFocus) cOpts[i].focus({ preventScroll: true });
     }
     function cmenuIndex() {
       var i = cOpts.findIndex(function (o) { return o === document.activeElement; });

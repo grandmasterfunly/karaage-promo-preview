@@ -383,7 +383,7 @@
     seed = Math.floor(Math.random() * 1e6) + 1;
     makeZig(); drawWood();
     if (KP.motionOK()) { board.classList.remove('is-drop'); void board.offsetWidth; board.classList.add('is-drop'); }
-    if (focus) { btn.focus(); KP.say(live, 'Board ' + (round + 1) + ' of ' + TOTAL + ' is ready. Hold to chop, then release in the red zone.'); }
+    if (focus) { btn.focus({ preventScroll: true }); KP.say(live, 'Board ' + (round + 1) + ' of ' + TOTAL + ' is ready. Hold to chop, then release in the red zone.'); }
   }
   function resetChallenge() {
     challengeOver = false; round = 0; score = 0; hits = []; boards = 0;
@@ -401,13 +401,13 @@
   btn.addEventListener('keydown', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); if (!e.repeat) startCharge(); } });
   btn.addEventListener('keyup', function (e) { if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); release(); } });
   btn.addEventListener('click', function () { if (performance.now() - lastSession > 350 && !charging && !KP.motionOK()) chop((zone.lo + zone.hi) / 2); });
-  board.addEventListener('click', function () { btn.focus(); });
+  board.addEventListener('click', function () { btn.focus({ preventScroll: true }); });
   $('[data-next-board]').addEventListener('click', function () { resetChallenge(); });
-  var rT; window.addEventListener('resize', function () { clearTimeout(rT); rT = setTimeout(function () { if (!broken) { var s0 = seed; drawWood(); seed = s0; } }, 200); });
+  var rT; window.addEventListener('resize', KP.onWidthChange(function () { clearTimeout(rT); rT = setTimeout(function () { if (!broken) { var s0 = seed; drawWood(); seed = s0; } }, 200); }));
 
   seed = 4242; makeZig();
   if (document.readyState === 'complete') drawWood(); else window.addEventListener('load', drawWood);
-  new ResizeObserver(function () { if (!broken && board.clientWidth) { var s0 = seed; seed = 4242 + boards; drawWood(); seed = s0; } }).observe(board);
+  new ResizeObserver(KP.onWidthChangeRO(function () { if (!broken && board.clientWidth) { var s0 = seed; seed = 4242 + boards; drawWood(); seed = s0; } })).observe(board);
 
   sec.querySelectorAll('input[name="en-diff"]').forEach(function (r) {
     r.addEventListener('change', function () { resetChallenge(); });

@@ -144,7 +144,7 @@
       else if (key === 'ArrowRight' || key === 'ArrowDown') idx = (idx + 1) % IDS.length;
       else idx = (idx - 1 + IDS.length) % IDS.length;
       show(IDS[idx]);
-      picks[idx].focus();
+      picks[idx].focus({ preventScroll: true });
     });
   });
 

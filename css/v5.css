@@ -1,12 +1,18 @@
 /* v5: mobile poster frames, lineup fan, closer, game UI. Desktop layout stays unless noted. */
 
-/* Stable preview bar: solid, sticky, no scroll-driven hiding. translateZ(0)
-   keeps it on its own layer so iOS does not repaint-flicker it mid-scroll. */
+/* Fixed preview bar (not sticky, no transform). Sticky + translateZ(0) on iOS
+   can jump or flicker when the toolbar shows or hides. Body padding holds the gap. */
 .preview-bar{
-  position:sticky;top:0;z-index:900;
+  position:fixed;top:0;left:0;right:0;z-index:900;
+  height:var(--bar-h);
   background:#202124;
-  -webkit-backface-visibility:hidden;backface-visibility:hidden;
-  transform:translateZ(0);
+  transform:none;
+  -webkit-backdrop-filter:none;backdrop-filter:none;
+}
+body{padding-top:var(--bar-h)}
+html{overflow-x:clip}
+@supports (-webkit-touch-callout: none){
+  html{scroll-behavior:auto}
 }
 
 /* Prefer 100svh (stable small viewport) over 100vh/100dvh so frames do not
@@ -115,7 +121,7 @@
   /* No scroll-snap on mobile: proximity snap fights the iOS Safari
      toolbar as it shows/hides, yanking the page and making the sticky
      preview bar appear to flicker or hide and return. */
-  html{scroll-snap-type:none}
+  html{scroll-snap-type:none;scroll-behavior:auto;overflow-x:clip}
   .mframe{
     display:flex;flex-direction:column;justify-content:center;align-items:stretch;
     box-sizing:border-box;width:100%;
