@@ -20,41 +20,46 @@
 
 .mframe{display:contents}
 
-/* ----- Lineup: fanned hand of official product photos ----- */
-/* Stage height uses svh (vh fallback first) so iOS toolbar show/hide
-   does not resize the fan mid-scroll. Transitions are transform/opacity
-   only — filter animations were a major source of mobile jank.
-   Items are composited with translateZ(0). Saturation filters removed. */
-.lineup{background:var(--paper,#f2e8d5);color:var(--ink,#1b1916);padding:clamp(48px,8vh,96px) clamp(16px,4vw,64px) clamp(32px,5vh,64px);padding:clamp(48px,8svh,96px) clamp(16px,4vw,64px) clamp(32px,5svh,64px);position:relative;overflow:hidden;isolation:isolate}
-.lineup__head{text-align:center;max-width:720px;margin:0 auto 8px}
-.lineup__title{font-family:var(--f-display,Anton,Impact,sans-serif);font-weight:400;font-size:clamp(2.2rem,5vw,4rem);letter-spacing:.02em;text-transform:uppercase;margin:0;line-height:.95;color:#111}
-.lineup__sub{font-family:var(--f-mincho,Georgia,serif);font-style:italic;font-size:clamp(1.05rem,2vw,1.35rem);margin:10px 0 0;color:#3a342c}
-.lineup__stage{position:relative;height:clamp(340px,52vh,560px);height:clamp(340px,52svh,560px);max-width:1100px;margin:8px auto 0;contain:layout paint;overflow:hidden}
-.lineup__fan{position:absolute;inset:0;display:block}
-.lineup__item{position:absolute;left:50%;top:52%;width:min(42%,420px);background:none;border:0;padding:0;cursor:pointer;transform-origin:50% 80%;transition:transform .4s cubic-bezier(.22,.8,.32,1),opacity .3s ease;z-index:1;margin:0;-webkit-backface-visibility:hidden;backface-visibility:hidden}
-.lineup__item img{display:block;width:100%;height:auto;pointer-events:none}
-.lineup__item[data-lineup="combat"]{transform:translate3d(-112%,-58%,0) rotate(-16deg);z-index:2}
-.lineup__item[data-lineup="enter"]{transform:translate3d(-58%,-48%,0) rotate(-6deg);z-index:3}
-.lineup__item[data-lineup="soba"]{transform:translate3d(-8%,-50%,0) rotate(7deg);z-index:3}
-.lineup__item[data-lineup="hustle"]{transform:translate3d(42%,-62%,0) rotate(16deg);z-index:2}
-.lineup.is-picked .lineup__item{opacity:.38}
-.lineup.is-picked .lineup__item.is-on,.lineup.is-picked .lineup__item:focus-visible{opacity:1}
-.lineup__item.is-on,.lineup__item:focus-visible{opacity:1;z-index:8;outline:none;transform:translate3d(-50%,-56%,0) rotate(0deg) scale(1.08)}
-.lineup__item:focus-visible img{outline:3px solid #7a1d14;outline-offset:4px}
-.lineup__info{text-align:center;min-height:7.5rem;margin:4px auto 0;max-width:520px}
-.lineup__wm{display:block;width:min(100%,380px);height:auto;margin:0 auto 6px}
-.lineup__tag{margin:0 0 12px;font-family:var(--f-mincho,Georgia,serif);font-size:1.1rem;color:#3a342c}
-.lineup__info.is-empty .lineup__wm,
-.lineup__info.is-empty .lineup__tag,
-.lineup__info.is-empty .lineup__order{visibility:hidden}
-.motion-off .lineup__item,.motion-off .lineup.is-picked .lineup__item{transition:none}
+/* ----- Lineup: arcade SELECT YOUR BOWL (single stage, no overlapping fan) ----- */
+.lineup{background:#0a0710;color:#fff;padding:clamp(40px,6vh,80px) clamp(16px,4vw,64px) clamp(32px,5vh,64px);padding:clamp(40px,6svh,80px) clamp(16px,4vw,64px) clamp(32px,5svh,64px);position:relative;overflow:hidden;isolation:isolate}
+.lineup .mframe--lineup{display:flex;flex-direction:column;align-items:center;max-width:720px;margin:0 auto}
+.lineup__title{font-family:var(--f-pixel2,Silkscreen,monospace);font-weight:400;font-size:clamp(1.35rem,3.2vw,2.1rem);letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px;line-height:1.15;color:var(--yellow,#ffe35a);text-align:center;text-shadow:3px 3px 0 #7a1010}
+.lineup__stage{width:100%;display:flex;flex-direction:column;align-items:center;text-align:center}
+.lineup__wm{display:block;width:min(100%,520px);height:100px;object-fit:contain;object-position:center;margin:0 auto 6px;background:#f2e8d5;box-sizing:border-box;padding:4px 10px;border:2px solid var(--yellow,#ffe35a)}
+.lineup__frame{position:relative;width:100%;max-width:560px;height:420px;height:min(42vh,420px);height:min(42svh,420px);margin:0 auto;overflow:hidden;background:#120a18;border:3px solid var(--yellow,#ffe35a);box-shadow:0 0 0 3px #0a0710,0 0 0 6px #7a1010;box-sizing:border-box}
+.lineup__photo{position:absolute;left:0;top:0;width:100%;height:100%;object-fit:contain;object-position:center;opacity:0;transition:opacity .35s ease;pointer-events:none}
+.lineup__photo.is-on{opacity:1;z-index:1}
+.lineup__tag{margin:8px 0 10px;font-family:var(--f-pixel2,Silkscreen,monospace);font-size:1.05rem;line-height:1.4;color:#f3e6cc;width:100%;box-sizing:border-box;height:3em;display:flex;align-items:center;justify-content:center;text-align:center;overflow:hidden}
+.lineup__order{min-height:48px;margin:0 0 12px}
+.lineup__picks{display:flex;justify-content:center;gap:10px;width:100%;max-width:560px;margin:0 auto;padding:0}
+.lineup__pick{position:relative;flex:1 1 0;min-width:0;max-width:120px;display:flex;flex-direction:column;align-items:center;gap:4px;padding:8px 4px 6px;border:3px solid #3a2a4a;background:#120a18;color:#fff;cursor:pointer;font:inherit}
+.lineup__pick.is-on,.lineup__pick:focus-visible{border-color:var(--yellow,#ffe35a);box-shadow:0 0 0 3px #7a1010;outline:3px solid var(--yellow,#ffe35a);outline-offset:2px;color:#111;background:var(--yellow,#ffe35a)}
+.lineup__cursor{position:absolute;top:2px;left:4px;font-size:.75rem;line-height:1;color:var(--yellow,#ffe35a);opacity:0}
+.lineup__pick.is-on .lineup__cursor,.lineup__pick:focus-visible .lineup__cursor{opacity:1;color:#7a1010}
+.lineup__icon{display:block;width:100%;height:56px}
+.lineup__icon img{display:block;width:100%;height:100%;object-fit:contain;object-position:center;pointer-events:none}
+.lineup__pick-name{font-family:var(--f-pixel2,Silkscreen,monospace);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;line-height:1.2}
+/* Arcade bonus-stage CYO: compact, secondary, no builder.
+   Selectors must beat site.css `.cyo a` and v4 hover bounce. */
+.cyo{display:flex;flex-direction:column;align-items:center;gap:6px;margin:12px 0 0;padding:0;width:100%;max-width:36rem;text-align:center}
+.cyo__label{margin:0;display:flex;align-items:center;justify-content:center;gap:6px;font-family:var(--f-pixel2,Silkscreen,monospace);font-size:.78rem;letter-spacing:.1em;text-transform:uppercase;color:var(--yellow,#ffe35a);line-height:1.3}
+.cyo__star{display:inline-block;width:10px;height:10px;flex:0 0 10px;color:var(--yellow,#ffe35a)}
+.cyo__star svg{display:block;width:10px;height:10px}
+.cyo__chips{list-style:none;display:flex;flex-wrap:wrap;justify-content:center;gap:6px;margin:0;padding:0;width:100%}
+.cyo a.cyo__opt{display:inline-flex;align-items:center;justify-content:center;gap:6px;box-sizing:border-box;min-height:44px;min-width:44px;padding:0 8px;border:3px solid var(--yellow,#ffe35a);border-radius:0;border-bottom:3px solid var(--yellow,#ffe35a);background:#120a18;color:var(--yellow,#ffe35a);font-family:var(--f-pixel2,Silkscreen,monospace);font-size:.72rem;font-weight:400;letter-spacing:.06em;text-transform:uppercase;text-decoration:none;line-height:1;box-shadow:2px 2px 0 #7a1010;transition:transform .1s linear,box-shadow .1s linear,background-color .1s linear,color .1s linear}
+.cyo .cyo__ico{display:block;width:16px;height:16px;flex:0 0 16px;transition:none}
+.cyo .cyo__ico svg{display:block;width:16px;height:16px}
+.cyo a.cyo__opt:hover,.cyo a.cyo__opt:focus-visible{background:var(--yellow,#ffe35a);color:#111;border-color:var(--yellow,#ffe35a);border-bottom-color:var(--yellow,#ffe35a);outline:3px solid var(--yellow,#ffe35a);outline-offset:2px;transform:translate(2px,2px);box-shadow:0 0 0 #7a1010}
+.cyo a.cyo__opt:hover .cyo__ico,.cyo a.cyo__opt:focus-visible .cyo__ico{transform:none}
+.cyo a.cyo__opt:hover .cyo__ico rect[fill="#0a0710"],.cyo a.cyo__opt:focus-visible .cyo__ico rect[fill="#0a0710"]{fill:#ffe35a}
+.motion-off .cyo a.cyo__opt,.motion-off .cyo a.cyo__opt:hover,.motion-off .cyo a.cyo__opt:focus-visible{transition:none;transform:none;box-shadow:2px 2px 0 #7a1010}
 @media (prefers-reduced-motion:reduce){
-  .lineup__item{transition:none}
+  .cyo a.cyo__opt,.cyo a.cyo__opt:hover,.cyo a.cyo__opt:focus-visible{transition:none;transform:none}
 }
-/* Static drop-shadow via a cheap box layer so we do not composite
-   filter:drop-shadow on four large images during scroll. */
-.lineup__item img{filter:none;box-shadow:none}
-.lineup__item::after{content:"";position:absolute;left:8%;right:8%;bottom:4%;height:16%;background:radial-gradient(ellipse at center,rgba(0,0,0,.4),transparent 70%);z-index:-1;pointer-events:none;transform:translateZ(0)}
+.motion-off .lineup__photo{transition:none}
+@media (prefers-reduced-motion:reduce){
+  .lineup__photo{transition:none}
+}
 
 /* ----- Closer (appetizer photo + brand ending) ----- */
 .closer{background:var(--paper,#f2e8d5);color:#111;position:relative;overflow:hidden;isolation:isolate}
@@ -224,18 +229,21 @@
   .hu-bubble__row{flex-wrap:wrap;gap:8px}
   .hu-react{margin-left:0}
 
-  /* Lineup one frame, compact fan */
+  /* Lineup: one SELECT YOUR BOWL screen */
   .lineup{padding:0}
-  .lineup .mframe--lineup{padding:16px 12px 12px}
-  .lineup__stage{height:320px;width:100%}
-  .lineup__item{width:min(42%,155px)}
-  .lineup__item[data-lineup="combat"]{transform:translate3d(-98%,-52%,0) rotate(-12deg)}
-  .lineup__item[data-lineup="enter"]{transform:translate3d(-70%,-44%,0) rotate(-5deg)}
-  .lineup__item[data-lineup="soba"]{transform:translate3d(-28%,-46%,0) rotate(6deg)}
-  .lineup__item[data-lineup="hustle"]{transform:translate3d(8%,-54%,0) rotate(12deg)}
-  .lineup__item.is-on,.lineup__item:focus-visible{transform:translate3d(-50%,-52%,0) rotate(0deg) scale(1.06)}
-  .lineup__wm{width:min(100%,260px)}
-  .cyo{padding:8px 16px 16px;margin:0;justify-content:center;text-align:center}
+  .lineup .mframe--lineup{padding:10px 12px 12px;min-height:calc(100vh - var(--bar-h,48px));min-height:calc(100svh - var(--bar-h,48px));justify-content:center;box-sizing:border-box}
+  .lineup__title{font-size:clamp(1.15rem,5.4vw,1.45rem);margin:0 0 6px}
+  .lineup__wm{width:min(100%,280px);height:64px;margin:0 auto 4px}
+  .lineup__frame{height:240px;max-width:100%}
+  .lineup__tag{margin:6px 0 8px;font-size:1rem;height:3em}
+  .lineup__order{min-height:48px;margin:0 0 10px;font-size:1.2rem}
+  .lineup__picks{gap:6px}
+  .lineup__pick{padding:4px 2px 4px;max-width:none}
+  .lineup__icon{height:48px}
+  .lineup__pick-name{font-size:.72rem}
+  .cyo{margin:8px 0 0}
+  .cyo__label{font-size:.68rem;letter-spacing:.06em}
+  .cyo a.cyo__opt{flex:1 1 0;font-size:.6rem;letter-spacing:.03em;padding:0 4px;gap:4px}
 
   /* Appetizer frames */
   .app{display:flex;flex-direction:column;min-height:0;padding:0;background:var(--paper,#f2e8d5);color:#1b1916}
@@ -264,7 +272,6 @@
   .cfloor__grid{grid-template-columns:repeat(6,minmax(0,1fr)) !important}
   .cfloor__grid .rcell__box{min-height:44px}
   .hu__logo{width:100%}
-  .lineup__item{width:46%}
 }
 
 /* ----- Desktop leftovers for new structure ----- */
@@ -403,4 +410,13 @@
   .cmenu{margin-top:10px;width:min(100%,420px)}
   .cfloor{width:100%;max-width:1200px}
   .chero__head{display:none}
+}
+
+/* Soba ink seal: keep 寿 + stamp, fit "Limited Time" on two lines */
+.seal span:last-child{font-size:.62rem;letter-spacing:.03em;line-height:1.15;text-align:center;max-width:4.6em;padding:0 4px}
+
+@media (max-width:600px){
+  .soba__chicken{width:144px;height:auto;left:0;bottom:-10%}
+  .soba__heroine{width:176px;height:auto;right:0;top:-8%}
+  .soba .mframe--food{overflow:visible;padding-bottom:36px}
 }

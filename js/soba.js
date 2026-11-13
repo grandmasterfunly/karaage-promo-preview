@@ -239,7 +239,7 @@
     sec.classList.add('is-revealed');
     disableRevealBtns();
     prompt.textContent = 'The mist is gone. Chilled soba, crispy karaage, nothing left to hide.';
-    KP.say(live, 'Revealed: the Soba Noodle Hidden Karaage Bowl. Chilled soba noodles topped with crispy karaage. A red Sus Hi seal stamps the painting.');
+    KP.say(live, 'Revealed: the Soba Noodle Hidden Karaage Bowl. Chilled soba noodles topped with crispy karaage. A red Limited Time seal stamps the painting.');
   }
   revealBtns.forEach(function (revealBtn) {
     revealBtn.addEventListener('click', function () {

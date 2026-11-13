@@ -8,11 +8,11 @@
 <meta name="description" content="New at Sus Hi Eatstation: Chicken Karaage, Japanese Fried Chicken, in four styles.">
 <link rel="preload" href="fonts/anton-0.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/hero-poster.webp" media="(min-width: 700px)">
-<link rel="stylesheet" href="css/fonts.css?v=20261113e">
-<link rel="stylesheet" href="css/site.css?v=20261113e">
-<link rel="stylesheet" href="css/v3.css?v=20261113e">
-<link rel="stylesheet" href="css/v4.css?v=20261113e">
-<link rel="stylesheet" href="css/v5.css?v=20261113e">
+<link rel="stylesheet" href="css/fonts.css?v=20261113f">
+<link rel="stylesheet" href="css/site.css?v=20261113f">
+<link rel="stylesheet" href="css/v3.css?v=20261113f">
+<link rel="stylesheet" href="css/v4.css?v=20261113f">
+<link rel="stylesheet" href="css/v5.css?v=20261113f">
 <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('kp-motion')==='off')document.documentElement.classList.add('motion-off');if(localStorage.getItem('kp-promo')==='off')document.documentElement.classList.add('promo-off');}catch(e){}</script>
 </head>
 <body>
@@ -316,7 +316,7 @@
           <canvas class="moon__mist" data-mist aria-hidden="true"></canvas>
           <p class="moon__hint" data-mist-hint aria-hidden="true">Brush to reveal</p>
         </div>
-        <div class="seal" data-seal aria-hidden="true"><span>寿</span><span>Sus Hi</span></div>
+        <div class="seal" data-seal aria-hidden="true"><span>寿</span><span>Limited Time</span></div>
       </div>
       <button type="button" class="btn-ink soba__reveal-m" data-reveal>Clear the mist</button>
       </div><!-- /soba food -->
@@ -383,37 +383,69 @@
   <!-- ============ LINEUP ============ -->
   <section class="lineup" id="k-lineup" data-chapter="lineup" aria-labelledby="lineup-title">
     <div class="mframe mframe--lineup">
-      <div class="lineup__head">
-        <h2 class="lineup__title" id="lineup-title">The Chicken Karaage Lineup</h2>
-        <p class="lineup__sub">Four ways to fight hunger.</p>
-      </div>
+      <h2 class="lineup__title" id="lineup-title">Select Your Bowl</h2>
       <div class="lineup__stage">
-        <div class="lineup__fan" role="group" aria-label="Chicken Karaage products">
-          <button type="button" class="lineup__item" data-lineup="combat" aria-pressed="false" aria-label="Karaage Combat Bowl">
-            <img src="assets/bowl-combat.webp" srcset="assets/bowl-combat-sm.webp 800w, assets/bowl-combat.webp 1391w" sizes="(max-width:760px) 54vw, 420px" alt="" width="1391" height="1126" decoding="async">
-          </button>
-          <button type="button" class="lineup__item" data-lineup="enter" aria-pressed="false" aria-label="Enter the Karaage Bowl">
-            <img src="assets/bowl-enter.webp" alt="" width="1000" height="829" decoding="async">
-          </button>
-          <button type="button" class="lineup__item" data-lineup="soba" aria-pressed="false" aria-label="Soba Noodle Hidden Karaage Bowl">
-            <img src="assets/bowl-soba.webp" alt="" width="1228" height="1236" decoding="async">
-          </button>
-          <button type="button" class="lineup__item" data-lineup="hustle" aria-pressed="false" aria-label="Karaage Hustle Burrito">
-            <img src="assets/burrito.webp" srcset="assets/burrito-sm.webp 800w, assets/burrito.webp 1325w" sizes="(max-width:760px) 54vw, 420px" alt="" width="1325" height="1117" decoding="async">
-          </button>
+        <img class="lineup__wm" data-lineup-wm src="assets/wm-combat.webp" width="1600" height="460" alt="Karaage Combat Bowl">
+        <div class="lineup__frame">
+          <img class="lineup__photo is-on" data-lineup-a src="assets/bowl-combat.webp" srcset="assets/bowl-combat-sm.webp 800w, assets/bowl-combat.webp 1391w" sizes="(max-width:760px) 86vw, 520px" width="1391" height="1126" alt="Karaage Combat Bowl: three crispy karaage over sushi rice with fried onions, pickled jalapeños, shredded cheese, scallions, purple cabbage, carrots, cucumber and Sus Hi sauce.">
+          <img class="lineup__photo" data-lineup-b width="1391" height="1126" alt="" aria-hidden="true">
         </div>
+        <p class="lineup__tag" data-lineup-tag>Choose your bowl.</p>
+        <a class="btn-order lineup__order" data-lineup-order href="#order" aria-label="Order Karaage Combat Bowl">Order Now</a>
+        <p class="sr-only" data-lineup-live aria-live="polite">Karaage Combat Bowl selected.</p>
       </div>
-      <div class="lineup__info is-empty" data-lineup-info aria-live="polite">
-        <img class="lineup__wm" data-lineup-wm alt="" width="1600" height="511">
-        <p class="lineup__tag" data-lineup-tag></p>
-        <a class="lineup__order btn-order" data-lineup-order href="#order">Order now</a>
+      <div class="lineup__picks" role="radiogroup" aria-label="Select your bowl">
+        <button type="button" class="lineup__pick is-on" role="radio" aria-checked="true" data-lineup="combat" aria-label="Karaage Combat Bowl">
+          <span class="lineup__cursor" aria-hidden="true">▶</span>
+          <span class="lineup__icon"><img src="assets/bowl-combat-sm.webp" alt="" width="800" height="648" decoding="async"></span>
+          <span class="lineup__pick-name">Combat</span>
+        </button>
+        <button type="button" class="lineup__pick" role="radio" aria-checked="false" data-lineup="enter" aria-label="Enter the Karaage Bowl">
+          <span class="lineup__cursor" aria-hidden="true">▶</span>
+          <span class="lineup__icon"><img src="assets/bowl-enter.webp" alt="" width="1000" height="829" loading="lazy" decoding="async"></span>
+          <span class="lineup__pick-name">Enter</span>
+        </button>
+        <button type="button" class="lineup__pick" role="radio" aria-checked="false" data-lineup="soba" aria-label="Soba Noodle Hidden Karaage Bowl">
+          <span class="lineup__cursor" aria-hidden="true">▶</span>
+          <span class="lineup__icon"><img src="assets/bowl-soba.webp" alt="" width="1228" height="1236" loading="lazy" decoding="async"></span>
+          <span class="lineup__pick-name">Soba</span>
+        </button>
+        <button type="button" class="lineup__pick" role="radio" aria-checked="false" data-lineup="hustle" aria-label="Karaage Hustle Burrito">
+          <span class="lineup__cursor" aria-hidden="true">▶</span>
+          <span class="lineup__icon"><img src="assets/burrito-sm.webp" alt="" width="800" height="675" loading="lazy" decoding="async"></span>
+          <span class="lineup__pick-name">Hustle</span>
+        </button>
+      </div>
+      <div class="cyo">
+        <p class="cyo__label"><span class="cyo__star" aria-hidden="true"><svg viewBox="0 0 10 10" width="10" height="10" focusable="false"><path fill="currentColor" d="M5 0l1 3.5H10l-3 2.2 1.2 3.8L5 7.2 1.8 9.5 3 5.7 0 3.5h4z"/></svg></span> Bonus Stage: Build Your Own</p>
+        <ul class="cyo__chips">
+          <li>
+            <a class="cyo__opt" href="#order">
+              <span class="cyo__ico" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="16" height="16" focusable="false"><rect x="4" y="1" width="8" height="14" rx="3" fill="currentColor"/><rect x="6" y="3" width="4" height="2" fill="#0a0710"/><rect x="6" y="7" width="4" height="2" fill="#0a0710"/><rect x="6" y="11" width="4" height="2" fill="#0a0710"/></svg>
+              </span>
+              Burrito
+            </a>
+          </li>
+          <li>
+            <a class="cyo__opt" href="#order">
+              <span class="cyo__ico" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="16" height="16" focusable="false"><path fill="currentColor" d="M2 7h12v2H2zM3 9h10v5H3z"/><rect x="5" y="4" width="2" height="3" fill="currentColor"/><rect x="9" y="3" width="2" height="4" fill="currentColor"/></svg>
+              </span>
+              Noodle
+            </a>
+          </li>
+          <li>
+            <a class="cyo__opt" href="#order" aria-label="Build your own sushi rice bowl">
+              <span class="cyo__ico" aria-hidden="true">
+                <svg viewBox="0 0 16 16" width="16" height="16" focusable="false"><path fill="currentColor" d="M3 8h10v2H3zM4 10h8v4H4z"/><rect x="5" y="5" width="2" height="2" fill="currentColor"/><rect x="9" y="5" width="2" height="2" fill="currentColor"/><rect x="7" y="3" width="2" height="2" fill="currentColor"/></svg>
+              </span>
+              Rice Bowl
+            </a>
+          </li>
+        </ul>
       </div>
     </div>
-    <p class="cyo">Or build your own:
-      <a class="cyo__opt" href="#order"><span class="cyo__ico" aria-hidden="true">🌯</span> burrito</a>,
-      <a class="cyo__opt" href="#order"><span class="cyo__ico" aria-hidden="true">🍜</span> noodle</a>,
-      or <a class="cyo__opt" href="#order"><span class="cyo__ico" aria-hidden="true">🍚</span> sushi rice bowl</a>.
-      <a class="cyo__go" href="#order">Build yours</a></p>
   </section>
 
   <!-- ============ CLOSER ============ -->
@@ -443,12 +475,12 @@
 </main>
 <footer class="ph ph--footer"><span class="ph__label">Existing site footer</span></footer>
 
-<script src="js/data.js?v=20261113e" defer></script>
-<script src="js/core.js?v=20261113e" defer></script>
-<script src="js/combat.js?v=20261113e" defer></script>
-<script src="js/enter.js?v=20261113e" defer></script>
-<script src="js/soba.js?v=20261113e" defer></script>
-<script src="js/hustle.js?v=20261113e" defer></script>
-<script src="js/lineup.js?v=20261113e" defer></script>
+<script src="js/data.js?v=20261113f" defer></script>
+<script src="js/core.js?v=20261113f" defer></script>
+<script src="js/combat.js?v=20261113f" defer></script>
+<script src="js/enter.js?v=20261113f" defer></script>
+<script src="js/soba.js?v=20261113f" defer></script>
+<script src="js/hustle.js?v=20261113f" defer></script>
+<script src="js/lineup.js?v=20261113f" defer></script>
 </body>
 </html>
