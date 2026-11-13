@@ -1,36 +1,54 @@
-/* Karaage Hustle Burrito: one speech bubble, endless karaage wisdom */
+/* Hustle: tap-only poster burst + Karaage wisdom. No scroll-linked JS, no layout changes. */
 (function () {
   'use strict';
-  var KP = window.KP, D = window.KP_DATA;
-  var sec = document.getElementById('k-hustle');
+  var D = window.KP_DATA;
+  var poster = document.querySelector('[data-hu-poster]');
+  if (poster) {
+    var powBtn = poster.querySelector('[data-hu-pow]');
+    var burst = poster.querySelector('[data-hu-burst]');
+    var mascot = poster.querySelector('[data-hu-mascot]');
+    var live = poster.querySelector('[data-hu-live]');
+    function bang() {
+      var word = KP.pick(D.bursts);
+      if (burst) burst.textContent = word;
+      if (live) KP.say(live, word);
+      if (!KP.motionOK()) return;
+      if (burst) { burst.classList.remove('is-on'); void burst.offsetWidth; burst.classList.add('is-on'); }
+      if (mascot) { mascot.classList.remove('is-hit'); void mascot.offsetWidth; mascot.classList.add('is-hit'); }
+    }
+    if (powBtn) powBtn.addEventListener('click', bang);
+  }
+
+  var sec = document.getElementById('k-wisdom') || document.getElementById('k-hustle');
   if (!sec) return;
-  var $ = function (s) { return sec.querySelector(s); };
-  var txt = $('[data-fact-text]'), nEl = $('[data-fact-count]'), pow = $('[data-pow]'), bub = $('[data-bubble]');
-  var deck = [], dealt = 0, cur = null;
-  function draw() { if (!deck.length) deck = D.jokes.map(function (j, i) { return i; }).sort(function () { return Math.random() - .5; }); return deck.pop(); }
-  function baseCount(i, k) { return 12 + ((i * (k === 'fire' ? 37 : 53)) % 180); }
+  function $(s) { return sec.querySelector(s); }
+  var idx = 0, cur = { idx: 0 };
+  function baseCount(i, k) { return ((i * (k === 'fire' ? 17 : 13) + 3) % 47) + 8; }
   function deal(announce) {
-    var idx = draw(); dealt++;
-    nEl.textContent = '#' + dealt;
-    cur = { idx: idx };
-    if (!announce) txt.removeAttribute('aria-live');
+    var txt = $('[data-fact-text]'), count = $('[data-fact-count]'), pow = $('[data-pow]'), bub = $('[data-bubble]');
+    if (!txt) return;
+    idx = (idx + (announce ? 1 : 0)) % D.jokes.length;
+    cur.idx = idx;
+    if (!announce) txt.setAttribute('aria-live', 'off');
+    if (count) count.textContent = '#' + (idx + 1);
     txt.textContent = D.jokes[idx];
     if (!announce) setTimeout(function () { txt.setAttribute('aria-live', 'polite'); }, 50);
-    pow.textContent = KP.pick(D.bursts);
-    if (announce && KP.motionOK()) {
+    if (pow) pow.textContent = KP.pick(D.bursts);
+    if (announce && KP.motionOK() && bub && pow) {
       bub.classList.remove('is-hit'); void bub.offsetWidth; bub.classList.add('is-hit');
       pow.classList.remove('is-on'); void pow.offsetWidth; pow.classList.add('is-on');
     }
     sec.querySelectorAll('[data-react]').forEach(function (b) { b.setAttribute('aria-pressed', 'false'); });
     sec.querySelectorAll('[data-react-n]').forEach(function (n) { n.textContent = baseCount(idx, n.dataset.reactN); });
   }
-  $('[data-hit]').addEventListener('click', function () { deal(true); });
+  var hit = $('[data-hit]');
+  if (hit) hit.addEventListener('click', function () { deal(true); });
   sec.querySelectorAll('[data-react]').forEach(function (b) {
     b.addEventListener('click', function () {
       var on = b.getAttribute('aria-pressed') !== 'true';
       b.setAttribute('aria-pressed', on ? 'true' : 'false');
       var k = b.dataset.react, n = sec.querySelector('[data-react-n="' + k + '"]');
-      n.textContent = baseCount(cur.idx, k) + (on ? 1 : 0);
+      if (n) n.textContent = baseCount(cur.idx, k) + (on ? 1 : 0);
       if (on && KP.motionOK()) {
         for (var i = 0; i < 5; i++) {
           var p = document.createElement('span'); p.className = 'pop'; p.setAttribute('aria-hidden', 'true');
@@ -43,6 +61,5 @@
     });
   });
   deal(false);
-  if ('IntersectionObserver' in window) new IntersectionObserver(function (en, ob) { if (en[0].isIntersecting) { sec.classList.add('is-in'); ob.disconnect(); } }, { threshold: .25 }).observe(sec); else sec.classList.add('is-in');
   window.KP_hustle = { deal: deal };
 })();
