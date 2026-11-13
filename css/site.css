@@ -15,6 +15,8 @@
   --f-brush:'Brush Kanji', 'Ma Shan Zheng', serif;
   --bar-h:44px;
   --bar-offset:calc(var(--bar-h) + env(safe-area-inset-top, 0px));
+  --frame-h:100vh;
+  --frame-h:100svh;
   --focus:#1a73ff;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -32,7 +34,7 @@ main:focus{outline:none}
 .skip-link:focus{top:calc(var(--bar-offset) + 8px)}
 
 /* ---------- Preview bar ---------- */
-.preview-bar{position:fixed;top:0;left:0;right:0;z-index:900;height:var(--bar-offset);display:flex;align-items:center;gap:14px;padding:env(safe-area-inset-top,0px) 14px 0;box-sizing:border-box;background:#202124;color:#fff;font-size:.875rem;border-bottom:1px solid #000}
+.preview-bar{position:fixed;top:0;left:0;right:0;width:100%;z-index:900;height:var(--bar-offset);display:flex;align-items:center;gap:14px;padding:env(safe-area-inset-top,0px) 14px 0;box-sizing:border-box;margin:0;background:#202124;color:#fff;font-size:.875rem;border-bottom:1px solid #000;transform:none;-webkit-transform:none;filter:none;will-change:auto}
 .preview-bar__tag{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.75rem;background:#fff;color:#202124;padding:3px 8px;border-radius:4px}
 .preview-switch{display:inline-flex;align-items:center;gap:10px;background:none;border:0;color:#fff;padding:6px 4px;min-height:32px}
 .preview-switch__track{width:42px;height:24px;border-radius:12px;background:#5f6368;position:relative;transition:background .2s}

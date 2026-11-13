@@ -13,12 +13,12 @@ body{padding-top:var(--bar-offset)}
 
 /* Prefer 100svh (stable small viewport) over 100vh/100dvh so frames do not
    resize when the mobile browser toolbar collapses or expands. */
-.hero{min-height:calc(100vh - var(--bar-offset));min-height:calc(100svh - var(--bar-offset))}
-.combat__screen{min-height:max(700px,100vh);min-height:max(700px,100svh)}
-.soba{min-height:max(760px,100vh);min-height:max(760px,100svh)}
-.chero{min-height:max(760px,100vh);min-height:max(760px,100svh)}
-.en{min-height:max(860px,100vh);min-height:max(860px,100svh)}
-.hu{min-height:max(860px,100vh);min-height:max(860px,100svh)}
+.hero{min-height:calc(var(--frame-h) - var(--bar-offset))}
+.combat__screen{min-height:max(700px,var(--frame-h))}
+.soba{min-height:max(760px,var(--frame-h))}
+.chero{min-height:max(760px,var(--frame-h))}
+.en{min-height:max(860px,var(--frame-h))}
+.hu{min-height:max(860px,var(--frame-h))}
 
 .mframe{display:contents}
 
@@ -67,15 +67,15 @@ body{padding-top:var(--bar-offset)}
 .closer{background:var(--paper,#f2e8d5);color:#111;position:relative;overflow:hidden;isolation:isolate}
 .closer__inner{position:relative;z-index:1;max-width:1100px;margin:0 auto;padding:clamp(48px,8vh,96px) 24px;text-align:center;display:flex;flex-direction:column;align-items:center;gap:14px}
 .closer__badge{display:block;width:min(42%,220px);height:auto;order:0}
-.closer__food{display:block;width:min(100%,560px);height:auto;max-height:min(58vh,640px);object-fit:contain;object-position:center;filter:drop-shadow(0 22px 28px rgba(0,0,0,.28));order:1}
+.closer__food{display:block;width:min(100%,560px);height:auto;max-height:min(58vh,640px);max-height:min(58svh,640px);object-fit:contain;object-position:center;filter:drop-shadow(0 22px 28px rgba(0,0,0,.28));order:1}
 .closer__kicker{order:2;margin:0;font-family:var(--f-cond,'Barlow Condensed',sans-serif);font-weight:800;letter-spacing:.16em;text-transform:uppercase;color:#7a1d14;font-size:1.05rem}
 .closer__title{order:3;font-family:var(--f-display,Anton,Impact,sans-serif);font-weight:400;font-size:clamp(3rem,8vw,6.2rem);line-height:.88;letter-spacing:.01em;text-transform:uppercase;margin:0}
 .closer__sub{order:4;font-family:var(--f-cond,'Barlow Condensed',sans-serif);font-weight:700;font-size:clamp(1.15rem,2.4vw,1.6rem);letter-spacing:.16em;text-transform:uppercase;margin:0}
 .closer__order{order:5;margin-top:4px;min-height:56px;padding:0 36px;font-size:1.45rem}
 .closer__mascot{order:6;display:block;width:min(28%,160px);height:auto;margin-top:4px;filter:drop-shadow(0 8px 0 rgba(0,0,0,.12))}
 @media (min-width:761px){
-  .closer__inner{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.9fr);grid-template-areas:"food badge" "food kicker" "food title" "food sub" "food order" "food mascot";align-items:center;justify-items:start;text-align:left;gap:8px 40px;padding:clamp(56px,8vh,100px) clamp(32px,5vw,72px)}
-  .closer__food{grid-area:food;width:100%;max-height:min(70vh,720px);justify-self:center}
+  .closer__inner{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(280px,.9fr);grid-template-areas:"food badge" "food kicker" "food title" "food sub" "food order" "food mascot";align-items:center;justify-items:start;text-align:left;gap:8px 40px;padding:clamp(56px,8vh,100px) clamp(32px,5vw,72px);padding:clamp(56px,8svh,100px) clamp(32px,5vw,72px)}
+  .closer__food{grid-area:food;width:100%;max-height:min(70vh,720px);max-height:min(70svh,720px);justify-self:center}
   .closer__badge{grid-area:badge;width:min(50%,200px)}
   .closer__kicker{grid-area:kicker}
   .closer__title{grid-area:title;font-size:clamp(3.4rem,6vw,6rem)}
@@ -100,7 +100,7 @@ body{padding-top:var(--bar-offset)}
 .pad__relaxed[aria-pressed="true"]{background:var(--yellow,#ffe35a);color:#0a0710}
 .fighter.is-block img{filter:drop-shadow(0 0 8px #7ec8ff) drop-shadow(0 10px 0 rgba(0,0,0,.45))}
 .fighter.is-wind img{filter:drop-shadow(0 0 10px #ff2a2a) drop-shadow(0 10px 0 rgba(0,0,0,.45))}
-.ko__victor{display:block;width:auto;height:min(38vh,280px);margin:0 auto 8px;image-rendering:pixelated;filter:drop-shadow(0 10px 0 rgba(0,0,0,.4))}
+.ko__victor{display:block;width:auto;height:min(38vh,280px);height:min(38svh,280px);margin:0 auto 8px;image-rendering:pixelated;filter:drop-shadow(0 10px 0 rgba(0,0,0,.4))}
 .cfloor__result.is-lose .ko__mark{color:#fff}
 .cfloor__result.is-win .ko__mark{color:var(--yellow,#ffe35a)}
 
@@ -130,8 +130,7 @@ body{padding-top:var(--bar-offset)}
      so a forced 100svh does not leave a dead gap between an image and the next block. */
   .hero .mframe--food,
   .closer .mframe--closer{
-    min-height:calc(100vh - var(--bar-offset));
-    min-height:calc(100svh - var(--bar-offset));
+    min-height:calc(var(--frame-h) - var(--bar-offset));
   }
   /* Kill leftover 100vh section mins so toolbar collapse cannot reflow frames. */
   .en,.hu,.soba,.combat__screen,.lineup,.closer,.app{min-height:0}
@@ -140,8 +139,8 @@ body{padding-top:var(--bar-offset)}
   /* Hero: Frame A food+title, Frame B style picker */
   .hero{min-height:0;display:block;overflow:visible;background:#0b0908}
   .hero .mframe--food{color:var(--cream,#f3e6cc);justify-content:flex-end;background:#0b0908}
-  .hero .hero__media{position:absolute;inset:0;z-index:0}
-  .hero .hero__media img,.hero .hero__poster{width:100%;height:100%;object-fit:cover}
+  .hero .hero__media,.hero .hero__media .hero__poster{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;overflow:hidden}
+  .hero .hero__media img,.hero .hero__poster img,.hero .hero__video,.hero .hero__embers{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center bottom}
   .hero .hero__copy{position:relative;z-index:1;padding:0 4px 8px;text-align:center}
   .hero .hero__title{font-size:clamp(3rem,16vw,4.6rem)}
   .hero .mframe--food{padding-bottom:8px}
@@ -156,8 +155,8 @@ body{padding-top:var(--bar-offset)}
   .chero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
   .chero__shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(10,7,16,.2),rgba(10,7,16,.65))}
   .combat .mframe--food,.combat .mframe--play{position:relative;z-index:2;color:#fff}
-  .combat .mframe--food{text-align:center;justify-content:center;padding:10px 12px 8px;gap:6px;min-height:calc(100vh - var(--bar-offset));min-height:calc(100svh - var(--bar-offset))}
-  .combat .mframe--play{min-height:calc(100vh - var(--bar-offset));min-height:calc(100svh - var(--bar-offset))}
+  .combat .mframe--food{text-align:center;justify-content:center;padding:10px 12px 8px;gap:6px;min-height:calc(var(--frame-h) - var(--bar-offset))}
+  .combat .mframe--play{min-height:calc(var(--frame-h) - var(--bar-offset))}
   .chero__head,.chero__bars{display:none}
   .cbowl{margin:0;width:100%;display:flex;flex-direction:column;align-items:center;min-width:0}
   .cbowl__logo{width:min(100%,280px);margin:0 auto 2px}
@@ -233,7 +232,7 @@ body{padding-top:var(--bar-offset)}
 
   /* Lineup: one SELECT YOUR BOWL screen */
   .lineup{padding:0}
-  .lineup .mframe--lineup{padding:10px 12px 12px;min-height:calc(100vh - var(--bar-offset));min-height:calc(100svh - var(--bar-offset));justify-content:center;box-sizing:border-box}
+  .lineup .mframe--lineup{padding:10px 12px 12px;min-height:calc(var(--frame-h) - var(--bar-offset));justify-content:center;box-sizing:border-box}
   .lineup__title{font-size:clamp(1.15rem,5.4vw,1.45rem);margin:0 0 6px}
   .lineup__wm{width:min(100%,280px);height:64px;margin:0 auto 4px}
   .lineup__frame{height:240px;max-width:100%}
@@ -381,7 +380,7 @@ body{padding-top:var(--bar-offset)}
 .hu{overflow:hidden}
 #k-combat[data-state="ko"] .cfloor__ring .fighter,
 #k-combat[data-state="ko"] .fx{visibility:hidden;pointer-events:none}
-.closer__inner{padding:clamp(40px,7vh,72px) 24px 32px}
+.closer__inner{padding:clamp(40px,7vh,72px) 24px 32px;padding:clamp(40px,7svh,72px) 24px 32px}
 
 
 /* ----- Combat arcade start menu ----- */
@@ -403,7 +402,7 @@ body{padding-top:var(--bar-offset)}
 
 /* Desktop: title screen (wordmark + bowl + menu) stacked over the dojo, fight game below */
 @media (min-width:761px){
-  .chero{display:flex;flex-direction:column;align-items:center;gap:12px;min-height:0;padding:clamp(28px,5vh,56px) clamp(16px,3vw,48px) clamp(28px,4vh,48px);grid-template-columns:none;grid-template-areas:none}
+  .chero{display:flex;flex-direction:column;align-items:center;gap:12px;min-height:0;padding:clamp(28px,5vh,56px) clamp(16px,3vw,48px) clamp(28px,4vh,48px);padding:clamp(28px,5svh,56px) clamp(16px,3vw,48px) clamp(28px,4svh,48px);grid-template-columns:none;grid-template-areas:none}
   .cbowl{width:min(920px,100%);display:flex;flex-direction:column;align-items:center}
   .cbowl__logo{width:min(100%,640px);margin:0 auto 4px}
   .cbowl__img{max-height:min(52vh,620px);max-height:min(52svh,620px);width:auto;max-width:100%;object-fit:contain}
@@ -421,4 +420,20 @@ body{padding-top:var(--bar-offset)}
   .soba__chicken{width:144px;height:auto;left:0;bottom:-10%}
   .soba__heroine{width:176px;height:auto;right:0;top:-8%}
   .soba .mframe--food{overflow:visible;padding-bottom:36px}
+}
+
+/* iOS scroll stability: preview bar is pure CSS fixed (no JS). Frame
+   heights use --frame-h, a pixel value locked on first paint and updated
+   only when the width changes, so a toolbar show/hide cannot stretch a
+   section or open a gap. Reveals stay opacity/transform only. */
+.preview-bar{position:fixed;top:0;left:0;right:0;width:100%;transform:none;-webkit-transform:none}
+.kp section,.mframe,.lineup__frame,.cbowl,.cbowl__img,.closer__food,.closer__inner,.en,.hu,.soba,.panel,.cfloor__ring,.chero{
+  overflow-anchor:none;
+}
+@media (max-width:760px),(hover:none) and (pointer:coarse){
+  .hero__poster img{animation:none;transform:none}
+  .closer__food{max-height:min(calc(var(--frame-h) * .58),640px)}
+  .closer__inner{padding:clamp(40px,calc(var(--frame-h) * .07),72px) 24px 32px}
+  .ko__victor{height:min(calc(var(--frame-h) * .38),280px)}
+  .lineup__frame{height:min(calc(var(--frame-h) * .42),420px)}
 }

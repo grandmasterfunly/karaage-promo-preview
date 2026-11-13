@@ -172,28 +172,6 @@
     });
   });
 
-  /* Pin the preview bar to the visual viewport. On iOS Safari, position:fixed
-     is laid out against the layout viewport, so the bar appears to slide away
-     while the toolbar collapses and snaps back when the scroll ends. Updating
-     `top` (not transform) keeps it glued to the visible top. */
-  (function pinPreviewBar() {
-    var bar = document.querySelector('.preview-bar');
-    var vv = window.visualViewport;
-    if (!bar || !vv) return;
-    var pending = false;
-    function sync() {
-      pending = false;
-      bar.style.top = (vv.offsetTop || 0) + 'px';
-    }
-    function onVV() {
-      if (pending) return;
-      pending = true;
-      requestAnimationFrame(sync);
-    }
-    vv.addEventListener('scroll', onVV, { passive: true });
-    vv.addEventListener('resize', onVV, { passive: true });
-  })();
-
   /* In-page hash links: never jump to the top for a missing id, never let a
      bare #order reload the page start, and use instant scrolling on iOS/mobile
      so smooth-scroll does not fight the toolbar. replaceState avoids a second
