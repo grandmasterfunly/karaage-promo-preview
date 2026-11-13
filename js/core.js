@@ -1,4 +1,4 @@
-/* Core: preview toggle, motion, nav, hero, wipes, scroll effects, appetizer */
+/* Core: preview toggle, motion, nav, hero, wipes, scroll effects */
 (function () {
   'use strict';
   var html = document.documentElement;
@@ -174,79 +174,4 @@
     });
   });
 
-  /* ---------- Appetizer dip (4 official pieces) ---------- */
-  var play = document.querySelector('[data-app-play]');
-  var pieces = document.querySelectorAll('[data-piece]');
-  var cup = document.querySelector('.app__cup');
-  var word = document.querySelector('[data-crunch-word]');
-  var countEl = document.querySelector('[data-crunch-n]');
-  var dipBtn = document.querySelector('[data-dip-next]');
-  var dipped = [false, false, false, false];
-  var words = ['Crunch!', 'Crack!', 'Crispy!', 'Krnch!', 'So juicy!'];
-  var drag = null;
-
-  function dippedCount() { return dipped.filter(Boolean).length; }
-  function announceDip() {
-    var n = dippedCount();
-    if (countEl) countEl.textContent = n >= 4 ? 'All four dipped. Add them to any bowl.' : ('Dipped ' + n + ' of 4');
-    if (word) word.textContent = n >= 4 ? 'Add to any bowl!' : words[(n - 1 + words.length) % words.length];
-    if (word && KP.motionOK()) { word.classList.remove('is-on'); void word.offsetWidth; word.classList.add('is-on'); }
-  }
-  function dunkPiece(el) {
-    if (!el) return;
-    var i = parseInt(el.getAttribute('data-piece'), 10);
-    if (dipped[i]) return;
-    dipped[i] = true;
-    el.classList.add('is-dunked');
-    el.disabled = true;
-    if (cup) { cup.classList.remove('is-dip'); void cup.offsetWidth; cup.classList.add('is-dip'); }
-    announceDip();
-    if (dipBtn && dippedCount() >= 4) dipBtn.disabled = true;
-  }
-  function nextUndipped() {
-    for (var i = 0; i < pieces.length; i++) if (!dipped[i]) return pieces[i];
-    return null;
-  }
-  function overCup(x, y) {
-    if (!cup) return false;
-    var r = cup.getBoundingClientRect();
-    var pad = 28;
-    return x >= r.left - pad && x <= r.right + pad && y >= r.top - pad && y <= r.bottom + pad;
-  }
-
-  pieces.forEach(function (el) {
-    el.addEventListener('pointerdown', function (e) {
-      if (el.disabled) return;
-      if (e.button && e.button !== 0) return;
-      if (e.cancelable) e.preventDefault();
-      try { el.setPointerCapture(e.pointerId); } catch (x) {}
-      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, moved: false, el: el };
-    });
-    el.addEventListener('pointermove', function (e) {
-      if (!drag || drag.id !== e.pointerId || drag.el !== el) return;
-      if (e.cancelable) e.preventDefault();
-      if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) > 8) drag.moved = true;
-    });
-    function endPtr(e) {
-      if (!drag || drag.el !== el) return;
-      var moved = drag.moved;
-      var x = e.clientX, y = e.clientY;
-      drag = null;
-      if (el.disabled) return;
-      if (!moved || overCup(x, y)) dunkPiece(el);
-    }
-    el.addEventListener('pointerup', endPtr);
-    el.addEventListener('pointercancel', function () { drag = null; });
-    el.addEventListener('click', function (e) {
-      /* keyboard / fallback: pointer path already dunks on tap */
-      if (el.disabled) return;
-      if (e.detail === 0) dunkPiece(el);
-    });
-  });
-  if (play) {
-    play.addEventListener('touchmove', function (e) {
-      if (drag) e.preventDefault();
-    }, { passive: false });
-  }
-  if (dipBtn) dipBtn.addEventListener('click', function () { dunkPiece(nextUndipped()); });
 })();

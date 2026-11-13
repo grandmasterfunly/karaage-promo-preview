@@ -1,4 +1,23 @@
 /* v5: mobile poster frames, lineup fan, closer, game UI. Desktop layout stays unless noted. */
+
+/* Stable preview bar: solid, sticky, no scroll-driven hiding. translateZ(0)
+   keeps it on its own layer so iOS does not repaint-flicker it mid-scroll. */
+.preview-bar{
+  position:sticky;top:0;z-index:900;
+  background:#202124;
+  -webkit-backface-visibility:hidden;backface-visibility:hidden;
+  transform:translateZ(0);
+}
+
+/* Prefer 100svh (stable small viewport) over 100vh/100dvh so frames do not
+   resize when the mobile browser toolbar collapses or expands. */
+.hero{min-height:calc(100vh - var(--bar-h));min-height:calc(100svh - var(--bar-h))}
+.combat__screen{min-height:max(700px,100vh);min-height:max(700px,100svh)}
+.soba{min-height:max(760px,100vh);min-height:max(760px,100svh)}
+.chero{min-height:max(760px,100vh);min-height:max(760px,100svh)}
+.en{min-height:max(860px,100vh);min-height:max(860px,100svh)}
+.hu{min-height:max(860px,100vh);min-height:max(860px,100svh)}
+
 .mframe{display:contents}
 
 /* ----- Lineup: fanned hand of official product photos ----- */
@@ -66,29 +85,29 @@
 .motion-off .moon__hint, @media (prefers-reduced-motion:reduce){.moon__hint{animation:none}}
 
 /* ----- Appetizer dip play area ----- */
-.app__play{touch-action:none;position:relative;display:flex;flex-direction:column;align-items:center;gap:12px;width:100%}
-.app__pieces{display:grid;grid-template-columns:repeat(4,auto);justify-content:center;gap:10px;width:100%;max-width:420px}
-.app__piece{width:72px;height:72px;min-width:44px;min-height:44px;padding:0;border:2px solid #111;border-radius:50%;background:#f3efe6;overflow:hidden;cursor:grab;box-shadow:3px 3px 0 #111}
-.app__piece{background-image:url("../assets/appetizer.webp");background-repeat:no-repeat;background-size:320%}
-.app__piece[data-piece="0"]{background-position:18% 48%}
-.app__piece[data-piece="1"]{background-position:62% 20%}
-.app__piece[data-piece="2"]{background-position:84% 48%}
-.app__piece[data-piece="3"]{background-position:44% 80%}
-.app__piece img{opacity:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
-.app__piece.is-dunked{opacity:.4;cursor:default}
-.app__cup-slot{position:relative;width:120px;height:110px;display:flex;flex-direction:column;align-items:center}
-.app__dip-alt{min-height:44px}
 
 @media (max-width:760px){
-  html{scroll-snap-type:y proximity}
+  /* No scroll-snap on mobile: proximity snap fights the iOS Safari
+     toolbar as it shows/hides, yanking the page and making the sticky
+     preview bar appear to flicker or hide and return. */
+  html{scroll-snap-type:none}
   .mframe{
     display:flex;flex-direction:column;justify-content:center;align-items:stretch;
     box-sizing:border-box;width:100%;
-    min-height:calc(100svh - var(--bar-h,48px));
-    padding:12px 16px 18px;
-    scroll-snap-align:start;scroll-margin-top:var(--bar-h,48px);
+    min-height:0;
+    padding:16px 16px 12px;
+    scroll-margin-top:var(--bar-h,48px);
     overflow:hidden;position:relative;
   }
+  /* Full-bleed photo posters may fill one screen; stacked food+info frames hug content
+     so a forced 100svh does not leave a dead gap between an image and the next block. */
+  .hero .mframe--food,
+  .closer .mframe--closer{
+    min-height:calc(100vh - var(--bar-h,48px));
+    min-height:calc(100svh - var(--bar-h,48px));
+  }
+  /* Kill leftover 100vh section mins so toolbar collapse cannot reflow frames. */
+  .en,.hu,.soba,.combat__screen,.lineup,.closer,.app{min-height:0}
   .mframe--food,.mframe--play,.mframe--lineup,.mframe--closer{justify-content:center}
 
   /* Hero: Frame A food+title, Frame B style picker */
@@ -98,7 +117,8 @@
   .hero .hero__media img,.hero .hero__poster{width:100%;height:100%;object-fit:cover}
   .hero .hero__copy{position:relative;z-index:1;padding:0 4px 8px;text-align:center}
   .hero .hero__title{font-size:clamp(3rem,16vw,4.6rem)}
-  .hero .mframe--play{background:#0b0908;color:#fff;padding-top:20px}
+  .hero .mframe--food{padding-bottom:8px}
+  .hero .mframe--play{background:#0b0908;color:#fff;padding-top:8px}
   .hero .styles{margin:0;padding:0}
   .styles__list{display:grid;grid-template-columns:1fr 1fr;gap:10px}
   .style-card{min-height:44px}
@@ -115,7 +135,7 @@
   .cbowl{margin:0;width:100%}
   .cbowl__logo{width:min(100%,340px);margin:0 auto 6px}
   .cbowl__logo img{width:100%;height:auto}
-  .cbowl__img{max-height:min(52svh,420px);width:auto;max-width:92%;margin:0 auto}
+  .cbowl__img{max-height:min(52vh,420px);max-height:min(52svh,420px);width:auto;max-width:92%;margin:0 auto}
   .cbowl__floor{justify-content:center;margin:8px 0 0}
   .combat .mframe--play{padding:8px 10px 12px}
   .cfloor{margin:0;padding:8px;padding-right:8px}
@@ -140,7 +160,7 @@
   .en .mframe--food{text-align:center;align-items:center}
   .en__poster{width:100%;padding:0}
   .en__logo{width:min(100%,340px);height:auto}
-  .en__bowl{max-height:min(48svh,380px);width:auto;max-width:90%;margin:0 auto}
+  .en__bowl{max-height:min(48vh,380px);max-height:min(48svh,380px);width:auto;max-width:90%;margin:0 auto}
   .en .mframe--play{align-items:stretch}
   .en-w{width:100%;max-width:none;justify-self:stretch}
 
@@ -153,14 +173,15 @@
   .soba__chicken{width:72px;left:0;bottom:2%}
   .soba__heroine{width:88px;right:0;top:2%}
   .soba .mframe--food .btn-ink{margin-top:10px}
-  .soba .mframe--play{align-items:flex-start;text-align:left;padding:24px 20px}
+  .soba .mframe--food{padding-bottom:8px}
+  .soba .mframe--play{align-items:flex-start;text-align:left;padding:8px 20px 24px}
   .soba__kanji{display:none}
 
   /* Hustle rebuild */
   .hu{min-height:0;padding:0;overflow:hidden;background:#f3e7cc}
   .hu__city,.hu__dots{display:none}
   .hu__inner{display:block;padding:0;min-height:0;grid-template-columns:none;grid-template-areas:none}
-  .hu .mframe--food{align-items:center;text-align:center;padding:16px 16px 20px;gap:8px}
+  .hu .mframe--food{align-items:center;text-align:center;padding:16px 16px 8px;gap:8px}
   .hu__cap{justify-self:center;align-self:center;margin:0 auto;display:flex;flex-direction:column;align-items:center;max-width:100%;box-sizing:border-box}
   .hu__logo{width:min(92%,300px);height:auto;max-width:100%}
   .hu__splash{position:relative;min-height:0 !important;width:100%;max-width:360px;margin:4px auto;aspect-ratio:auto;display:flex;justify-content:center;align-items:center}
@@ -170,7 +191,7 @@
   .hu__new{position:absolute;z-index:3;right:0;top:0;width:72px;height:72px;font-size:1.1rem}
   .hu__title{transform:none !important;text-align:center;margin:6px 0 4px;font-size:clamp(1.7rem,8vw,2.4rem);line-height:1.05}
   .hu__order{transform:none !important;margin:8px auto 0;justify-self:center}
-  .hu .mframe--play{align-items:stretch;padding:20px 16px 24px}
+  .hu .mframe--play{align-items:stretch;padding:8px 16px 24px}
   .hu__talk{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;max-width:100%;width:100%;margin:0}
   .hu__mascot{width:88px;height:auto;align-self:end}
   .hu-bubble{max-width:100%;width:100%;box-sizing:border-box;overflow:visible}
@@ -182,7 +203,7 @@
   /* Lineup one frame, compact fan */
   .lineup{padding:0}
   .lineup .mframe--lineup{padding:16px 12px 12px}
-  .lineup__stage{height:min(48svh,340px);width:100%}
+  .lineup__stage{height:min(48vh,340px);height:min(48svh,340px);width:100%}
   .lineup__item{width:min(42%,155px)}
   .lineup__item[data-lineup="combat"]{transform:translate(-98%,-52%) rotate(-12deg)}
   .lineup__item[data-lineup="enter"]{transform:translate(-70%,-44%) rotate(-5deg)}
@@ -200,9 +221,6 @@
   .app__hero-img{display:block;width:min(88%,360px);height:auto;margin:0 auto;filter:drop-shadow(0 14px 16px rgba(0,0,0,.28))}
   .app__title{font-size:clamp(2.1rem,9vw,2.8rem);margin:8px 0 0;line-height:1;color:#111}
   .app__pcs{margin:4px 0 0;font-family:var(--f-cond,'Barlow Condensed',sans-serif);font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:#7a1d14}
-  .app .mframe--play{padding:16px;color:#1b1916}
-  .app__pieces{grid-template-columns:1fr 1fr;max-width:240px;margin:0 auto;gap:12px}
-  .app__piece{width:100px;height:100px}
 
   /* Closer one frame */
   .closer{padding:0}
@@ -225,27 +243,39 @@
 .soba__title--frame,
 .soba__reveal-m{display:none}
 .app__hero-img{display:block;width:min(640px,100%);height:auto;margin:0 auto;filter:drop-shadow(0 30px 40px rgba(0,0,0,.7));grid-column:2;grid-row:1}
-.app__play{grid-column:2;grid-row:2;justify-self:center;padding-top:8px}
-.app__copy{grid-column:1;grid-row:1 / span 2}
+.app__copy{grid-column:1;grid-row:1}
 @media (min-width:761px){.app__pcs{margin:8px 0 0;font-family:var(--f-cond);font-weight:800;letter-spacing:.14em;text-transform:uppercase;color:var(--yellow,#ffe35a)}}
-.app__cup-slot .app__cup{position:relative;right:auto;bottom:auto;width:120px;pointer-events:none}
-.app__word{position:relative;left:auto;top:auto;transform:none;margin:0;font-size:1.6rem;text-align:center}
-.app__count{grid-column:auto;margin:0}
 
 /* ----- Final Boss (Insane) ----- */
-.en-w.is-insane .en-w__chi{background:#1a0c08;border-color:#7a1010;box-shadow:0 0 0 2px #1a0c08, 0 0 16px rgba(180,20,20,.45)}
+/* Insane meter: keep position:absolute (v3) so the empty fill span
+   still stretches top/bottom. position:relative collapsed it to 0 height.
+   Animate background-position, not filter:hue-rotate, for WebKit.
+   Sweet zone must not use mix-blend-mode:multiply on the dark track. */
+.en-w.is-insane .en-w__chi{
+  background:#1a0c08;border-color:#7a1010;
+  box-shadow:0 0 0 2px #1a0c08, 0 0 16px rgba(180,20,20,.45);
+  height:18px;overflow:visible;z-index:3;
+}
 .en-w.is-insane .en-w__fill{
-  position:relative;
+  position:absolute;left:0;top:0;bottom:0;z-index:1;
   background:linear-gradient(90deg,#ff2a2a,#ff8a00,#ffe35a,#3dcc5a,#2f8cff,#9b4dff,#ff2a2a);
-  background-size:200% 100%;
+  background-size:200% 100%;background-position:0 0;
   box-shadow:0 0 10px rgba(255,70,180,.7), 0 0 18px rgba(80,180,255,.4);
   animation:bossHue 12s linear infinite;
 }
 .en-w.is-insane .en-w__fill::after{
-  content:"";position:absolute;right:-8px;top:-5px;bottom:-5px;width:22px;
-  background:inherit;filter:blur(7px);opacity:.85;pointer-events:none;
+  content:"";position:absolute;right:-2px;top:-4px;bottom:-4px;width:8px;
+  background:#fff;border-radius:2px;
+  box-shadow:0 0 8px 3px rgba(255,200,80,.9), 0 0 16px 6px rgba(255,80,200,.55);
+  pointer-events:none;
 }
-.en-w.is-insane .en-w__sweet{box-shadow:0 0 10px rgba(255,60,80,.8);border:1px solid rgba(255,230,160,.7)}
+.en-w.is-insane .en-w__sweet{
+  mix-blend-mode:normal;
+  background:rgba(255,227,90,.4);
+  box-shadow:inset 0 0 0 2px #ffe35a, 0 0 10px rgba(255,60,80,.8);
+  border:2px solid #ffe35a;
+  z-index:2;pointer-events:none;
+}
 .en-w.is-insane .en-w__board,
 .en-w.is-insane .board{
   outline:3px solid #8a1111;
@@ -261,7 +291,7 @@
 }
 .en-w.is-insane .board::before{left:12%;bottom:8%;animation-delay:-2s}
 .en-w.is-insane .board::after{right:18%;bottom:14%;animation-delay:-3.8s}
-@keyframes bossHue{to{filter:hue-rotate(360deg)}}
+@keyframes bossHue{to{background-position:200% 0}}
 @keyframes bossEmber{
   0%,100%{transform:translateY(0);opacity:.15}
   40%{transform:translateY(-14px);opacity:.7}
@@ -306,8 +336,7 @@
   .soba__reveal-m{display:inline-flex}
   .soba__actions [data-reveal]{display:none}
   .soba__copy .soba__title{display:none}
-  .app__hero-img,.app__play,.app__copy{grid-column:auto;grid-row:auto}
-  .app__count{color:#1b1916;background:transparent}
+  .app__hero-img,.app__copy{grid-column:auto;grid-row:auto}
 }
 
 .en-w{position:relative}
