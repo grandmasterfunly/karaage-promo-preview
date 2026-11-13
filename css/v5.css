@@ -1,23 +1,19 @@
 /* v5: mobile poster frames, lineup fan, closer, game UI. Desktop layout stays unless noted. */
 
-/* Fixed preview bar (not sticky, no transform). Sticky + translateZ(0) on iOS
-   can jump or flicker when the toolbar shows or hides. Body padding holds the gap. */
-.preview-bar{
-  position:fixed;top:0;left:0;right:0;z-index:900;
-  height:var(--bar-h);
-  background:#202124;
-  transform:none;
-  -webkit-backdrop-filter:none;backdrop-filter:none;
-}
-body{padding-top:var(--bar-h)}
-html{overflow-x:clip}
+/* Bar source rule lives in site.css (fixed, no transform). Keep body clear of
+   the fixed bar, including the iOS safe-area inset. Do not set overflow-x on
+   html/body: that can make iOS treat them as scroll containers and un-pin fixed. */
+body{padding-top:var(--bar-offset)}
 @supports (-webkit-touch-callout: none){
+  html{scroll-behavior:auto}
+}
+@media (max-width:760px),(hover:none) and (pointer:coarse){
   html{scroll-behavior:auto}
 }
 
 /* Prefer 100svh (stable small viewport) over 100vh/100dvh so frames do not
    resize when the mobile browser toolbar collapses or expands. */
-.hero{min-height:calc(100vh - var(--bar-h));min-height:calc(100svh - var(--bar-h))}
+.hero{min-height:calc(100vh - var(--bar-offset));min-height:calc(100svh - var(--bar-offset))}
 .combat__screen{min-height:max(700px,100vh);min-height:max(700px,100svh)}
 .soba{min-height:max(760px,100vh);min-height:max(760px,100svh)}
 .chero{min-height:max(760px,100vh);min-height:max(760px,100svh)}
@@ -121,21 +117,21 @@ html{overflow-x:clip}
   /* No scroll-snap on mobile: proximity snap fights the iOS Safari
      toolbar as it shows/hides, yanking the page and making the sticky
      preview bar appear to flicker or hide and return. */
-  html{scroll-snap-type:none;scroll-behavior:auto;overflow-x:clip}
+  html{scroll-snap-type:none;scroll-behavior:auto}
   .mframe{
     display:flex;flex-direction:column;justify-content:center;align-items:stretch;
     box-sizing:border-box;width:100%;
     min-height:0;
     padding:16px 16px 12px;
-    scroll-margin-top:var(--bar-h,48px);
+    scroll-margin-top:var(--bar-offset);
     overflow:hidden;position:relative;
   }
   /* Full-bleed photo posters may fill one screen; stacked food+info frames hug content
      so a forced 100svh does not leave a dead gap between an image and the next block. */
   .hero .mframe--food,
   .closer .mframe--closer{
-    min-height:calc(100vh - var(--bar-h,48px));
-    min-height:calc(100svh - var(--bar-h,48px));
+    min-height:calc(100vh - var(--bar-offset));
+    min-height:calc(100svh - var(--bar-offset));
   }
   /* Kill leftover 100vh section mins so toolbar collapse cannot reflow frames. */
   .en,.hu,.soba,.combat__screen,.lineup,.closer,.app{min-height:0}
@@ -160,8 +156,8 @@ html{overflow-x:clip}
   .chero__bg{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;z-index:0;pointer-events:none}
   .chero__shade{position:absolute;inset:0;z-index:1;pointer-events:none;background:linear-gradient(to bottom,rgba(10,7,16,.2),rgba(10,7,16,.65))}
   .combat .mframe--food,.combat .mframe--play{position:relative;z-index:2;color:#fff}
-  .combat .mframe--food{text-align:center;justify-content:center;padding:10px 12px 8px;gap:6px;min-height:calc(100vh - var(--bar-h,48px));min-height:calc(100svh - var(--bar-h,48px))}
-  .combat .mframe--play{min-height:calc(100vh - var(--bar-h,48px));min-height:calc(100svh - var(--bar-h,48px))}
+  .combat .mframe--food{text-align:center;justify-content:center;padding:10px 12px 8px;gap:6px;min-height:calc(100vh - var(--bar-offset));min-height:calc(100svh - var(--bar-offset))}
+  .combat .mframe--play{min-height:calc(100vh - var(--bar-offset));min-height:calc(100svh - var(--bar-offset))}
   .chero__head,.chero__bars{display:none}
   .cbowl{margin:0;width:100%;display:flex;flex-direction:column;align-items:center;min-width:0}
   .cbowl__logo{width:min(100%,280px);margin:0 auto 2px}
@@ -237,7 +233,7 @@ html{overflow-x:clip}
 
   /* Lineup: one SELECT YOUR BOWL screen */
   .lineup{padding:0}
-  .lineup .mframe--lineup{padding:10px 12px 12px;min-height:calc(100vh - var(--bar-h,48px));min-height:calc(100svh - var(--bar-h,48px));justify-content:center;box-sizing:border-box}
+  .lineup .mframe--lineup{padding:10px 12px 12px;min-height:calc(100vh - var(--bar-offset));min-height:calc(100svh - var(--bar-offset));justify-content:center;box-sizing:border-box}
   .lineup__title{font-size:clamp(1.15rem,5.4vw,1.45rem);margin:0 0 6px}
   .lineup__wm{width:min(100%,280px);height:64px;margin:0 auto 4px}
   .lineup__frame{height:240px;max-width:100%}

@@ -81,13 +81,16 @@
 
   /* ---------- Floor stage (ninja always waiting) ---------- */
   var startBtn = $('[data-press-start]');
-  function focusFloor() {
+  function focusFloor(opts) {
     setState('select');
-    if (floor) floor.scrollIntoView({ behavior: 'auto', block: 'nearest' });
+    /* Hash handler already scrolls #combat-floor on a direct tap. Skip a second jump. */
+    if (floor && !(opts && opts.skipScroll)) {
+      floor.scrollIntoView({ behavior: 'auto', block: 'start' });
+    }
     KP.say(live, 'Ninja Karaage is waiting on the dojo floor. Choose your ingredient, then press Fight.');
     var c = grid.querySelector('input:checked'); if (c) c.focus({ preventScroll: true });
   }
-  if (startBtn) startBtn.addEventListener('click', function () { focusFloor(); });
+  if (startBtn) startBtn.addEventListener('click', function (e) { focusFloor({ skipScroll: e.defaultPrevented }); });
   function resetToWait() {
     clearTimers(); fighting = false; clearTimeout(cpuT); clearTimeout(narrT);
     if (f1) f1.className = 'fighter fighter--p1 is-idle is-preview';

@@ -172,4 +172,62 @@
     });
   });
 
+  /* Pin the preview bar to the visual viewport. On iOS Safari, position:fixed
+     is laid out against the layout viewport, so the bar appears to slide away
+     while the toolbar collapses and snaps back when the scroll ends. Updating
+     `top` (not transform) keeps it glued to the visible top. */
+  (function pinPreviewBar() {
+    var bar = document.querySelector('.preview-bar');
+    var vv = window.visualViewport;
+    if (!bar || !vv) return;
+    var pending = false;
+    function sync() {
+      pending = false;
+      bar.style.top = (vv.offsetTop || 0) + 'px';
+    }
+    function onVV() {
+      if (pending) return;
+      pending = true;
+      requestAnimationFrame(sync);
+    }
+    vv.addEventListener('scroll', onVV, { passive: true });
+    vv.addEventListener('resize', onVV, { passive: true });
+  })();
+
+  /* In-page hash links: never jump to the top for a missing id, never let a
+     bare #order reload the page start, and use instant scrolling on iOS/mobile
+     so smooth-scroll does not fight the toolbar. replaceState avoids a second
+     jump from the browser's own hash navigation. */
+  function preferInstantScroll() {
+    try {
+      if (window.CSS && CSS.supports && CSS.supports('-webkit-touch-callout', 'none')) return true;
+      return window.matchMedia('(max-width: 760px), (hover: none) and (pointer: coarse)').matches;
+    } catch (e) { return true; }
+  }
+  function scrollToId(id) {
+    var target = document.getElementById(id);
+    if (!target) return false;
+    target.scrollIntoView({ behavior: 'auto', block: 'start' });
+    return true;
+  }
+  document.addEventListener('click', function (e) {
+    var a = e.target.closest && e.target.closest('a[href^="#"]');
+    if (!a || e.defaultPrevented || e.button) return;
+    var hash = a.getAttribute('href');
+    if (!hash || hash === '#') { e.preventDefault(); return; }
+    var id = hash.slice(1);
+    if (!id) { e.preventDefault(); return; }
+    var target = document.getElementById(id);
+    /* Placeholder Order links: the closer button IS #order — do not jump. */
+    if (!target) { e.preventDefault(); return; }
+    if (a === target || a.contains(target)) { e.preventDefault(); return; }
+    if (preferInstantScroll()) {
+      e.preventDefault();
+      scrollToId(id);
+      if (history.replaceState) {
+        try { history.replaceState(null, '', hash); } catch (err) {}
+      }
+    }
+  });
+
 })();

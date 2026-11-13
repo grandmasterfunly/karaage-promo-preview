@@ -14,6 +14,7 @@
   --f-mincho:'Shippori Mincho', 'Times New Roman', serif;
   --f-brush:'Brush Kanji', 'Ma Shan Zheng', serif;
   --bar-h:44px;
+  --bar-offset:calc(var(--bar-h) + env(safe-area-inset-top, 0px));
   --focus:#1a73ff;
 }
 *,*::before,*::after{box-sizing:border-box}
@@ -28,10 +29,10 @@ h1,h2,h3,p{margin:0}
 main:focus{outline:none}
 .skip-link:not(:focus){clip-path:inset(50%);opacity:0;pointer-events:none}
 .skip-link{position:fixed;left:12px;top:-60px;z-index:1000;background:#111;color:#fff;padding:12px 18px;border-radius:8px;font-weight:800;text-decoration:none;transition:top .15s}
-.skip-link:focus{top:calc(var(--bar-h) + 8px)}
+.skip-link:focus{top:calc(var(--bar-offset) + 8px)}
 
 /* ---------- Preview bar ---------- */
-.preview-bar{position:sticky;top:0;z-index:900;height:var(--bar-h);display:flex;align-items:center;gap:14px;padding:0 14px;background:#202124;color:#fff;font-size:.875rem;border-bottom:1px solid #000;-webkit-backface-visibility:hidden;backface-visibility:hidden;transform:translateZ(0)}
+.preview-bar{position:fixed;top:0;left:0;right:0;z-index:900;height:var(--bar-offset);display:flex;align-items:center;gap:14px;padding:env(safe-area-inset-top,0px) 14px 0;box-sizing:border-box;background:#202124;color:#fff;font-size:.875rem;border-bottom:1px solid #000}
 .preview-bar__tag{font-weight:800;letter-spacing:.12em;text-transform:uppercase;font-size:.75rem;background:#fff;color:#202124;padding:3px 8px;border-radius:4px}
 .preview-switch{display:inline-flex;align-items:center;gap:10px;background:none;border:0;color:#fff;padding:6px 4px;min-height:32px}
 .preview-switch__track{width:42px;height:24px;border-radius:12px;background:#5f6368;position:relative;transition:background .2s}
@@ -628,7 +629,7 @@ main:focus{outline:none}
 .moon__mist{transition:opacity 1.2s ease}
 .moon__mist.is-gone{opacity:0;pointer-events:none}
 
-.kp section{scroll-margin-top:var(--bar-h)}
+.kp section,#styles,#combat-floor,#select-head,#order,#main{scroll-margin-top:var(--bar-offset)}
 [tabindex="-1"]:focus{outline:none;box-shadow:none}
 .arcade-top{position:absolute;top:14px;left:0;right:0;display:flex;justify-content:center;gap:clamp(18px,6vw,90px);font-family:var(--f-pixel);font-size:clamp(.55rem,1vw,.8rem);color:#fff;text-transform:uppercase;z-index:3}
 .arcade-top span{background:#0a0710;padding:6px 8px}
