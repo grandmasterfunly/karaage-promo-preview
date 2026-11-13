@@ -250,18 +250,21 @@
     clearTimers();
     setState('fight');
     score = 0; hp1 = 100; hp2 = 100; sp = 0; combo = 0; lastHit = 0; cd = 0; winding = false; fighting = true;
+    cpuBlocking = false; playerBlocking = false; cpuKind = null;
+    setPlayerBlock(false);
+    if (f2) f2.classList.remove('is-block', 'is-wind');
     $('[data-f1-img]').src = 'assets/f-' + chosen.id + '.webp';
     $('[data-hud-p1-name]').textContent = chosen.name;
     f1.className = 'fighter fighter--p1 is-idle'; f2.className = 'fighter fighter--p2 is-idle';
     render();
     showCall('Fight!');
-    KP.say(live, 'Fight! Press J to punch, K to kick. Fill the meter, then press L for ' + chosen.special + '.');
+    KP.say(live, 'Fight! Press J to punch, K to kick, L for ' + chosen.special + ', B to block. Strike after Ninja Karaage attacks. Do not spam into its block.');
     sec.querySelector('[data-move="punch"]').focus({ preventScroll: true });
-    scheduleCpu(1800);
+    scheduleCpu(easyMode ? 2600 : 1800);
   }
   function showCall(t) { call.textContent = t; call.classList.remove('is-on'); void call.offsetWidth; call.classList.add('is-on'); }
   function render() {
-    hpEl1.style.width = hp1 + '%'; hpEl2.style.width = Math.max(0, hp2) + '%';
+    hpEl1.style.width = Math.max(0, hp1) + '%'; hpEl2.style.width = Math.max(0, hp2) + '%';
     spEl.style.width = Math.min(100, sp) + '%';
     var ready = sp >= 100;
     spBtn.disabled = !ready; spBtn.classList.toggle('is-ready', ready);
@@ -289,6 +292,15 @@
   }
   function anim(el, cls, ms) { el.classList.remove('is-idle'); el.classList.add(cls); setTimeout(function () { el.classList.remove(cls); if (fighting) el.classList.add('is-idle'); }, ms); }
   var MOVES = { punch: { dmg: 7, cd: 240, label: 'Punch' }, kick: { dmg: 11, cd: 420, label: 'Kick' }, special: { dmg: 30, cd: 700, label: 'Special' } };
+  var CPU_MOVES = { punch: { dmg: 8, label: 'Punch' }, kick: { dmg: 12, label: 'Kick' }, special: { dmg: 18, label: 'Special' } };
+  var playerBlocking = false, cpuBlocking = false, cpuKind = null, easyMode = false;
+
+  function setPlayerBlock(on) {
+    playerBlocking = !!on;
+    var b = $('[data-block]');
+    if (b) { b.setAttribute('aria-pressed', playerBlocking ? 'true' : 'false'); b.classList.toggle('is-on', playerBlocking); }
+    if (f1) f1.classList.toggle('is-block', playerBlocking);
+  }
 
   function move(kind) {
     if (state !== 'fight' || !fighting) return;
@@ -296,88 +308,166 @@
     if (now < cd) return;
     var m = MOVES[kind];
     if (kind === 'special') { if (sp < 100) return; sp = 0; }
+    if (playerBlocking) setPlayerBlock(false);
     cd = now + m.cd;
     var btn = sec.querySelector('[data-move="' + kind + '"]');
-    btn.classList.add('is-press'); setTimeout(function () { btn.classList.remove('is-press'); }, 120);
+    if (btn) { btn.classList.add('is-press'); setTimeout(function () { btn.classList.remove('is-press'); }, 120); }
     if (kind === 'special') f1.classList.add('is-special--' + chosen.id);
     anim(f1, 'is-' + kind, kind === 'special' ? 560 : 160);
     var dmg = m.dmg + Math.round(KP.rand(-1, 2));
-    var countered = winding;
-    if (countered) { dmg += 4; winding = false; f2.classList.remove('is-wind'); clearTimeout(cpuT); scheduleCpu(1600); }
-    combo = (now - lastHit < 1200) ? combo + 1 : 1; lastHit = now;
+    var countered = winding && !cpuBlocking;
+    if (countered) { dmg += 4; winding = false; f2.classList.remove('is-wind'); clearTimeout(cpuT); scheduleCpu(easyMode ? 2000 : 1400); }
+    var blocked = cpuBlocking && !countered;
+    if (blocked) {
+      dmg = (kind === 'special') ? 6 : 0; /* chip only on special */
+    }
+    combo = blocked ? 0 : ((now - lastHit < 1200) ? combo + 1 : 1);
+    if (!blocked) lastHit = now;
     if (combo >= 3) dmg += 2;
-    hp2 -= dmg; score += dmg * 100 * Math.max(1, combo);
-    if (kind !== 'special') sp += dmg * 1.9;
+    hp2 = Math.max(0, hp2 - dmg);
+    if (!blocked) score += dmg * 100 * Math.max(1, combo);
+    if (kind !== 'special') sp += Math.max(0, dmg) * 1.9;
     setTimeout(function () {
       var c = center(f2);
-      f2.style.setProperty('--kb', (kind === 'special' ? 40 : 14) + 'px');
-      f2.style.setProperty('--kr', (kind === 'kick' ? 6 : 3) + 'deg');
-      anim(f2, 'is-hurt', 140);
-      spark(c.x + KP.rand(-30, 30), c.y + KP.rand(-40, 30), kind === 'special' ? 'spark--r' : (kind === 'kick' ? 'spark--y' : ''));
-      if (kind === 'special') { spark(c.x - 40, c.y - 30, 'spark--y'); spark(c.x + 30, c.y + 20, 'spark--r'); }
-      dmgText(c.x, c.y, countered ? 'COUNTER!' : (kind === 'special' ? chosen.special.toUpperCase() + '!' : '-' + dmg));
-      if ((kind !== 'punch') && KP.motionOK()) { arena.classList.remove('shake'); void arena.offsetWidth; arena.classList.add('shake'); }
+      if (blocked) {
+        dmgText(c.x, c.y, dmg ? 'CHIP ' + dmg : 'BLOCKED!');
+        if (dmg) { anim(f2, 'is-hurt', 100); }
+      } else {
+        f2.style.setProperty('--kb', (kind === 'special' ? 40 : 14) + 'px');
+        f2.style.setProperty('--kr', (kind === 'kick' ? 6 : 3) + 'deg');
+        anim(f2, 'is-hurt', 140);
+        spark(c.x + KP.rand(-30, 30), c.y + KP.rand(-40, 30), kind === 'special' ? 'spark--r' : (kind === 'kick' ? 'spark--y' : ''));
+        if (kind === 'special') { spark(c.x - 40, c.y - 30, 'spark--y'); spark(c.x + 30, c.y + 20, 'spark--r'); }
+        dmgText(c.x, c.y, countered ? 'COUNTER!' : (kind === 'special' ? chosen.special.toUpperCase() + '!' : '-' + dmg));
+        if ((kind !== 'punch') && KP.motionOK()) { arena.classList.remove('shake'); void arena.offsetWidth; arena.classList.add('shake'); }
+      }
     }, 70);
     if (combo >= 2) { comboN.textContent = combo; comboEl.classList.add('is-on'); clearTimeout(comboEl._t); comboEl._t = setTimeout(function () { comboEl.classList.remove('is-on'); }, 1200); }
     render();
-    if (hp2 <= 0) return ko();
-    var msg = (kind === 'special' ? chosen.special + '! ' : m.label + (countered ? ', counter hit! ' : '. ')) + (combo >= 2 ? combo + ' hit combo. ' : '') + 'Ninja Karaage at ' + Math.max(0, Math.round(hp2)) + ' percent.' + (sp >= 100 ? ' Special ready, press L.' : '');
-    narrate(msg, kind === 'special');
+    if (hp2 <= 0) return endFight(true);
+    var msg = blocked
+      ? (dmg ? 'Special chips the block for ' + dmg + '. ' : 'Ninja Karaage blocked your ' + m.label.toLowerCase() + '. ') + 'Wait for an opening after it attacks.'
+      : ((kind === 'special' ? chosen.special + '! ' : m.label + (countered ? ', counter hit! ' : '. ')) + (combo >= 2 ? combo + ' hit combo. ' : '') + 'Ninja Karaage at ' + Math.max(0, Math.round(hp2)) + ' percent.' + (sp >= 100 ? ' Special ready, press L.' : ''));
+    narrate(msg, kind === 'special' || blocked);
   }
 
   function scheduleCpu(ms) {
     clearTimeout(cpuT);
-    cpuT = setTimeout(cpuTurn, ms || KP.rand(1500, 2500));
+    var wait = ms || (easyMode ? KP.rand(2200, 3400) : KP.rand(1100, 2000));
+    cpuT = setTimeout(cpuTurn, wait);
   }
   function cpuTurn() {
     if (state !== 'fight' || !fighting) return;
     if (!visible || document.hidden) return scheduleCpu(800);
-    winding = true; f2.classList.add('is-wind');
+    /* pick an action: block or a telegraphed attack */
+    var roll = Math.random();
+    if (easyMode) {
+      cpuKind = roll < .2 ? 'block' : (roll < .7 ? 'punch' : (roll < .9 ? 'kick' : 'special'));
+    } else {
+      cpuKind = roll < .28 ? 'block' : (roll < .58 ? 'punch' : (roll < .84 ? 'kick' : 'special'));
+    }
+    if (cpuKind === 'block') {
+      cpuBlocking = true;
+      f2.classList.add('is-block');
+      winding = false;
+      narrate('Ninja Karaage takes a blocking stance.');
+      cpuT = setTimeout(function () {
+        cpuBlocking = false;
+        if (f2) f2.classList.remove('is-block');
+        scheduleCpu(easyMode ? 1600 : 900);
+      }, easyMode ? 700 : 900);
+      return;
+    }
+    winding = true; cpuBlocking = false;
+    f2.classList.add('is-wind');
+    f2.classList.remove('is-block');
+    narrate('Ninja Karaage winds up a ' + cpuKind + '. Block or counter!');
+    var wind = easyMode ? 900 : (cpuKind === 'special' ? 700 : 520);
     cpuT = setTimeout(function () {
       if (!winding || !fighting) return;
       winding = false; f2.classList.remove('is-wind');
-      anim(f2, 'is-attack', 180);
-      if (hp1 > 15) {
-        hp1 = Math.max(15, hp1 - 8);
-        setTimeout(function () {
-          var c = center(f1);
+      var kind = cpuKind;
+      anim(f2, 'is-' + (kind === 'kick' ? 'kick' : 'attack'), kind === 'special' ? 400 : 180);
+      var base = CPU_MOVES[kind].dmg;
+      if (easyMode) base = Math.max(4, Math.round(base * 0.6));
+      var blocked = playerBlocking;
+      var dmg = blocked ? (kind === 'special' ? 5 : 0) : base;
+      hp1 = Math.max(0, hp1 - dmg);
+      setTimeout(function () {
+        var c = center(f1);
+        if (blocked) {
+          dmgText(c.x, c.y, dmg ? 'CHIP ' + dmg : 'BLOCKED!');
+        } else {
           f1.style.setProperty('--kb', '-14px'); f1.style.setProperty('--kr', '-4deg');
-          anim(f1, 'is-hurt', 140); spark(c.x, c.y, 'spark--r'); dmgText(c.x, c.y, '-8');
-        }, 90);
-        combo = 0; render();
-        narrate('Ninja Karaage hits you. Your health ' + hp1 + ' percent. Strike while it winds up to counter.');
-      } else {
-        dmgText(center(f2).x, center(f2).y, 'TOO SLOW!');
-      }
-      scheduleCpu();
-    }, 620);
+          anim(f1, 'is-hurt', 140); spark(c.x, c.y, 'spark--r'); dmgText(c.x, c.y, '-' + dmg);
+        }
+      }, 90);
+      if (!blocked) combo = 0;
+      render();
+      if (hp1 <= 0) return endFight(false);
+      narrate(blocked
+        ? (dmg ? 'You blocked the special, but took chip damage. Your health ' + Math.round(hp1) + ' percent.'
+               : 'You blocked the ' + kind + '. Strike now.')
+        : ('Ninja Karaage hits you with a ' + kind + '. Your health ' + Math.round(hp1) + ' percent. Strike while it recovers.'));
+      scheduleCpu(easyMode ? 2000 : 1200);
+    }, wind);
   }
 
-  function ko() {
-    fighting = false; clearTimeout(cpuT); clearTimeout(narrT); winding = false;
-    f2.className = 'fighter fighter--p2 is-ko';
-    f1.className = 'fighter fighter--p1' + (KP.motionOK() ? ' is-hop-in' : ' is-out');
+  function endFight(playerWon) {
+    fighting = false; clearTimeout(cpuT); clearTimeout(narrT); winding = false; cpuBlocking = false;
+    setPlayerBlock(false);
+    if (playerWon) {
+      f2.className = 'fighter fighter--p2 is-ko';
+      f1.className = 'fighter fighter--p1' + (KP.motionOK() ? ' is-hop-in' : '');
+    } else {
+      f1.className = 'fighter fighter--p1 is-ko';
+      f2.className = 'fighter fighter--p2' + (KP.motionOK() ? ' is-hop-in' : ' is-idle');
+    }
     showCall('K.O.!');
-    KP.say(live, 'K.O.! ' + chosen.name + ' wins and jumps back into the bowl. Every fighter is in your bowl.');
+    var name = playerWon ? chosen.name : 'Ninja Karaage';
+    KP.say(live, 'K.O.! ' + name + ' wins.');
     later(function () {
-      f1.className = 'fighter fighter--p1 is-out';
-      f2.className = 'fighter fighter--p2 is-idle is-wait';
       setState('ko');
-      $('[data-ko-win]').textContent = chosen.name + ' wins!';
-      $('[data-ko-score]').textContent = 'Score ' + String(score).padStart(6, '0');
-      var w = $('[data-ko-win]'); if (w) { w.setAttribute('tabindex', '-1'); w.focus({ preventScroll: true }); }
+      if (koBox) { koBox.classList.toggle('is-win', playerWon); koBox.classList.toggle('is-lose', !playerWon); }
+      var img = $('[data-ko-victor]');
+      if (img) {
+        img.src = playerWon ? ('assets/f-' + chosen.id + '.webp') : 'assets/f-ninja.webp';
+        img.alt = name;
+      }
+      var mark = $('[data-ko-mark]');
+      if (mark) mark.textContent = playerWon ? 'YOU WIN' : 'YOU LOSE';
+      var winLine = $('[data-ko-win]');
+      if (winLine) {
+        winLine.textContent = name + ' wins!';
+        winLine.setAttribute('tabindex', '-1');
+        winLine.focus({ preventScroll: true });
+      }
+      var sc = $('[data-ko-score]');
+      if (sc) sc.textContent = 'Score ' + String(score).padStart(6, '0');
     }, KP.motionOK() ? 900 : 200);
   }
+  function ko() { endFight(true); }
 
   sec.querySelectorAll('[data-move]').forEach(function (b) {
     b.addEventListener('pointerdown', function (e) { if (e.pointerType !== 'mouse') { e.preventDefault(); move(b.dataset.move); b._tap = true; } });
     b.addEventListener('click', function () { if (b._tap) { b._tap = false; return; } move(b.dataset.move); });
   });
+  var blockBtn = $('[data-block]');
+  if (blockBtn) {
+    blockBtn.addEventListener('pointerdown', function (e) { if (e.button && e.button !== 0) return; e.preventDefault(); try { blockBtn.setPointerCapture(e.pointerId); } catch (x) {} setPlayerBlock(true); });
+    blockBtn.addEventListener('pointerup', function () { setPlayerBlock(false); });
+    blockBtn.addEventListener('pointercancel', function () { setPlayerBlock(false); });
+    blockBtn.addEventListener('lostpointercapture', function () { setPlayerBlock(false); });
+  }
   sec.addEventListener('keydown', function (e) {
     if (state !== 'fight' || e.ctrlKey || e.metaKey || e.altKey) return;
     var k = e.key.toLowerCase();
     var map = { j: 'punch', k: 'kick', l: 'special' };
     if (map[k]) { e.preventDefault(); if (!e.repeat) move(map[k]); }
+    if (k === 'b') { e.preventDefault(); if (!e.repeat) setPlayerBlock(true); }
+  });
+  sec.addEventListener('keyup', function (e) {
+    if (e.key.toLowerCase() === 'b') setPlayerBlock(false);
   });
   $('[data-rematch]').addEventListener('click', enterAndFight);
   $('[data-reselect]').addEventListener('click', function () {
@@ -393,7 +483,12 @@
     if (paused) { fighting = true; scheduleCpu(800); KP.say(live, 'Fight resumed.'); }
     else { fighting = false; clearTimeout(cpuT); KP.say(live, 'Fight paused.'); }
   });
-
+  var easyBtn = $('[data-fight-easy]');
+  if (easyBtn) easyBtn.addEventListener('click', function () {
+    easyMode = !easyMode;
+    easyBtn.setAttribute('aria-pressed', easyMode ? 'true' : 'false');
+    KP.say(live, easyMode ? 'Relaxed fight on. The Ninja is slower and less aggressive.' : 'Relaxed fight off.');
+  });
 
   setState('idle');
 
@@ -408,7 +503,10 @@
     clearPin: clearPin,
     open: function () { focusFloor(); },
     setState: setState, startFight: startFight, enter: enterAndFight, reset: resetToWait, move: move,
-    ko: function () { hp2 = 0; ko(); },
+    ko: function () { hp2 = 0; endFight(true); },
+    win: function () { hp2 = 0; endFight(true); },
+    lose: function () { hp1 = 0; endFight(false); },
+    block: function (on) { setPlayerBlock(!!on); },
     hit: function (n) { for (var i = 0; i < n; i++) { cd = 0; move(i % 2 ? 'kick' : 'punch'); } }
   };
 })();

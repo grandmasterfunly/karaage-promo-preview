@@ -45,23 +45,60 @@
     var rl = $('[data-round]'); if (rl) rl.textContent = String(Math.min(round + 1, TOTAL));
     return b.name;
   }
+  /* Insane tuned for ~10% of players clearing all 5 boards.
+     Model: player aims at zone center on the upward pass; release error
+     ε ~ N(0, 55ms) (specified tap-timing noise). Mean display/input lag is
+     anticipatable on a periodic visible meter, so it is not stacked on as
+     extra σ. Meter is a triangle wave (0→100 in `period` ms, then back).
+     Hit if the value is inside [lo, hi] (rare late releases can still catch
+     the downward pass). Monte Carlo n=100,000:
+     period 620ms, window 15.7% (77.15–92.85) → per-board 62.96%, overall 10.00%.
+     Standard and Relaxed tables are unchanged. */
+  var STANDARD_ROWS = [
+    { period: 1300, lo: 72, hi: 92, left: '72%', w: '20%' },
+    { period: 1150, lo: 74, hi: 90, left: '74%', w: '16%' },
+    { period: 1000, lo: 76, hi: 90, left: '76%', w: '14%' },
+    { period: 900, lo: 78, hi: 90, left: '78%', w: '12%' },
+    { period: 800, lo: 80, hi: 90, left: '80%', w: '10%' }
+  ];
+  function relaxRows(rows) {
+    return rows.map(function (r) {
+      var lo = Math.max(68, r.lo - 4), hi = Math.min(96, r.hi + 2);
+      return { period: r.period + 800, lo: lo, hi: hi, left: lo + '%', w: (hi - lo) + '%' };
+    });
+  }
+  var INSANE_ROW = { period: 620, lo: 77.15, hi: 92.85, left: '77.15%', w: '15.7%' };
+  var INSANE_ROWS = [INSANE_ROW, INSANE_ROW, INSANE_ROW, INSANE_ROW, INSANE_ROW];
+  function getMode() {
+    var el = sec.querySelector('input[name="en-diff"]:checked');
+    return (el && el.value) || 'standard';
+  }
+  function isInsane() { return getMode() === 'insane'; }
+  function applyModeChrome() {
+    var on = isInsane();
+    if (rig) rig.classList.toggle('is-insane', on);
+    if (meter) meter.classList.toggle('is-insane', on);
+    if (sec) sec.classList.toggle('is-boss', on);
+  }
+  var bossTimer;
+  function showBossCard() {
+    var card = $('[data-boss-card]');
+    if (!card) return;
+    card.hidden = false;
+    clearTimeout(bossTimer);
+    bossTimer = setTimeout(function () { card.hidden = true; }, KP.motionOK() ? 1800 : 700);
+    KP.say(live, 'Final Boss. Insane difficulty. Hold, then release in the rainbow zone.');
+  }
   function setupRound() {
-    var table = [
-      { period: 1300, lo: 72, hi: 92, left: '72%', w: '20%' },
-      { period: 1150, lo: 74, hi: 90, left: '74%', w: '16%' },
-      { period: 1000, lo: 76, hi: 90, left: '76%', w: '14%' },
-      { period: 900, lo: 78, hi: 90, left: '78%', w: '12%' },
-      { period: 800, lo: 80, hi: 90, left: '80%', w: '10%' }
-    ];
-    if (!KP.motionOK()) {
-      table = table.map(function (r) {
-        return { period: r.period + 800, lo: Math.max(68, r.lo - 4), hi: Math.min(96, r.hi + 2), left: r.left, w: (parseFloat(r.w) + 4) + '%' };
-      });
-    }
+    var mode = getMode();
+    var table = STANDARD_ROWS;
+    if (mode === 'relaxed' || (mode === 'standard' && !KP.motionOK())) table = relaxRows(STANDARD_ROWS);
+    if (mode === 'insane') table = INSANE_ROWS; /* even under reduced motion */
     var r = table[Math.min(round, TOTAL - 1)];
     period = r.period; zone = r;
     meter.style.setProperty('--sweet-left', r.left);
     meter.style.setProperty('--sweet-w', r.w);
+    applyModeChrome();
     var rl = $('[data-round]'); if (rl) rl.textContent = String(round + 1);
   }
   function paintHits() {
@@ -93,10 +130,19 @@
     var off = document.createElement('canvas'); off.width = W; off.height = H;
     var g = off.getContext('2d');
     var base = g.createLinearGradient(0, 0, 0, H);
-    base.addColorStop(0, '#e2b475'); base.addColorStop(.5, '#d39d5c'); base.addColorStop(1, '#bf8546');
+    if (isInsane()) {
+      base.addColorStop(0, '#4a2a18'); base.addColorStop(.45, '#2a160c'); base.addColorStop(1, '#1a0c08');
+    } else {
+      base.addColorStop(0, '#e2b475'); base.addColorStop(.5, '#d39d5c'); base.addColorStop(1, '#bf8546');
+    }
     g.fillStyle = base; g.fillRect(0, 0, W, H);
     // tone bands
-    for (var b = 0; b < 7; b++) { g.fillStyle = 'rgba(' + (rng() < .5 ? '120,62,22' : '245,205,150') + ',' + (rng() * .12) + ')'; var y = rng() * H; g.fillRect(0, y, W, rng() * H * .25); }
+    for (var b = 0; b < 7; b++) {
+      g.fillStyle = isInsane()
+        ? 'rgba(' + (rng() < .5 ? '10,6,4' : '80,30,16') + ',' + (0.1 + rng() * .22) + ')'
+        : 'rgba(' + (rng() < .5 ? '120,62,22' : '245,205,150') + ',' + (rng() * .12) + ')';
+      var y = rng() * H; g.fillRect(0, y, W, rng() * H * .25);
+    }
     var knots = [];
     var nk = 1 + Math.floor(rng() * 2);
     for (var k = 0; k < nk; k++) knots.push({ x: W * (.15 + rng() * .7), y: H * (.25 + rng() * .5), r: H * (.08 + rng() * .06) });
@@ -165,7 +211,7 @@
       addPath(d, true); addPath(d);
     }
     // branches
-    var nb = 1 + Math.floor(now / 35);
+    var nb = (isInsane() ? 3 : 1) + Math.floor(now / (isInsane() ? 22 : 35));
     for (var i = 0; i < nb; i++) {
       var s = zig[Math.min(n, Math.floor(rng() * (b + 1)))];
       var dir = rng() < .5 ? -1 : 1, x = s[0], y = s[1], dd = 'M' + x.toFixed(1) + ' ' + y.toFixed(1);
@@ -217,14 +263,14 @@
     if (gi) { gi.classList.remove('is-chop'); void gi.offsetWidth; gi.classList.add('is-chop'); setTimeout(function () { gi.classList.remove('is-chop'); }, 260); }
     if (KP.motionOK()) { board.classList.remove('is-hit'); void board.offsetWidth; board.classList.add('is-hit'); }
     if (g === 'perfect' || g === 'good') {
-      flashWord(g === 'perfect' ? 'Perfect!' : 'Hi-yah!');
+      flashWord(isInsane() && g === 'perfect' ? 'Boss break!' : (g === 'perfect' ? 'Perfect!' : 'Hi-yah!'));
       growCracks(0, 100); rig.classList.add('has-cracks');
-      burst(g === 'perfect' ? 8 : 5, false);
+      burst(g === 'perfect' ? (isInsane() ? 16 : 8) : (isInsane() ? 10 : 5), isInsane());
       split(g === 'perfect');
     } else {
       flashWord(g === 'early' ? 'Early!' : 'Late!');
-      growCracks(0, 28); rig.classList.add('has-cracks');
-      burst(2, false);
+      growCracks(0, isInsane() ? 48 : 28); rig.classList.add('has-cracks');
+      burst(isInsane() ? 5 : 2, false);
       KP.say(live, 'Miss. The strike was ' + g + '. Board ' + (round + 1) + ' of ' + TOTAL + '.');
       broken = true; btn.disabled = true;
       setTimeout(advance, KP.motionOK() ? 700 : 200);
@@ -294,7 +340,13 @@
     after.hidden = false;
     var nb = $('[data-next-board]'); if (nb) nb.focus({ preventScroll: true });
     var perfects = hits.filter(function (h) { return h === 'perfect'; }).length;
-    KP.say(live, 'Challenge complete. ' + perfects + ' perfect strikes. You earned a ' + belt.name + '. Your fortune: ' + text);
+    if (isInsane() && boards >= TOTAL) {
+      var stripe = document.createElement('p');
+      stripe.className = 'en-slip__stripe';
+      stripe.textContent = 'Insane black-belt stripe';
+      fortune.appendChild(stripe);
+    }
+    KP.say(live, 'Challenge complete. ' + perfects + ' perfect strikes. You earned a ' + belt.name + (isInsane() && boards >= TOTAL ? ' with an Insane black-belt stripe' : '') + '. Your fortune: ' + text);
   }
   var typeT;
   function typeOut(text) {
@@ -321,7 +373,10 @@
   }
   function resetChallenge() {
     challengeOver = false; round = 0; score = 0; hits = []; boards = 0;
+    var leftover = fortune.querySelector('.en-slip__stripe');
+    if (leftover) leftover.remove();
     paintHits(); setupRound(); newBoard(true); renderBelts(false);
+    if (isInsane()) showBossCard();
   }
 
   /* ---------- input ---------- */
@@ -340,5 +395,9 @@
   if (document.readyState === 'complete') drawWood(); else window.addEventListener('load', drawWood);
   new ResizeObserver(function () { if (!broken && board.clientWidth) { var s0 = seed; seed = 4242 + boards; drawWood(); seed = s0; } }).observe(board);
 
-  window.KP_enter = { chop: chop, newBoard: newBoard, reset: resetChallenge, finish: finish, setupRound: setupRound };
+  sec.querySelectorAll('input[name="en-diff"]').forEach(function (r) {
+    r.addEventListener('change', function () { resetChallenge(); });
+  });
+
+  window.KP_enter = { chop: chop, newBoard: newBoard, reset: resetChallenge, finish: finish, setupRound: setupRound, getMode: getMode };
 })();

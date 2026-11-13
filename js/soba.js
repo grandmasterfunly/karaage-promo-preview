@@ -187,63 +187,74 @@
   }
   function pos(e) { var r = mist.getBoundingClientRect(); return { x: (e.clientX - r.left) * dpr, y: (e.clientY - r.top) * dpr }; }
   function brushR() { return mist.width * .075; }
+  function tapR() { return mist.width * .16; } /* generous single-tap clear */
+  function setHintText() {
+    if (!hint) return;
+    var touch = (window.matchMedia && window.matchMedia('(pointer: coarse)').matches) || (navigator.maxTouchPoints > 0);
+    hint.textContent = touch ? 'Tap or swipe to reveal' : 'Brush to reveal';
+  }
+  setHintText();
   mist.addEventListener('pointerdown', function (e) {
     if (revealed) return;
     if (!KP.motionOK()) return; /* reduced motion: use the Clear the mist button */
-    down = { x: e.clientX, y: e.clientY, id: e.pointerId }; intent = 'maybe'; last = pos(e);
+    if (e.cancelable) e.preventDefault();
+    try { mist.setPointerCapture(e.pointerId); } catch (x) {}
+    down = { x: e.clientX, y: e.clientY, id: e.pointerId, stamped: true };
+    intent = 'brush'; painting = true;
+    last = pos(e);
+    stamp(last.x, last.y, tapR(), 0);
+    if (hint) hint.classList.add('is-gone');
+    if (strokes === 0) KP.say(live, 'The mist begins to clear. Brush across the bowl.');
   });
   mist.addEventListener('pointermove', function (e) {
     if (revealed || !down || down.id !== e.pointerId) return;
-    var dx = e.clientX - down.x, dy = e.clientY - down.y;
-    if (intent === 'maybe') {
-      if (Math.abs(dy) > 10 && Math.abs(dy) > Math.abs(dx) * 1.15) { intent = 'scroll'; return; }
-      if (Math.hypot(dx, dy) > 8) {
-        intent = 'brush'; painting = true;
-        try { mist.setPointerCapture(e.pointerId); } catch (x) {}
-        hint.classList.add('is-gone');
-        if (strokes === 0) KP.say(live, 'The mist begins to clear. Brush across the bowl.');
-        stamp(last.x, last.y, brushR(), 0);
-      } else return;
-    }
     if (intent !== 'brush' || !painting) return;
+    if (e.cancelable) e.preventDefault();
     var p = pos(e); line(last, p, brushR()); last = p;
   });
   function endStroke(e) {
-    down = null;
     if (intent === 'brush' && painting) {
       painting = false; strokes++;
       var c = cleared();
       if (c > .5) reveal('paint');
       else if (strokes % 3 === 0) KP.say(live, Math.round(c * 100) + ' percent revealed. Keep brushing.');
     }
-    intent = null; painting = false;
+    down = null; intent = null; painting = false;
   }
   mist.addEventListener('pointerup', endStroke);
   mist.addEventListener('pointercancel', endStroke);
+  mist.addEventListener('touchmove', function (e) {
+    if (!revealed) e.preventDefault();
+  }, { passive: false });
 
-  var revealBtn = $('[data-reveal]'), seal = $('[data-seal]'), prompt = $('[data-soba-prompt]');
+  var revealBtns = sec.querySelectorAll('[data-reveal]'), seal = $('[data-seal]'), prompt = $('[data-soba-prompt]');
+  function disableRevealBtns() {
+    revealBtns.forEach(function (b) { b.disabled = true; b.textContent = 'Revealed'; });
+  }
   function reveal() {
     if (revealed) return; revealed = true;
     hint.classList.add('is-gone');
     mist.classList.add('is-gone');
     setTimeout(function () { seal.classList.add('is-on'); }, KP.motionOK() ? 700 : 0);
     sec.classList.add('is-revealed');
-    revealBtn.disabled = true; revealBtn.textContent = 'Revealed';
+    disableRevealBtns();
     prompt.textContent = 'The mist is gone. Chilled soba, crispy karaage, nothing left to hide.';
     KP.say(live, 'Revealed: the Soba Noodle Hidden Karaage Bowl. Chilled soba noodles topped with crispy karaage. A red Sus Hi seal stamps the painting.');
   }
-  revealBtn.addEventListener('click', function () {
-    if (revealed) return;
-    if (!KP.motionOK()) return reveal();
-    revealBtn.disabled = true; hint.classList.add('is-gone');
-    var W = mist.width, H = mist.height, t0 = performance.now(), prev = null, r = brushR() * 1.2;
-    (function step(t) {
-      var e = Math.min(1, (t - t0) / 1600);
-      var ang = e * 6.283 * 2.2, rad = W * (.05 + .38 * e);
-      var p = { x: W / 2 + Math.cos(ang) * rad, y: H / 2 + Math.sin(ang) * rad };
-      if (prev) line(prev, p, r); prev = p;
-      if (e < 1) requestAnimationFrame(step); else reveal();
-    })(t0);
+  revealBtns.forEach(function (revealBtn) {
+    revealBtn.addEventListener('click', function () {
+      if (revealed) return;
+      if (!KP.motionOK()) return reveal();
+      disableRevealBtns(); hint.classList.add('is-gone');
+      var W = mist.width, H = mist.height, t0 = performance.now(), prev = null, r = brushR() * 1.2;
+      (function step(t) {
+        var e = Math.min(1, (t - t0) / 1600);
+        var ang = e * 6.283 * 2.2, rad = W * (.05 + .38 * e);
+        var p = { x: W / 2 + Math.cos(ang) * rad, y: H / 2 + Math.sin(ang) * rad };
+        if (prev) line(prev, p, r); prev = p;
+        if (e < 1) requestAnimationFrame(step); else reveal();
+      })(t0);
+    });
   });
 
   /* ---------- easter egg ---------- */

@@ -174,46 +174,79 @@
     });
   });
 
-  /* ---------- Appetizer crunch ---------- */
-  var plate = document.querySelector('[data-crunch]');
-  var ccv = document.querySelector('[data-crumbs]');
-  var cctx = ccv.getContext('2d');
+  /* ---------- Appetizer dip (4 official pieces) ---------- */
+  var play = document.querySelector('[data-app-play]');
+  var pieces = document.querySelectorAll('[data-piece]');
+  var cup = document.querySelector('.app__cup');
   var word = document.querySelector('[data-crunch-word]');
   var countEl = document.querySelector('[data-crunch-n]');
-  var crumbs = [], crunches = 0, raf = null;
+  var dipBtn = document.querySelector('[data-dip-next]');
+  var dipped = [false, false, false, false];
   var words = ['Crunch!', 'Crack!', 'Crispy!', 'Krnch!', 'So juicy!'];
-  function sizeC() { ccv.width = ccv.clientWidth * dpr; ccv.height = ccv.clientHeight * dpr; }
-  sizeC(); window.addEventListener('resize', sizeC);
-  var cup = document.querySelector('.app__cup');
-  plate.addEventListener('click', function (e) {
-    crunches++;
-    var dips = Math.min(4, crunches);
-    countEl.textContent = dips >= 4 ? 'All four dipped. Add them to any bowl.' : ('Dipped ' + dips + ' of 4');
-    word.textContent = dips >= 4 ? 'Add to any bowl!' : words[(crunches - 1) % words.length];
-    if (cup) { cup.classList.remove('is-dip'); void cup.offsetWidth; cup.classList.add('is-dip'); }
-    plate.classList.add('is-dip');
-    if (!KP.motionOK()) return;
-    plate.classList.remove('is-crunch'); void plate.offsetWidth; plate.classList.add('is-crunch');
-    word.classList.remove('is-on'); void word.offsetWidth; word.classList.add('is-on');
-    var r = ccv.getBoundingClientRect();
-    var x = (e.clientX && e.detail ? e.clientX - r.left : r.width / 2) * dpr;
-    var y = (e.clientY && e.detail ? e.clientY - r.top : r.height / 2) * dpr;
-    for (var i = 0; i < 70; i++) {
-      var a = Math.random() * 6.283, sp = KP.rand(2, 11) * dpr;
-      var seed = Math.random();
-      crumbs.push({ x: x, y: y, vx: Math.cos(a) * sp, vy: Math.sin(a) * sp - 5 * dpr, s: KP.rand(2, seed < .2 ? 4 : 8) * dpr, c: seed < .12 ? '#f7f1df' : seed < .2 ? '#1d1a14' : seed < .3 ? '#3f6b2a' : 'hsl(' + KP.rand(26, 40) + ',' + KP.rand(60, 85) + '%,' + KP.rand(38, 60) + '%)', rot: Math.random() * 6, vr: KP.rand(-.3, .3), life: 1 });
-    }
-    if (!raf) raf = requestAnimationFrame(stepCrumbs);
-  });
-  function stepCrumbs() {
-    cctx.clearRect(0, 0, ccv.width, ccv.height);
-    crumbs = crumbs.filter(function (c) { return c.life > 0; });
-    crumbs.forEach(function (c) {
-      c.vy += 0.45 * dpr; c.x += c.vx; c.y += c.vy; c.vx *= .985; c.rot += c.vr; c.life -= .014;
-      cctx.save(); cctx.globalAlpha = Math.max(0, c.life); cctx.translate(c.x, c.y); cctx.rotate(c.rot); cctx.fillStyle = c.c;
-      cctx.beginPath(); cctx.moveTo(-c.s / 2, -c.s / 3); cctx.lineTo(c.s / 2, -c.s / 2); cctx.lineTo(c.s / 3, c.s / 2); cctx.lineTo(-c.s / 2, c.s / 3); cctx.closePath(); cctx.fill(); cctx.restore();
-    });
-    raf = crumbs.length ? requestAnimationFrame(stepCrumbs) : null;
-    if (!raf) cctx.clearRect(0, 0, ccv.width, ccv.height);
+  var drag = null;
+
+  function dippedCount() { return dipped.filter(Boolean).length; }
+  function announceDip() {
+    var n = dippedCount();
+    if (countEl) countEl.textContent = n >= 4 ? 'All four dipped. Add them to any bowl.' : ('Dipped ' + n + ' of 4');
+    if (word) word.textContent = n >= 4 ? 'Add to any bowl!' : words[(n - 1 + words.length) % words.length];
+    if (word && KP.motionOK()) { word.classList.remove('is-on'); void word.offsetWidth; word.classList.add('is-on'); }
   }
+  function dunkPiece(el) {
+    if (!el) return;
+    var i = parseInt(el.getAttribute('data-piece'), 10);
+    if (dipped[i]) return;
+    dipped[i] = true;
+    el.classList.add('is-dunked');
+    el.disabled = true;
+    if (cup) { cup.classList.remove('is-dip'); void cup.offsetWidth; cup.classList.add('is-dip'); }
+    announceDip();
+    if (dipBtn && dippedCount() >= 4) dipBtn.disabled = true;
+  }
+  function nextUndipped() {
+    for (var i = 0; i < pieces.length; i++) if (!dipped[i]) return pieces[i];
+    return null;
+  }
+  function overCup(x, y) {
+    if (!cup) return false;
+    var r = cup.getBoundingClientRect();
+    var pad = 28;
+    return x >= r.left - pad && x <= r.right + pad && y >= r.top - pad && y <= r.bottom + pad;
+  }
+
+  pieces.forEach(function (el) {
+    el.addEventListener('pointerdown', function (e) {
+      if (el.disabled) return;
+      if (e.button && e.button !== 0) return;
+      if (e.cancelable) e.preventDefault();
+      try { el.setPointerCapture(e.pointerId); } catch (x) {}
+      drag = { id: e.pointerId, x: e.clientX, y: e.clientY, moved: false, el: el };
+    });
+    el.addEventListener('pointermove', function (e) {
+      if (!drag || drag.id !== e.pointerId || drag.el !== el) return;
+      if (e.cancelable) e.preventDefault();
+      if (Math.hypot(e.clientX - drag.x, e.clientY - drag.y) > 8) drag.moved = true;
+    });
+    function endPtr(e) {
+      if (!drag || drag.el !== el) return;
+      var moved = drag.moved;
+      var x = e.clientX, y = e.clientY;
+      drag = null;
+      if (el.disabled) return;
+      if (!moved || overCup(x, y)) dunkPiece(el);
+    }
+    el.addEventListener('pointerup', endPtr);
+    el.addEventListener('pointercancel', function () { drag = null; });
+    el.addEventListener('click', function (e) {
+      /* keyboard / fallback: pointer path already dunks on tap */
+      if (el.disabled) return;
+      if (e.detail === 0) dunkPiece(el);
+    });
+  });
+  if (play) {
+    play.addEventListener('touchmove', function (e) {
+      if (drag) e.preventDefault();
+    }, { passive: false });
+  }
+  if (dipBtn) dipBtn.addEventListener('click', function () { dunkPiece(nextUndipped()); });
 })();
