@@ -13,7 +13,7 @@ body{padding-top:var(--bar-offset)}
 
 /* Prefer 100svh (stable small viewport) over 100vh/100dvh so frames do not
    resize when the mobile browser toolbar collapses or expands. */
-.hero{min-height:calc(var(--frame-h) - var(--bar-offset))}
+.hero{min-height:calc(100vh - var(--bar-offset));min-height:calc(100svh - var(--bar-offset))}
 .combat__screen{min-height:max(700px,var(--frame-h))}
 .soba{min-height:max(760px,var(--frame-h))}
 .chero{min-height:max(760px,var(--frame-h))}
@@ -128,7 +128,7 @@ body{padding-top:var(--bar-offset)}
   }
   /* Full-bleed photo posters may fill one screen; stacked food+info frames hug content
      so a forced 100svh does not leave a dead gap between an image and the next block. */
-  .hero .mframe--food,
+  .hero .mframe--food{min-height:0;justify-content:flex-start}
   .closer .mframe--closer{
     min-height:calc(var(--frame-h) - var(--bar-offset));
   }
@@ -138,10 +138,12 @@ body{padding-top:var(--bar-offset)}
 
   /* Hero: Frame A food+title, Frame B style picker */
   .hero{min-height:0;display:block;overflow:visible;background:#0b0908}
-  .hero .mframe--food{color:var(--cream,#f3e6cc);justify-content:flex-end;background:#0b0908}
-  .hero .hero__media,.hero .hero__media .hero__poster{position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;overflow:hidden}
-  .hero .hero__media img,.hero .hero__poster img,.hero .hero__video,.hero .hero__embers{position:absolute;inset:0;width:100%;height:100%;max-height:none;object-fit:cover;object-position:center bottom}
-  .hero .hero__copy{position:relative;z-index:1;padding:0 4px 8px;text-align:center}
+  .hero .mframe--food{color:var(--cream,#f3e6cc);justify-content:flex-start;background:#0b0908}
+  .hero .hero__media{position:relative;inset:auto;z-index:0;display:block;width:100%;height:auto;overflow:hidden}
+  .hero .hero__media .hero__poster{display:block;width:100%;height:auto}
+  .hero .hero__media img,.hero .hero__poster img{position:static;width:100%;height:auto;object-fit:contain;object-position:center;max-height:none}
+  .hero .hero__video,.hero .hero__embers{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;pointer-events:none}
+  .hero .hero__copy{position:relative;z-index:1;padding:12px 16px 16px;text-align:center;max-width:none;width:100%;background:#0b0908;-webkit-mask-image:none;mask-image:none;padding-right:16px}
   .hero .hero__title{font-size:clamp(3rem,16vw,4.6rem)}
   .hero .mframe--food{padding-bottom:8px}
   .hero .mframe--play{background:#0b0908;color:#fff;padding-top:8px}
