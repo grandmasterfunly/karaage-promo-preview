@@ -143,6 +143,22 @@
     var np = newP(false); np.x = (e.clientX - r.left) / r.width; np.y = (e.clientY - r.top) / r.height; np.vy *= 2.2; np.r *= 1.3; np.a = 1;
     parts.push(np); if (parts.length > 160) parts.splice(0, parts.length - 160);
   });
+  /* One spark burst on tap. Transform/opacity particles only; no layout, no scroll. */
+  heroEl.addEventListener('pointerdown', function (e) {
+    if (!KP.motionOK() || heroPaused || !cv) return;
+    if (e.target.closest && e.target.closest('a,button')) return;
+    var r = cv.getBoundingClientRect();
+    if (!r.width || !r.height) return;
+    var x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    if (y > 1 || y < 0) return;
+    for (var i = 0; i < 8; i++) {
+      var sp = newP(false);
+      sp.x = x + KP.rand(-0.04, 0.04); sp.y = y + KP.rand(-0.03, 0.03);
+      sp.vy *= 2.8; sp.r *= 1.6; sp.a = 1;
+      parts.push(sp);
+    }
+    if (parts.length > 160) parts.splice(0, parts.length - 160);
+  });
   function drawEmbers(t) {
     requestAnimationFrame(drawEmbers);
     if (!heroOn || heroPaused || !KP.motionOK()) return;
