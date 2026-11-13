@@ -420,34 +420,114 @@
 .cfloor__plate-in{font-family:var(--f-pixel2);font-size:.8rem;color:#fff;text-transform:uppercase;margin:0 0 4px}
 .cfloor__plate-bio{font-family:var(--f-pixel2);font-size:.75rem;color:#fff;line-height:1.25;margin:0 0 2px}
 .cfloor__plate-sp{font-family:var(--f-pixel2);font-size:.7rem;color:var(--yellow);text-transform:uppercase;margin:0}
+/* VS select: P1 left facing right, ninja right facing left, nameplate under P1 */
+#k-combat[data-state="idle"] .cfloor__board,
+#k-combat[data-state="select"] .cfloor__board{grid-template-columns:minmax(0,1fr) minmax(300px,1.2fr)}
+#k-combat[data-state="idle"] .cfloor__ring.arena,
+#k-combat[data-state="select"] .cfloor__ring.arena{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+  grid-template-rows:auto minmax(200px,1fr) auto;
+  grid-template-areas:"insert insert" "p1 p2" "plate meta";
+  height:auto;
+  min-height:0;
+  padding:6px 8px 8px;
+  align-items:end;
+  column-gap:8px;
+}
+#k-combat[data-state="idle"] .cfloor__insert,
+#k-combat[data-state="select"] .cfloor__insert{
+  grid-area:insert;
+  position:relative;
+  left:auto;top:auto;transform:none;
+  width:100%;text-align:center;justify-self:center;
+  z-index:1;white-space:nowrap;
+}
 #k-combat[data-state="idle"] .cfloor .fighter--p1,
-#k-combat[data-state="select"] .cfloor .fighter--p1{left:10%!important;opacity:1;transform:none;pointer-events:none}
+#k-combat[data-state="select"] .cfloor .fighter--p1{
+  grid-area:p1;
+  position:relative;
+  left:auto!important;right:auto;bottom:auto;
+  width:100%;max-width:100%;
+  display:flex;justify-content:center;align-items:flex-end;
+  opacity:1;transform:none;pointer-events:none;z-index:2;
+}
+#k-combat[data-state="idle"] .cfloor .fighter--p2,
+#k-combat[data-state="select"] .cfloor .fighter--p2{
+  grid-area:p2;
+  position:relative;
+  left:auto;right:auto!important;bottom:auto;
+  width:100%;max-width:100%;
+  display:flex;justify-content:center;align-items:flex-end;
+  opacity:1;transform:none;z-index:2;
+}
 #k-combat[data-state="idle"] .cfloor .fighter--p1.is-out,
 #k-combat[data-state="select"] .cfloor .fighter--p1.is-out{opacity:1;transform:none}
 #k-combat[data-state="idle"] .cfloor .fighter--p1 img,
 #k-combat[data-state="select"] .cfloor .fighter--p1 img,
 #k-combat[data-state="idle"] .cfloor .fighter--p2 img,
-#k-combat[data-state="select"] .cfloor .fighter--p2 img{height:200px!important}
-#k-combat[data-state="idle"] .cfloor__ring.arena,
-#k-combat[data-state="select"] .cfloor__ring.arena{height:clamp(230px,32vh,280px)}
+#k-combat[data-state="select"] .cfloor .fighter--p2 img{
+  height:clamp(160px,24vh,240px);
+  width:auto;
+  max-width:100%;
+  max-height:240px;
+  object-fit:contain;
+  object-position:center bottom;
+}
+#k-combat[data-state="idle"] .cfloor__plate,
+#k-combat[data-state="select"] .cfloor__plate{
+  grid-area:plate;
+  position:relative;
+  left:auto;right:auto;bottom:auto;
+  max-width:100%;
+  width:auto;
+  margin:6px 4px 0 0;
+  z-index:3;
+  align-self:start;
+}
 #k-combat[data-state="fight"] .cfloor__plate,
 #k-combat[data-state="entrance"] .cfloor__plate,
 #k-combat[data-state="ko"] .cfloor__plate{display:none}
 #k-combat[data-state="idle"] .cfloor__prompt,
-#k-combat[data-state="select"] .cfloor__prompt{left:auto;right:12px;bottom:8px;max-width:42%;text-align:right}
+#k-combat[data-state="select"] .cfloor__prompt{display:none}
 @media (max-width:760px){
   .cfloor__grid{grid-template-columns:repeat(3,minmax(0,1fr));gap:8px}
   .cfloor__grid .rcell__box{min-height:72px;padding:2px}
   .cfloor__board{grid-template-columns:1fr}
   .cfloor__ring{order:-1}
+  #k-combat[data-state="idle"] .cfloor__board,
+  #k-combat[data-state="select"] .cfloor__board{grid-template-columns:1fr}
   #k-combat[data-state="idle"] .cfloor__ring.arena,
-  #k-combat[data-state="select"] .cfloor__ring.arena{height:200px}
+  #k-combat[data-state="select"] .cfloor__ring.arena{
+    grid-template-areas:"insert insert" "p1 p2" "plate plate";
+    padding:4px 6px 8px;
+    column-gap:4px;
+  }
   #k-combat[data-state="idle"] .cfloor .fighter--p1 img,
   #k-combat[data-state="select"] .cfloor .fighter--p1 img,
   #k-combat[data-state="idle"] .cfloor .fighter--p2 img,
-  #k-combat[data-state="select"] .cfloor .fighter--p2 img{height:132px!important}
-  .cfloor__plate{left:6px;right:auto;bottom:6px;max-width:58%;padding:6px 8px}
+  #k-combat[data-state="select"] .cfloor .fighter--p2 img{
+    height:clamp(120px,28vw,160px);
+    max-height:160px;
+  }
+  #k-combat[data-state="idle"] .cfloor__plate,
+  #k-combat[data-state="select"] .cfloor__plate{margin:6px 0 0;padding:6px 8px}
   .cfloor__plate-name{font-size:.85rem}
   .cfloor__plate-bio{font-size:.7rem}
 }
-#k-combat[data-state="idle"] .cfloor__prompt,#k-combat[data-state="select"] .cfloor__prompt{display:none}
+@media (max-width:360px){
+  #k-combat[data-state="idle"] .cfloor .fighter--p1 img,
+  #k-combat[data-state="select"] .cfloor .fighter--p1 img,
+  #k-combat[data-state="idle"] .cfloor .fighter--p2 img,
+  #k-combat[data-state="select"] .cfloor .fighter--p2 img{
+    height:120px;
+    max-height:120px;
+  }
+  #k-combat[data-state="idle"] .cfloor__insert,
+  #k-combat[data-state="select"] .cfloor__insert{
+    white-space:normal;
+    letter-spacing:.02em;
+    font-size:.55rem;
+    max-width:100%;
+  }
+}
