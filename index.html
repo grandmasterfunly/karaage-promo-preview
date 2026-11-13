@@ -8,18 +8,19 @@
 <meta name="description" content="New at Sus Hi Eatstation: Chicken Karaage, Japanese Fried Chicken, in four styles.">
 <link rel="preload" href="fonts/anton-0.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/hero-poster.webp" media="(min-width: 700px)">
-<link rel="stylesheet" href="css/fonts.css?v=20261113m">
-<link rel="stylesheet" href="css/site.css?v=20261113m">
-<link rel="stylesheet" href="css/v3.css?v=20261113m">
-<link rel="stylesheet" href="css/v4.css?v=20261113m">
-<link rel="stylesheet" href="css/v5.css?v=20261113m">
+<link rel="stylesheet" href="css/fonts.css?v=20261113n">
+<link rel="stylesheet" href="css/site.css?v=20261113n">
+<link rel="stylesheet" href="css/v3.css?v=20261113n">
+<link rel="stylesheet" href="css/v4.css?v=20261113n">
+<link rel="stylesheet" href="css/v5.css?v=20261113n">
+<link rel="stylesheet" href="css/v6.css?v=20261113n">
 <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('kp-motion')==='off')document.documentElement.classList.add('motion-off');if(localStorage.getItem('kp-promo')==='off')document.documentElement.classList.add('promo-off');}catch(e){}(function(){var r=document.documentElement,w=window.innerWidth;function l(){r.style.setProperty('--frame-h',window.innerHeight+'px')}l();window.addEventListener('resize',function(){var n=window.innerWidth;if(n!==w){w=n;l()}},{passive:true});})();</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="inkrough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9"/></filter></defs></svg>
 
-<div class="preview-bar" data-v="20261113m" role="region" aria-label="Preview controls">
+<div class="preview-bar" data-v="20261113n" role="region" aria-label="Preview controls">
   <span class="preview-bar__tag">Preview</span>
   <button type="button" class="preview-switch" role="switch" aria-checked="true" id="promo-switch">
     <span class="preview-switch__label">Karaage promo</span>
@@ -92,23 +93,23 @@
         <li><a class="style-card style-card--combat" href="#k-combat">
           <span class="style-card__art" aria-hidden="true"><img src="assets/f-ninja.webp" alt="" width="150" height="171" loading="lazy"></span>
           <span class="style-card__name">Karaage Combat Bowl</span>
-          <span class="style-card__meta">Spicy &middot; Fight for it</span>
+          <span class="style-card__meta">Fight for your food</span>
         </a></li>
         <li><a class="style-card style-card--enter" href="#k-enter">
           <span class="style-card__stripes" aria-hidden="true"></span>
           <span class="style-card__art" aria-hidden="true"><img src="assets/m-gi.webp" alt="" width="150" height="161" loading="lazy"></span>
           <span class="style-card__name">Enter the Karaage Bowl</span>
-          <span class="style-card__meta">Break a board, earn a belt</span>
+          <span class="style-card__meta">Test your skills, break a board</span>
         </a></li>
         <li><a class="style-card style-card--soba" href="#k-soba">
           <span class="style-card__art" aria-hidden="true"><img src="assets/m-robe.webp" alt="" width="190" height="151" loading="lazy"></span>
           <span class="style-card__name">Soba Noodle Hidden Karaage Bowl</span>
-          <span class="style-card__meta">Chilled soba &middot; Find it</span>
+          <span class="style-card__meta">A chill reveal</span>
         </a></li>
         <li><a class="style-card style-card--hustle" href="#k-hustle">
           <span class="style-card__art" aria-hidden="true"><img src="assets/m-jacket.webp" alt="" width="130" height="175" loading="lazy"></span>
           <span class="style-card__name">Karaage Hustle Burrito</span>
-          <span class="style-card__meta">Wrapped &middot; Get roasted</span>
+          <span class="style-card__meta">Get roasted by the Karaage chicken</span>
         </a></li>
       </ul>
     </div>
@@ -344,6 +345,7 @@
   <div class="wipe" data-from="soba" data-to="hustle" aria-hidden="true"><svg viewBox="0 0 1600 200" preserveAspectRatio="none"><path class="wipe__stroke" d="M-40 130 L 140 60 L 260 120 L 420 30 L 560 110 L 720 50 L 860 120 L 1040 40 L 1180 115 L 1340 55 L 1480 120 L 1660 70 L1660 220 L-40 220 Z"/><path class="wipe__stroke wipe__stroke--2" d="M-40 170 L 200 130 L 380 175 L 640 135 L 900 172 L 1200 130 L 1660 165 L1660 220 L-40 220 Z"/></svg></div>
 
   <!-- ============ HUSTLE ============ -->
+  <div class="hu-band">
   <section class="hu" id="k-hustle" data-chapter="hustle" aria-labelledby="hustle-title">
     <div class="mframe mframe--food">
       <div class="hu-poster" data-hu-poster>
@@ -392,6 +394,8 @@
       </div>
     </div>
   </section>
+
+  </div>
 
   <section class="lineup" id="k-lineup" data-chapter="lineup" aria-labelledby="lineup-title">
     <div class="mframe mframe--lineup">
@@ -487,13 +491,13 @@
 </main>
 <footer class="ph ph--footer"><span class="ph__label">Existing site footer</span></footer>
 
-<script src="js/data.js?v=20261113m" defer></script>
-<script src="js/core.js?v=20261113m" defer></script>
-<script src="js/combat.js?v=20261113m" defer></script>
-<script src="js/enter.js?v=20261113m" defer></script>
-<script src="js/soba.js?v=20261113m" defer></script>
-<script src="js/hustle.js?v=20261113m" defer></script>
-<script src="js/lineup.js?v=20261113m" defer></script>
-<script>if(/[?&]debug=1(?:&|$)/.test(location.search)){var s=document.createElement('script');s.src='js/debug.js?v=20261113m';s.defer=true;document.body.appendChild(s);}</script>
+<script src="js/data.js?v=20261113n" defer></script>
+<script src="js/core.js?v=20261113n" defer></script>
+<script src="js/combat.js?v=20261113n" defer></script>
+<script src="js/enter.js?v=20261113n" defer></script>
+<script src="js/soba.js?v=20261113n" defer></script>
+<script src="js/hustle.js?v=20261113n" defer></script>
+<script src="js/lineup.js?v=20261113n" defer></script>
+<script>if(/[?&]debug=1(?:&|$)/.test(location.search)){var s=document.createElement('script');s.src='js/debug.js?v=20261113n';s.defer=true;document.body.appendChild(s);}</script>
 </body>
 </html>

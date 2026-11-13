@@ -1,0 +1,192 @@
+/* v6: desktop interlaced layouts (min-width 900px).
+   Mobile layout is unchanged except .style-card__meta wrapping so the
+   longer Choose-your-style taglines do not overflow on a 390px phone.
+   Do not target .soba or its children — that section stays as-is. */
+
+/* Longer style-card taglines: wrap cleanly on every viewport. */
+.style-card__meta{
+  overflow-wrap:anywhere;
+  word-break:break-word;
+  line-height:1.3;
+  max-width:100%;
+  box-sizing:border-box;
+}
+@media (max-width:760px){
+  .style-card__meta{font-size:.75rem;line-height:1.25;margin-top:4px}
+}
+
+/* Wrapper is invisible on mobile so Hustle + Wisdom stay separate frames. */
+.hu-band{display:contents}
+
+@media (min-width:900px){
+
+  /* ---------- Combat: title + bowl + compact menu LEFT, fight RIGHT ---------- */
+  .combat,.chero{min-height:0}
+  .chero{
+    display:grid;
+    grid-template-columns:minmax(280px,.88fr) minmax(0,1.2fr);
+    grid-template-areas:"food play";
+    align-items:center;
+    gap:clamp(16px,2.4vw,40px);
+    padding:clamp(20px,3.5vh,40px) clamp(20px,3.5vw,56px) clamp(20px,3vh,36px);
+  }
+  .cbowl{
+    grid-area:food;
+    width:100%;
+    max-width:none;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+  }
+  .cbowl__logo{width:min(100%,400px);margin:0 auto 4px}
+  .cbowl__logo img{display:block;width:100%;height:auto}
+  .cbowl__stage{padding:0;width:100%}
+  /* Lock true photo proportions. Source is 1391x1126; width:100% + max-height
+     can stretch the element box when a grid/flex parent assigns a height. */
+  .cbowl__img{
+    display:block;
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:min(42vh,420px);
+    max-height:min(42svh,420px);
+    object-fit:contain;
+    object-position:center;
+    aspect-ratio:1391 / 1126;
+    margin:0 auto;
+    flex:0 0 auto;
+    align-self:center;
+  }
+  .cbowl__tags,.cbowl.is-roster .cbowl__tags{display:none}
+  .cmenu{margin-top:8px;width:min(100%,280px)}
+  .cmenu__opt{min-height:44px;font-size:.95rem;padding:0 10px}
+  .cfloor{grid-area:play;width:100%;max-width:none}
+
+  /* ---------- Enter: bigger board-break LEFT, bowl + title RIGHT ---------- */
+  .en{
+    display:grid;
+    grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr);
+    grid-template-areas:"widget poster";
+    column-gap:clamp(20px,3.5vw,56px);
+    align-items:center;
+    padding:clamp(28px,4.5vh,56px) clamp(24px,4.5vw,72px);
+    min-height:0;
+  }
+  .en-w{
+    grid-area:widget;
+    width:100%;
+    max-width:none;
+    justify-self:stretch;
+  }
+  .en__poster{grid-area:poster;width:100%}
+  .en__mascot{
+    grid-area:widget;
+    justify-self:start;
+    align-self:end;
+    width:clamp(88px,9vw,140px);
+    z-index:3;
+    pointer-events:none;
+  }
+  .en-w__help,.en-w__rank{
+    padding-left:clamp(108px,11vw,152px);
+    box-sizing:border-box;
+  }
+  .en-w__title{font-size:clamp(1.55rem,2.4vw,2.25rem)}
+  .en .board{width:100%;max-width:none}
+  .en__logo{width:min(100%,100%);height:auto;margin:0 auto}
+  .en__bowl{
+    display:block;
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:min(52vh,520px);
+    max-height:min(52svh,520px);
+    object-fit:contain;
+    object-position:center;
+    aspect-ratio:1000 / 829;
+    margin:0 auto;
+  }
+
+  /* ---------- Hustle + wisdom: poster LEFT, Karaage wisdom RIGHT ---------- */
+  .hu-band{
+    display:grid;
+    grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);
+    align-items:stretch;
+    background:#111;
+  }
+  .hu{
+    min-height:0;
+    padding:28px 20px 28px clamp(20px,3vw,40px);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+  }
+  .hu-poster{width:100%;max-width:560px}
+  .hu-poster__food{
+    width:min(100%,460px);
+    height:auto;
+    max-height:min(48vh,440px);
+    max-height:min(48svh,440px);
+    object-fit:contain;
+    object-position:center;
+    aspect-ratio:1325 / 1117;
+  }
+  .hu-wise{
+    min-height:0;
+    padding:28px clamp(20px,3vw,40px) 28px 20px;
+    display:flex;
+    align-items:center;
+  }
+  .hu-wise__inner{width:100%;max-width:none;margin:0}
+
+  /* ---------- Lineup: picker + CYO LEFT, bowl photo RIGHT ---------- */
+  .lineup{padding:clamp(28px,4.5vh,52px) clamp(20px,3.5vw,64px)}
+  .lineup .mframe--lineup{
+    display:grid;
+    grid-template-columns:minmax(240px,.8fr) minmax(0,1.25fr);
+    grid-template-areas:
+      "title photo"
+      "picks photo"
+      "cyo   photo";
+    gap:10px 36px;
+    align-items:center;
+    max-width:1240px;
+    width:100%;
+    margin:0 auto;
+  }
+  .lineup__title{grid-area:title;text-align:left;margin:0}
+  .lineup__picks{
+    grid-area:picks;
+    display:grid;
+    grid-template-columns:repeat(2,max-content);
+    justify-content:start;
+    gap:10px 12px;
+    width:100%;
+    max-width:none;
+    margin:0;
+  }
+  .cyo{grid-area:cyo;margin:8px 0 0;max-width:none;align-items:flex-start;text-align:left}
+  .cyo__label,.cyo__chips{justify-content:flex-start}
+  .lineup__stage{grid-area:photo;width:100%}
+  .lineup__frame{max-width:100%;width:100%;height:min(48vh,440px);height:min(48svh,440px)}
+  .lineup__photo{object-fit:contain;object-position:center}
+
+  /* ---------- Closer / appetizer: food LEFT, order copy RIGHT (already); fill the width ---------- */
+  .closer{padding:clamp(28px,4.5vh,56px) clamp(28px,5vw,80px)}
+  .closer .mframe--closer,.closer__inner{
+    max-width:1240px;
+    width:100%;
+    margin-left:auto;
+    margin-right:auto;
+  }
+  .closer__food{
+    width:auto;
+    height:auto;
+    max-width:100%;
+    max-height:min(58vh,560px);
+    max-height:min(58svh,560px);
+    object-fit:contain;
+    object-position:center;
+    aspect-ratio:1316 / 1192;
+  }
+}
