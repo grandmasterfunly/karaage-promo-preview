@@ -43,8 +43,8 @@
   var toggle = nav.querySelector('.mnav__toggle');
   var face = nav.querySelector('[data-mnav-face]');
   var cur = nav.querySelector('[data-mnav-current]');
-  var faces = { hero: 'm-ninja', combat: 'f-ninja', enter: 'm-gi', soba: 'm-robe', hustle: 'm-jacket', fighters: 'm-ninja', app: 'm-ninja' };
-  var labels = { hero: 'Karaage', combat: 'Combat', enter: 'Enter', soba: 'Soba', hustle: 'Hustle', fighters: 'Fighters', app: 'Appetizer' };
+  var faces = { hero: 'm-ninja', combat: 'f-ninja', enter: 'm-gi', soba: 'm-robe', hustle: 'm-jacket', fighters: 'm-ninja', lineup: 'm-ninja', closer: 'm-ninja', app: 'm-ninja' };
+  var labels = { hero: 'Karaage', combat: 'Combat', enter: 'Enter', soba: 'Soba', hustle: 'Hustle', fighters: 'Fighters', lineup: 'The lineup', closer: 'Appetizer', app: 'Appetizer' };
   function setOpen(o) { nav.classList.toggle('is-open', o); toggle.setAttribute('aria-expanded', o ? 'true' : 'false'); }
   toggle.addEventListener('click', function () { setOpen(!nav.classList.contains('is-open')); });
   nav.addEventListener('keydown', function (e) { if (e.key === 'Escape' && nav.classList.contains('is-open')) { setOpen(false); toggle.focus(); } });

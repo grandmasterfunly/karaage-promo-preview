@@ -51,9 +51,18 @@
      anticipatable on a periodic visible meter, so it is not stacked on as
      extra σ. Meter is a triangle wave (0→100 in `period` ms, then back).
      Hit if the value is inside [lo, hi] (rare late releases can still catch
-     the downward pass). Monte Carlo n=100,000:
-     period 620ms, window 15.7% (77.15–92.85) → per-board 62.96%, overall 10.00%.
-     Standard and Relaxed tables are unchanged. */
+     the downward pass). Monte Carlo n=300,000, σ=55ms.
+     Before (identical boards): period 620ms, window 15.7% (77.15–92.85)
+       → per-board 62.96%, overall 10.00%.
+     After (progressive boards; zone shrinks and period shortens each round):
+       Board 1: 760ms, 22.5% (70.35–92.85) → 88.02%
+       Board 2: 690ms, 20.0% (72.85–92.85) → 79.12%
+       Board 3: 620ms, 17.0% (75.85–92.85) → 66.67%
+       Board 4: 550ms, 14.0% (78.85–92.85) → 53.22%
+       Board 5: 480ms, 11.0% (81.85–92.85) → 40.65%
+       Product ≈ 10.05% clearing all five.
+     Visible rainbow zone (left/w) matches lo/hi each round. Standard and
+     Relaxed tables are unchanged. */
   var STANDARD_ROWS = [
     { period: 1300, lo: 72, hi: 92, left: '72%', w: '20%' },
     { period: 1150, lo: 74, hi: 90, left: '74%', w: '16%' },
@@ -67,8 +76,13 @@
       return { period: r.period + 800, lo: lo, hi: hi, left: lo + '%', w: (hi - lo) + '%' };
     });
   }
-  var INSANE_ROW = { period: 620, lo: 77.15, hi: 92.85, left: '77.15%', w: '15.7%' };
-  var INSANE_ROWS = [INSANE_ROW, INSANE_ROW, INSANE_ROW, INSANE_ROW, INSANE_ROW];
+  var INSANE_ROWS = [
+    { period: 760, lo: 70.35, hi: 92.85, left: '70.35%', w: '22.5%' },
+    { period: 690, lo: 72.85, hi: 92.85, left: '72.85%', w: '20%' },
+    { period: 620, lo: 75.85, hi: 92.85, left: '75.85%', w: '17%' },
+    { period: 550, lo: 78.85, hi: 92.85, left: '78.85%', w: '14%' },
+    { period: 480, lo: 81.85, hi: 92.85, left: '81.85%', w: '11%' }
+  ];
   function getMode() {
     var el = sec.querySelector('input[name="en-diff"]:checked');
     return (el && el.value) || 'standard';
@@ -87,7 +101,7 @@
     card.hidden = false;
     clearTimeout(bossTimer);
     bossTimer = setTimeout(function () { card.hidden = true; }, KP.motionOK() ? 1800 : 700);
-    KP.say(live, 'Final Boss. Insane difficulty. Hold, then release in the rainbow zone.');
+    KP.say(live, 'Crazy Karaage Mode. Insane difficulty. Hold, then release in the rainbow zone.');
   }
   function setupRound() {
     var mode = getMode();
@@ -263,7 +277,7 @@
     if (gi) { gi.classList.remove('is-chop'); void gi.offsetWidth; gi.classList.add('is-chop'); setTimeout(function () { gi.classList.remove('is-chop'); }, 260); }
     if (KP.motionOK()) { board.classList.remove('is-hit'); void board.offsetWidth; board.classList.add('is-hit'); }
     if (g === 'perfect' || g === 'good') {
-      flashWord(isInsane() && g === 'perfect' ? 'Boss break!' : (g === 'perfect' ? 'Perfect!' : 'Hi-yah!'));
+      flashWord(isInsane() && g === 'perfect' ? 'Crazy break!' : (g === 'perfect' ? 'Perfect!' : 'Hi-yah!'));
       growCracks(0, 100); rig.classList.add('has-cracks');
       burst(g === 'perfect' ? (isInsane() ? 16 : 8) : (isInsane() ? 10 : 5), isInsane());
       split(g === 'perfect');
@@ -399,5 +413,5 @@
     r.addEventListener('change', function () { resetChallenge(); });
   });
 
-  window.KP_enter = { chop: chop, newBoard: newBoard, reset: resetChallenge, finish: finish, setupRound: setupRound, getMode: getMode };
+  window.KP_enter = { chop: chop, newBoard: newBoard, reset: resetChallenge, finish: finish, setupRound: setupRound, getMode: getMode, setMode: function (m) { var el = sec.querySelector('input[name="en-diff"][value="' + m + '"]'); if (el) el.checked = true; applyModeChrome(); resetChallenge(); }, goto: function (n) { round = Math.max(0, Math.min(TOTAL - 1, n|0)); setupRound(); paintHits(); }, zone: function () { return { period: period, lo: zone.lo, hi: zone.hi, left: zone.left, w: zone.w, round: round }; } };
 })();

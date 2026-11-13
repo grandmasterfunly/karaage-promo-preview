@@ -8,11 +8,11 @@
 <meta name="description" content="New at Sus Hi Eatstation: Chicken Karaage, Japanese Fried Chicken, in four styles.">
 <link rel="preload" href="fonts/anton-0.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/hero-poster.webp" media="(min-width: 700px)">
-<link rel="stylesheet" href="css/fonts.css?v=20261113d">
-<link rel="stylesheet" href="css/site.css?v=20261113d">
-<link rel="stylesheet" href="css/v3.css?v=20261113d">
-<link rel="stylesheet" href="css/v4.css?v=20261113d">
-<link rel="stylesheet" href="css/v5.css?v=20261113d">
+<link rel="stylesheet" href="css/fonts.css?v=20261113e">
+<link rel="stylesheet" href="css/site.css?v=20261113e">
+<link rel="stylesheet" href="css/v3.css?v=20261113e">
+<link rel="stylesheet" href="css/v4.css?v=20261113e">
+<link rel="stylesheet" href="css/v5.css?v=20261113e">
 <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('kp-motion')==='off')document.documentElement.classList.add('motion-off');if(localStorage.getItem('kp-promo')==='off')document.documentElement.classList.add('promo-off');}catch(e){}</script>
 </head>
 <body>
@@ -49,7 +49,7 @@
       <li><a href="#k-soba" data-chapter="soba"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Soba Hidden Karaage</span></a></li>
       <li><a href="#k-hustle" data-chapter="hustle"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Hustle Burrito</span></a></li>
       <li><a href="#k-lineup" data-chapter="lineup"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">The lineup</span></a></li>
-      <li><a href="#k-app" data-chapter="app"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Appetizer</span></a></li>
+      <li><a href="#k-closer" data-chapter="closer"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Appetizer</span></a></li>
       <li class="mnav__motion"><button type="button" class="mnav__motionbtn" aria-pressed="false" data-motion-toggle>Pause motion</button></li>
     </ul>
   </nav>
@@ -124,23 +124,12 @@
       <div class="chero__shade" aria-hidden="true"></div>
       <svg class="chero__lines" data-cbowl-lines aria-hidden="true"></svg>
       <div class="mframe mframe--food">
-      <div class="chero__head">
-        <p class="chero__spicy"><span class="flames" aria-hidden="true"><i></i><i></i><i></i></span> Spicy</p>
-        <p class="chero__jfc">Japanese Fried Chicken (JFC)</p>
-        <p class="chero__tag">Choose your bowl.</p>
-        <dl class="chero__bars" aria-hidden="true">
-          <div><dt>Flavor</dt><dd><span style="--v:96%"></span></dd></div>
-          <div><dt>Crunch</dt><dd><span style="--v:100%"></span></dd></div>
-          <div><dt>Heat</dt><dd><span style="--v:78%"></span></dd></div>
-        </dl>
-        <a class="btn-order" href="#order">Order now</a>
-      </div>
       <figure class="cbowl" data-cbowl>
         <h2 class="cbowl__logo" id="combat-title">
           <img src="assets/wm-combat.webp" alt="Karaage Combat Bowl" width="1600" height="460">
         </h2>
         <div class="cbowl__stage" data-cbowl-stage>
-          <img class="cbowl__img" src="assets/bowl-combat.webp" srcset="assets/bowl-combat-sm.webp 800w, assets/bowl-combat.webp 1391w" sizes="(max-width:760px) 92vw, min(820px,68vh)" alt="Karaage Combat Bowl: three crispy karaage over sushi rice with fried onions, pickled jalapeños, shredded cheese, scallions, purple cabbage, carrots, cucumber and Sus Hi sauce." width="1391" height="1126" loading="lazy">
+          <img class="cbowl__img" src="assets/bowl-combat.webp" srcset="assets/bowl-combat-sm.webp 800w, assets/bowl-combat.webp 1391w" sizes="(max-width:760px) 92vw, min(820px,58vh)" alt="Karaage Combat Bowl: three crispy karaage over sushi rice with fried onions, pickled jalapeños, shredded cheese, scallions, purple cabbage, carrots, cucumber and Sus Hi sauce." width="1391" height="1126" loading="lazy">
           <ul class="cbowl__tags" id="cbowl-tags" aria-hidden="true">
             <li class="ctag ctag--l" data-k="scallions" style="--ty:2%"><img src="assets/f-scallions.webp" alt="" width="40" height="40" loading="lazy"><span>Scallions<i>In the bowl</i></span></li>
             <li class="ctag ctag--l" data-k="fire-sauce" style="--ty:18%"><img src="assets/f-fire-sauce.webp" alt="" width="40" height="40" loading="lazy"><span>Fire Sauce<i>In the bowl</i></span></li>
@@ -160,10 +149,16 @@
           <li>Fire Sauce</li><li>Fried Onion</li><li>White Sauce</li><li>Nori Seasoning</li><li>Chili Powder</li><li>Cucumber</li>
           <li>Scallions</li><li>Sus Hi Sauce</li><li>Purple Cabbage</li><li>Pickled Jalapeños</li><li>Melted Cheese</li><li>Pickled Carrots</li>
         </ul>
-        <figcaption class="cbowl__floor">
-          <span class="cbowl__cap">Every fighter is in your bowl.</span>
-          <button type="button" class="cbowl__toggle" aria-pressed="false" aria-controls="cbowl-tags" data-cbowl-toggle>Show the roster</button>
-        </figcaption>
+        <nav class="cmenu" aria-label="Karaage Combat Bowl menu">
+          <p class="cmenu__heat"><span class="flames" aria-hidden="true"><i></i><i></i><i></i></span> Heat: Spicy</p>
+          <ul class="cmenu__list">
+            <li><a class="cmenu__opt is-on" href="#order" data-cmenu><span class="cmenu__cursor" aria-hidden="true">▶</span> Order Now</a></li>
+            <li><a class="cmenu__opt" href="#combat-floor" data-cmenu><span class="cmenu__cursor" aria-hidden="true">▶</span> Play (Fight)</a></li>
+            <li><button type="button" class="cmenu__opt" data-cmenu data-cmenu-info aria-expanded="false" aria-controls="cmenu-desc"><span class="cmenu__cursor" aria-hidden="true">▶</span> See the Bowl</button></li>
+            <li><a class="cmenu__opt" href="#select-head" data-cmenu><span class="cmenu__cursor" aria-hidden="true">▶</span> Select Ingredient</a></li>
+          </ul>
+          <p class="cmenu__desc" id="cmenu-desc" hidden>Every fighter is in your bowl. Japanese fried chicken, spicy, with twelve ingredients ready for the dojo.</p>
+        </nav>
       </figure>
       </div><!-- /combat food -->
       <div class="mframe mframe--play">
@@ -177,7 +172,7 @@
         </div>
         <div class="cfloor__board">
         <form class="cfloor__pick cfloor__wall" data-screen="select">
-          <p class="cfloor__pick-title" id="select-head">Choose your fighter</p>
+          <p class="cfloor__pick-title" id="select-head">Choose your ingredient</p>
           <fieldset class="cfloor__set">
             <legend class="sr-only">Choose one of twelve ingredient fighters, all in your bowl. Use arrow keys, then press Fight.</legend>
             <div class="cfloor__grid" data-roster></div>
@@ -186,7 +181,7 @@
         </form>
         <div class="cfloor__ring arena" data-arena>
           <div class="cfloor__glow" aria-hidden="true"></div>
-          <p class="cfloor__insert" aria-hidden="true">Insert coin · Choose your fighter</p>
+          <p class="cfloor__insert" aria-hidden="true">Insert coin · Choose your ingredient</p>
           <div class="fighter fighter--p1 is-idle is-preview" data-f1>
             <img src="assets/f-fire-sauce.webp" alt="Fire Sauce" width="80" height="80" data-f1-img>
           </div>
@@ -202,7 +197,7 @@
             <p class="cfloor__plate-bio" data-p1-bio></p>
             <p class="cfloor__plate-sp">Special: <span data-p1-special></span></p>
           </div>
-          <p class="cfloor__prompt" data-floor-prompt>Ninja Karaage is waiting. Choose your fighter.</p>
+          <p class="cfloor__prompt" data-floor-prompt>Ninja Karaage is waiting. Choose your ingredient.</p>
         </div>
         </div>
         <div class="cfloor__pad pad" role="group" aria-label="Fight controls. Keys: J punch, K kick, L special, B block." hidden data-floor-pad>
@@ -276,7 +271,7 @@
         <label class="en-w__opt"><input type="radio" name="en-diff" value="standard" checked> Standard</label>
         <label class="en-w__opt en-w__opt--insane"><input type="radio" name="en-diff" value="insane"> Insane</label>
       </div>
-      <p class="en-w__help" id="chop-help">Hold, then let go in the red zone. Keyboard: hold Space or Enter, then release. The zone gets smaller each board. Choose Insane for a thinner, faster Final Boss meter.</p>
+      <p class="en-w__help" id="chop-help">Hold, then let go in the red zone. Keyboard: hold Space or Enter, then release. The zone gets smaller each board. Choose Insane for a thinner, faster Crazy Karaage Mode meter.</p>
       <p class="en-w__rank"><span data-rank-name>White belt</span><span class="sr-only">, </span><span class="sr-only" data-rank-count>0 boards broken</span><span class="belts" aria-hidden="true" data-belts></span></p>
       <div class="en-slip" data-fortune hidden>
         <p class="en-slip__k">Your belt</p>
@@ -288,7 +283,7 @@
       <span data-after hidden></span>
       <div class="en-boss" data-boss-card hidden>
         <p class="en-boss__eyebrow">Insane</p>
-        <p class="en-boss__title">Final Boss</p>
+        <p class="en-boss__title">Crazy Karaage Mode</p>
       </div>
     </div>
     <img class="en__mascot" src="assets/m-gi.webp" alt="" width="678" height="900" loading="lazy" data-gi>
@@ -395,16 +390,16 @@
       <div class="lineup__stage">
         <div class="lineup__fan" role="group" aria-label="Chicken Karaage products">
           <button type="button" class="lineup__item" data-lineup="combat" aria-pressed="false" aria-label="Karaage Combat Bowl">
-            <img src="assets/bowl-combat.webp" srcset="assets/bowl-combat-sm.webp 800w, assets/bowl-combat.webp 1391w" sizes="(max-width:760px) 54vw, 420px" alt="" width="1391" height="1126" loading="lazy">
+            <img src="assets/bowl-combat.webp" srcset="assets/bowl-combat-sm.webp 800w, assets/bowl-combat.webp 1391w" sizes="(max-width:760px) 54vw, 420px" alt="" width="1391" height="1126" decoding="async">
           </button>
           <button type="button" class="lineup__item" data-lineup="enter" aria-pressed="false" aria-label="Enter the Karaage Bowl">
-            <img src="assets/bowl-enter.webp" alt="" width="1000" height="829" loading="lazy">
+            <img src="assets/bowl-enter.webp" alt="" width="1000" height="829" decoding="async">
           </button>
           <button type="button" class="lineup__item" data-lineup="soba" aria-pressed="false" aria-label="Soba Noodle Hidden Karaage Bowl">
-            <img src="assets/bowl-soba.webp" alt="" width="1228" height="1236" loading="lazy">
+            <img src="assets/bowl-soba.webp" alt="" width="1228" height="1236" decoding="async">
           </button>
           <button type="button" class="lineup__item" data-lineup="hustle" aria-pressed="false" aria-label="Karaage Hustle Burrito">
-            <img src="assets/burrito.webp" srcset="assets/burrito-sm.webp 800w, assets/burrito.webp 1325w" sizes="(max-width:760px) 54vw, 420px" alt="" width="1325" height="1117" loading="lazy">
+            <img src="assets/burrito.webp" srcset="assets/burrito-sm.webp 800w, assets/burrito.webp 1325w" sizes="(max-width:760px) 54vw, 420px" alt="" width="1325" height="1117" decoding="async">
           </button>
         </div>
       </div>
@@ -421,27 +416,13 @@
       <a class="cyo__go" href="#order">Build yours</a></p>
   </section>
 
-  <!-- ============ APPETIZER ============ -->
-  <section class="app" id="k-app" data-chapter="app" aria-labelledby="app-title">
-    <div class="mframe mframe--food">
-      <div class="app__copy">
-        <p class="app__kicker">Appetizer</p>
-        <h2 class="app__title" id="app-title">Chicken Karaage</h2>
-        <p class="app__pcs">4 pieces</p>
-        <p class="app__jfc">Japanese Fried Chicken (JFC)</p>
-        <p class="app__tag">Big chunky crispy chicken</p>
-        <p class="app__nudge">Four pieces. Dip them in Sus Hi sauce. Add them to any bowl.</p>
-        <a class="btn-order" href="#order">Add to any bowl</a>
-      </div>
-      <img class="app__hero-img" src="assets/appetizer.webp" srcset="assets/appetizer-sm.webp 800w, assets/appetizer.webp 1316w" sizes="(max-width:760px) 88vw, 420px" alt="Chicken Karaage appetizer: four crispy pieces in a paper boat." width="1316" height="1192" loading="lazy">
-    </div>
-  </section>
-
   <!-- ============ CLOSER ============ -->
-  <section class="closer" id="k-closer" aria-labelledby="closer-title closer-sub">
+  <section class="closer" id="k-closer" data-chapter="closer" aria-labelledby="closer-title closer-sub">
     <div class="mframe mframe--closer">
       <div class="closer__inner">
         <img class="closer__badge" src="assets/badge-limited.webp" width="600" height="440" alt="Limited Time">
+        <img class="closer__food" src="assets/appetizer.webp" srcset="assets/appetizer-sm.webp 800w, assets/appetizer.webp 1316w" sizes="(max-width:760px) 86vw, 520px" alt="Chicken Karaage appetizer: four crispy pieces in a paper boat." width="1316" height="1192" loading="lazy">
+        <p class="closer__kicker">Appetizer · 4 pieces</p>
         <h2 class="closer__title" id="closer-title">Chicken Karaage.</h2>
         <p class="closer__sub" id="closer-sub">Japanese Fried Chicken.</p>
         <a class="btn-order closer__order" href="#order">Order Now</a>
@@ -462,12 +443,12 @@
 </main>
 <footer class="ph ph--footer"><span class="ph__label">Existing site footer</span></footer>
 
-<script src="js/data.js?v=20261113d" defer></script>
-<script src="js/core.js?v=20261113d" defer></script>
-<script src="js/combat.js?v=20261113d" defer></script>
-<script src="js/enter.js?v=20261113d" defer></script>
-<script src="js/soba.js?v=20261113d" defer></script>
-<script src="js/hustle.js?v=20261113d" defer></script>
-<script src="js/lineup.js?v=20261113d" defer></script>
+<script src="js/data.js?v=20261113e" defer></script>
+<script src="js/core.js?v=20261113e" defer></script>
+<script src="js/combat.js?v=20261113e" defer></script>
+<script src="js/enter.js?v=20261113e" defer></script>
+<script src="js/soba.js?v=20261113e" defer></script>
+<script src="js/hustle.js?v=20261113e" defer></script>
+<script src="js/lineup.js?v=20261113e" defer></script>
 </body>
 </html>

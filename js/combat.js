@@ -84,7 +84,7 @@
   function focusFloor() {
     setState('select');
     if (floor) floor.scrollIntoView({ behavior: KP.motionOK() ? 'smooth' : 'auto', block: 'nearest' });
-    KP.say(live, 'Ninja Karaage is waiting on the dojo floor. Choose your fighter, then press Fight.');
+    KP.say(live, 'Ninja Karaage is waiting on the dojo floor. Choose your ingredient, then press Fight.');
     var c = grid.querySelector('input:checked'); if (c) c.focus({ preventScroll: true });
   }
   if (startBtn) startBtn.addEventListener('click', function () { focusFloor(); });
@@ -93,7 +93,7 @@
     if (f1) f1.className = 'fighter fighter--p1 is-idle is-preview';
     if (f2) f2.className = 'fighter fighter--p2 is-idle is-wait';
     setState('idle');
-    if (prompt) prompt.textContent = 'Ninja Karaage is waiting. Choose your fighter.';
+    if (prompt) prompt.textContent = 'Ninja Karaage is waiting. Choose your ingredient.';
   }
 
   /* ---------- Bowl roster callouts ---------- */
@@ -205,9 +205,10 @@
       if (bowlImg) ro.observe(bowlImg);
       if (floor) ro.observe(floor);
     }
-    stage.querySelector('img').addEventListener('load', scheduleLines);
+    var bowlImg2 = stage && stage.querySelector('img');
+    if (bowlImg2) bowlImg2.addEventListener('load', scheduleLines);
     if (document.fonts) document.fonts.ready.then(scheduleLines);
-    tog.addEventListener('click', function () {
+    if (tog) tog.addEventListener('click', function () {
       var on = tog.getAttribute('aria-pressed') !== 'true';
       setRoster(on, on);
     });
@@ -473,7 +474,7 @@
   $('[data-reselect]').addEventListener('click', function () {
     resetToWait();
     var c = grid.querySelector('input:checked'); if (c) c.focus();
-    KP.say(live, 'Ninja Karaage is waiting. Choose your fighter.');
+    KP.say(live, 'Ninja Karaage is waiting. Choose your ingredient.');
   });
   var pauseBtn = $('[data-fight-pause]');
   if (pauseBtn) pauseBtn.addEventListener('click', function () {
@@ -491,6 +492,41 @@
   });
 
   setState('idle');
+
+
+  /* Arcade start menu: arrow keys + hover/focus move the cursor */
+  var cmenu = document.querySelector('.cmenu');
+  if (cmenu) {
+    var cOpts = [].slice.call(cmenu.querySelectorAll('[data-cmenu]'));
+    function cmenuSelect(i, moveFocus) {
+      i = (i + cOpts.length) % cOpts.length;
+      cOpts.forEach(function (o, n) { o.classList.toggle('is-on', n === i); });
+      if (moveFocus) cOpts[i].focus();
+    }
+    function cmenuIndex() {
+      var i = cOpts.findIndex(function (o) { return o === document.activeElement; });
+      if (i < 0) i = cOpts.findIndex(function (o) { return o.classList.contains('is-on'); });
+      return i < 0 ? 0 : i;
+    }
+    cOpts.forEach(function (o, i) {
+      o.addEventListener('mouseenter', function () { cmenuSelect(i, false); });
+      o.addEventListener('focus', function () { cmenuSelect(i, false); });
+    });
+    cmenu.addEventListener('keydown', function (e) {
+      if (e.key === 'ArrowDown' || e.key === 'ArrowRight') { e.preventDefault(); cmenuSelect(cmenuIndex() + 1, true); }
+      else if (e.key === 'ArrowUp' || e.key === 'ArrowLeft') { e.preventDefault(); cmenuSelect(cmenuIndex() - 1, true); }
+    });
+    var infoBtn = cmenu.querySelector('[data-cmenu-info]');
+    var desc = cmenu.querySelector('#cmenu-desc');
+    if (infoBtn && desc) {
+      infoBtn.addEventListener('click', function () {
+        var open = desc.hasAttribute('hidden');
+        if (open) desc.removeAttribute('hidden'); else desc.setAttribute('hidden', '');
+        infoBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        if (typeof setRoster === 'function') setRoster(open, open);
+      });
+    }
+  }
 
   /* test hook for screenshots */
   window.KP_combat = {
