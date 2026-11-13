@@ -11,6 +11,7 @@
   var fortune = $('[data-fortune]'), ftext = $('[data-fortune-text]'), after = $('[data-after]');
   var dpr = Math.min(2, window.devicePixelRatio || 1);
   var boards = 0, damage = 0, zig = [], broken = false, seed = 1;
+  var splitGen = 0, splitRaf = 0;
   var TOTAL = 5, round = 0, score = 0, period = 1300, zone = { lo: 72, hi: 92 }, challengeOver = false;
   var deck = D.fortunes.slice().sort(function () { return Math.random() - .5; }), fi = 0;
 
@@ -316,14 +317,16 @@
     boards++;
     rig.classList.add('is-split');
     burst(22, true);
+    var gen = ++splitGen;
     var halves = [{ el: cL, vx: -7, vy: -9, vr: -5 }, { el: cR, vx: 7, vy: -10, vr: 6 }];
     if (KP.motionOK()) {
       var st = performance.now();
       halves.forEach(function (h) { h.x = 0; h.y = 0; h.r = 0; });
       (function step(t) {
+        if (gen !== splitGen) return;
         var e = t - st;
         halves.forEach(function (h) { h.vy += .55; h.x += h.vx; h.y += h.vy; h.r += h.vr; h.vr *= .98; h.el.style.transform = 'translate(' + h.x + 'px,' + h.y + 'px) rotate(' + h.r + 'deg)'; h.el.style.opacity = Math.max(0, 1 - Math.max(0, e - 500) / 500); });
-        if (e < 1000) requestAnimationFrame(step);
+        if (e < 1000) splitRaf = requestAnimationFrame(step);
       })(st);
     } else {
       halves.forEach(function (h) { h.el.style.opacity = 0; });
@@ -377,6 +380,8 @@
     broken = false; damage = 0; btn.disabled = false;
     fortune.hidden = true; after.hidden = true; ftext.textContent = '';
     var fb = $('[data-final-belt]'); if (fb) fb.textContent = '';
+    splitGen++;
+    if (splitRaf) { cancelAnimationFrame(splitRaf); splitRaf = 0; }
     rig.classList.remove('is-split', 'has-cracks');
     svg.innerHTML = ''; svg.style.opacity = 1;
     [cL, cR].forEach(function (c) { c.style.transform = ''; c.style.opacity = 1; });

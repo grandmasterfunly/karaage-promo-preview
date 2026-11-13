@@ -62,37 +62,25 @@
   .cmenu__opt{min-height:44px;font-size:.95rem;padding:0 10px}
   .cfloor{grid-area:play;width:100%;max-width:none}
 
-  /* ---------- Enter: bigger board-break LEFT, bowl + title RIGHT ---------- */
+  /* ---------- Enter: bowl on the right, board on the left.
+     Desktop: double black stripes become a slim full-bleed edge frame
+     (brand look, no longer cutting through content). Board is capped
+     to sit in proportion with the bowl. Title is centered on the board.
+     Fortune/belt slip stacks above the mascot so the win message stays visible. ---------- */
   .en{
     display:grid;
-    grid-template-columns:minmax(0,1.15fr) minmax(0,.95fr);
+    grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
     grid-template-areas:"widget poster";
     column-gap:clamp(20px,3.5vw,56px);
     align-items:center;
-    padding:clamp(28px,4.5vh,56px) clamp(24px,4.5vw,72px);
+    padding:clamp(28px,4.5vh,56px) clamp(72px,7.5vw,104px);
     min-height:0;
   }
-  .en-w{
-    grid-area:widget;
-    width:100%;
-    max-width:none;
-    justify-self:stretch;
-  }
+  .en__stripes{z-index:0;width:clamp(36px,3.2vw,52px)!important}
+  .en__stripes--l{left:0!important}
+  .en__stripes--r{right:0!important}
+  .en-w,.en__poster{position:relative;z-index:2}
   .en__poster{grid-area:poster;width:100%}
-  .en__mascot{
-    grid-area:widget;
-    justify-self:start;
-    align-self:end;
-    width:clamp(88px,9vw,140px);
-    z-index:3;
-    pointer-events:none;
-  }
-  .en-w__help,.en-w__rank{
-    padding-left:clamp(108px,11vw,152px);
-    box-sizing:border-box;
-  }
-  .en-w__title{font-size:clamp(1.55rem,2.4vw,2.25rem)}
-  .en .board{width:100%;max-width:none}
   .en__logo{width:min(100%,100%);height:auto;margin:0 auto}
   .en__bowl{
     display:block;
@@ -105,6 +93,83 @@
     object-position:center;
     aspect-ratio:1000 / 829;
     margin:0 auto;
+  }
+  .en-w{
+    grid-area:widget;
+    width:100%;
+    max-width:none;
+    justify-self:stretch;
+    display:grid;
+    grid-template-columns:1fr minmax(0,440px) 1fr;
+    grid-template-areas:
+      ". round ."
+      ". hits ."
+      ". board ."
+      ". chi ."
+      ". btn ."
+      ". diff ."
+      ". help ."
+      ". rank ."
+      ". slip ."
+      ". boss .";
+    justify-items:stretch;
+    row-gap:6px;
+  }
+  .en-w__round{grid-area:round}
+  .en-w__hits{grid-area:hits}
+  .en-w__board{grid-area:board;position:relative;width:100%}
+  .en .board{width:100%;max-width:none}
+  .en-w__title{
+    grid-area:board;
+    place-self:center;
+    z-index:5;
+    margin:0;
+    width:min(92%,16em);
+    text-align:center;
+    pointer-events:none;
+    font-size:clamp(1.35rem,2.1vw,1.9rem);
+    color:#111;
+    text-shadow:0 1px 0 #f6ecd0,1px 0 0 #f6ecd0,-1px 0 0 #f6ecd0,0 -1px 0 #f6ecd0,0 0 10px rgba(246,226,122,.95);
+  }
+  .en-w__chi{grid-area:chi}
+  .en-w__btn{grid-area:btn}
+  .en-w__diff{grid-area:diff}
+  .en-w__help{grid-area:help;padding-left:0;box-sizing:border-box}
+  .en-w__rank{grid-area:rank;padding-left:0;box-sizing:border-box}
+  .en-slip{grid-area:slip;position:relative;z-index:6}
+  .en-boss{grid-area:boss}
+  /* Mascot stands at the lower-left of the bowl, above the tagline and CTA,
+     so it never covers "Become one with the taste," Order, or the fortune slip. */
+  .en__mascot{
+    grid-area:poster;
+    justify-self:start;
+    align-self:end;
+    width:clamp(96px,9vw,136px);
+    z-index:3;
+    pointer-events:none;
+    /* Sit in the column gap, not over the Trifecta cup or the tagline. */
+    margin:0 0 10.5rem -6.5rem;
+  }
+  /* The title lives on the board; hide it once the board has split away. */
+  .en-w.is-split .en-w__title,
+  #k-enter:has(.en-slip:not([hidden])) .en-w__title{visibility:hidden}
+  .en__jfc,.en__tag,.en__poster .btn-order{
+    position:relative;
+    z-index:4;
+  }
+  .en__tag{
+    width:100%;
+    box-sizing:border-box;
+    padding-left:.25em;
+    padding-right:88px; /* clear the chapter chip on the right edge */
+    font-size:clamp(1.4rem,2.15vw,2.2rem);
+    text-align:center;
+  }
+  .en-slip,.en-slip__text{
+    position:relative;
+    z-index:6;
+    overflow-wrap:anywhere;
+    max-width:100%;
   }
 
   /* ---------- Hustle + wisdom: poster LEFT, Karaage wisdom RIGHT ---------- */
@@ -188,5 +253,61 @@
     object-fit:contain;
     object-position:center;
     aspect-ratio:1316 / 1192;
+  }
+
+  /* Soba desktop only: scale the two characters ~40% so they fill
+     empty side space, without changing the circle, bamboo, mist, or bowl. */
+  .soba__chicken{width:min(36.4%,266px)}
+  .soba__heroine{width:min(42%,294px)}
+}
+
+
+/* ---------- Combat win: hide the fight stage + box; the win card takes that slot ---------- */
+#k-combat[data-state="ko"] .cfloor{
+  background:none;
+  border:none;
+  box-shadow:none;
+  padding:0;
+  margin:0;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  min-height:0;
+}
+#k-combat[data-state="ko"] .cfloor__board,
+#k-combat[data-state="ko"] .cfloor__hud,
+#k-combat[data-state="ko"] .cfloor__pad,
+#k-combat[data-state="ko"] .cfloor__keys,
+#k-combat[data-state="ko"] .cfloor__prompt{
+  display:none !important;
+}
+#k-combat[data-state="ko"] .cfloor__result{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  background:none;
+  border:none;
+  box-shadow:none;
+  padding:0;
+  margin:0;
+  width:100%;
+}
+.ko-card{
+  background:#0a0710;
+  border:3px solid var(--yellow,#ffe35a);
+  box-shadow:0 0 0 3px #0a0710,0 0 0 6px #7a1010;
+  padding:16px 20px 18px;
+  text-align:center;
+  width:max-content;
+  max-width:100%;
+  box-sizing:border-box;
+  color:#fff;
+}
+#k-combat[data-state="ko"] .chero{align-items:center}
+@media (max-width:760px){
+  #k-combat[data-state="ko"] .mframe--play,
+  #k-combat[data-state="ko"] .cfloor{
+    min-height:calc(var(--frame-h) - var(--bar-offset));
+    box-sizing:border-box;
   }
 }
