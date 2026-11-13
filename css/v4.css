@@ -446,31 +446,31 @@
 #k-combat[data-state="idle"] .cfloor .fighter--p1,
 #k-combat[data-state="select"] .cfloor .fighter--p1{
   grid-area:p1;
-  position:relative;
-  left:auto!important;right:auto;bottom:auto;
-  width:100%;max-width:100%;
+  position:relative!important;
+  left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  width:100%!important;max-width:100%!important;height:auto!important;
   display:flex;justify-content:center;align-items:flex-end;
-  opacity:1;transform:none;pointer-events:none;z-index:2;
+  opacity:1;transform:none!important;pointer-events:none;z-index:2;
 }
 #k-combat[data-state="idle"] .cfloor .fighter--p2,
 #k-combat[data-state="select"] .cfloor .fighter--p2{
   grid-area:p2;
-  position:relative;
-  left:auto;right:auto!important;bottom:auto;
-  width:100%;max-width:100%;
+  position:relative!important;
+  left:auto!important;right:auto!important;top:auto!important;bottom:auto!important;
+  width:100%!important;max-width:100%!important;height:auto!important;
   display:flex;justify-content:center;align-items:flex-end;
-  opacity:1;transform:none;z-index:2;
+  opacity:1;transform:none!important;z-index:2;
 }
 #k-combat[data-state="idle"] .cfloor .fighter--p1.is-out,
-#k-combat[data-state="select"] .cfloor .fighter--p1.is-out{opacity:1;transform:none}
+#k-combat[data-state="select"] .cfloor .fighter--p1.is-out{opacity:1;transform:none!important}
 #k-combat[data-state="idle"] .cfloor .fighter--p1 img,
 #k-combat[data-state="select"] .cfloor .fighter--p1 img,
 #k-combat[data-state="idle"] .cfloor .fighter--p2 img,
 #k-combat[data-state="select"] .cfloor .fighter--p2 img{
-  height:clamp(160px,24vh,240px);
-  width:auto;
-  max-width:100%;
-  max-height:240px;
+  height:clamp(160px,24vh,240px)!important;
+  width:auto!important;
+  max-width:100%!important;
+  max-height:240px!important;
   object-fit:contain;
   object-position:center bottom;
 }
@@ -507,8 +507,9 @@
   #k-combat[data-state="select"] .cfloor .fighter--p1 img,
   #k-combat[data-state="idle"] .cfloor .fighter--p2 img,
   #k-combat[data-state="select"] .cfloor .fighter--p2 img{
-    height:clamp(120px,28vw,160px);
-    max-height:160px;
+    height:clamp(120px,28vw,160px)!important;
+    max-height:160px!important;
+    max-width:100%!important;
   }
   #k-combat[data-state="idle"] .cfloor__plate,
   #k-combat[data-state="select"] .cfloor__plate{margin:6px 0 0;padding:6px 8px}
@@ -520,8 +521,8 @@
   #k-combat[data-state="select"] .cfloor .fighter--p1 img,
   #k-combat[data-state="idle"] .cfloor .fighter--p2 img,
   #k-combat[data-state="select"] .cfloor .fighter--p2 img{
-    height:120px;
-    max-height:120px;
+    height:120px!important;
+    max-height:120px!important;
   }
   #k-combat[data-state="idle"] .cfloor__insert,
   #k-combat[data-state="select"] .cfloor__insert{
