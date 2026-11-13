@@ -2,7 +2,7 @@
 (function () {
   'use strict';
   if (!/[?&]debug=1(?:&|$)/.test(location.search)) return;
-  var VER = '20261113k';
+  var VER = '20261113l';
   var box = document.createElement('div');
   box.id = 'kp-debug';
   box.setAttribute('aria-hidden', 'true');
