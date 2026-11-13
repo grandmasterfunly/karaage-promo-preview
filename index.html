@@ -1,0 +1,433 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Chicken Karaage | Japanese Fried Chicken | Sus Hi Eatstation</title>
+<meta name="description" content="New at Sus Hi Eatstation: Chicken Karaage, Japanese Fried Chicken, in four styles.">
+<link rel="preload" href="fonts/anton-0.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="preload" as="image" href="assets/hero-poster.webp" media="(min-width: 700px)">
+<link rel="stylesheet" href="css/fonts.css">
+<link rel="stylesheet" href="css/site.css">
+<link rel="stylesheet" href="css/v3.css">
+<link rel="stylesheet" href="css/v4.css">
+<script>document.documentElement.classList.add('js');try{if(localStorage.getItem('kp-motion')==='off')document.documentElement.classList.add('motion-off');if(localStorage.getItem('kp-promo')==='off')document.documentElement.classList.add('promo-off');}catch(e){}</script>
+</head>
+<body>
+<a class="skip-link" href="#main">Skip to main content</a>
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="inkrough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9"/></filter></defs></svg>
+
+<div class="preview-bar" role="region" aria-label="Preview controls">
+  <span class="preview-bar__tag">Preview</span>
+  <button type="button" class="preview-switch" role="switch" aria-checked="true" id="promo-switch">
+    <span class="preview-switch__label">Karaage promo</span>
+    <span class="preview-switch__track" aria-hidden="true"><span class="preview-switch__thumb"></span></span>
+    <span class="preview-switch__state" aria-hidden="true">ON</span>
+  </button>
+</div>
+
+<header class="ph ph--menu" aria-label="Sus Hi Eatstation site header (existing)">
+  <span class="ph__label">Existing site menu bar</span>
+</header>
+
+<main id="main" tabindex="-1">
+<div id="karaage-promo" class="kp">
+
+  <!-- Mascot chapter nav -->
+  <nav class="mnav" aria-label="Karaage chapters">
+    <button type="button" class="mnav__toggle" aria-expanded="false" aria-controls="mnav-list">
+      <img class="mnav__face" src="assets/m-ninja.webp" alt="" width="64" height="70" data-mnav-face>
+      <span class="mnav__current" data-mnav-current>Karaage</span>
+      <span class="sr-only">: show chapters</span>
+    </button>
+    <ul class="mnav__list" id="mnav-list">
+      <li><a href="#k-hero" data-chapter="hero"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">New karaage</span></a></li>
+      <li><a href="#k-combat" data-chapter="combat"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Combat Bowl</span></a></li>
+      <li><a href="#k-enter" data-chapter="enter"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Enter the Karaage</span></a></li>
+      <li><a href="#k-soba" data-chapter="soba"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Soba Hidden Karaage</span></a></li>
+      <li><a href="#k-hustle" data-chapter="hustle"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Hustle Burrito</span></a></li>
+      <li><a href="#k-fighters" data-chapter="fighters"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Choose your fighter</span></a></li>
+      <li><a href="#k-app" data-chapter="app"><span class="mnav__dot" aria-hidden="true"></span><span class="mnav__txt">Appetizer</span></a></li>
+      <li class="mnav__motion"><button type="button" class="mnav__motionbtn" aria-pressed="false" data-motion-toggle>Pause motion</button></li>
+    </ul>
+  </nav>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero" id="k-hero" data-chapter="hero" aria-labelledby="hero-title">
+    <div class="hero__media">
+      <picture class="hero__poster" aria-hidden="true">
+        <source media="(max-width: 699px)" srcset="assets/hero-poster-m.webp">
+        <img src="assets/hero-poster.webp" alt="" width="1920" height="1080" fetchpriority="high">
+      </picture>
+      <video class="hero__video" muted loop playsinline preload="none" poster="assets/hero-poster.webp" aria-hidden="true" tabindex="-1" data-hero-video>
+        <source data-src="assets/hero.mp4" type="video/mp4">
+      </video>
+      <canvas class="hero__embers" aria-hidden="true" data-embers></canvas>
+      <button type="button" class="hero__pause" hidden aria-pressed="false" data-hero-pause>
+        <span class="hero__pause-icon" aria-hidden="true"></span><span data-hero-pause-label>Pause video</span>
+      </button>
+    </div>
+
+    <div class="hero__copy">
+      <p class="hero__eyebrow"><span class="tag-new">New</span></p>
+      <h1 class="hero__title" id="hero-title">
+        <span class="hero__line">Chicken</span>
+        <span class="hero__line hero__line--hot">Karaage.</span>
+      </h1>
+      <p class="hero__tag">Japanese Fried Chicken</p>
+      <div class="hero__ctas">
+        <a class="btn-order" href="#order">Order now</a>
+        <a class="hero__choose" href="#styles">Choose your style <span class="chev" aria-hidden="true"></span></a>
+      </div>
+    </div>
+
+    <div class="styles" id="styles" tabindex="-1">
+      <h2 class="styles__title">Choose your style</h2>
+      <ul class="styles__list">
+        <li><a class="style-card style-card--combat" href="#k-combat">
+          <span class="style-card__art" aria-hidden="true"><img src="assets/f-ninja.webp" alt="" width="150" height="171" loading="lazy"></span>
+          <span class="style-card__name">Karaage Combat Bowl</span>
+          <span class="style-card__meta">Spicy &middot; Fight for it</span>
+        </a></li>
+        <li><a class="style-card style-card--enter" href="#k-enter">
+          <span class="style-card__stripes" aria-hidden="true"></span>
+          <span class="style-card__art" aria-hidden="true"><img src="assets/m-gi.webp" alt="" width="150" height="161" loading="lazy"></span>
+          <span class="style-card__name">Enter the Karaage Bowl</span>
+          <span class="style-card__meta">Break a board, earn a belt</span>
+        </a></li>
+        <li><a class="style-card style-card--soba" href="#k-soba">
+          <span class="style-card__art" aria-hidden="true"><img src="assets/m-robe.webp" alt="" width="190" height="151" loading="lazy"></span>
+          <span class="style-card__name">Soba Noodle Hidden Karaage Bowl</span>
+          <span class="style-card__meta">Chilled soba &middot; Find it</span>
+        </a></li>
+        <li><a class="style-card style-card--hustle" href="#k-hustle">
+          <span class="style-card__art" aria-hidden="true"><img src="assets/m-jacket.webp" alt="" width="130" height="175" loading="lazy"></span>
+          <span class="style-card__name">Karaage Hustle Burrito</span>
+          <span class="style-card__meta">Wrapped &middot; Get roasted</span>
+        </a></li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="wipe" data-from="hero" data-to="combat" aria-hidden="true"><svg viewBox="0 0 1600 200" preserveAspectRatio="none"><path class="wipe__stroke" d="M-40 120 C 200 40, 420 170, 700 95 S 1200 30, 1660 110 L1660 220 L-40 220 Z"/><path class="wipe__stroke wipe__stroke--2" d="M-40 160 C 300 110, 600 200, 900 140 S 1400 120, 1660 150 L1660 220 L-40 220 Z"/></svg></div>
+
+  <!-- ============ COMBAT ============ -->
+  <section class="combat" id="k-combat" data-chapter="combat" data-state="idle" aria-labelledby="combat-title">
+    <div class="chero">
+      <img class="chero__bg" src="assets/dojo.webp" alt="" width="1122" height="1402" loading="lazy">
+      <div class="chero__shade" aria-hidden="true"></div>
+      <svg class="chero__lines" data-cbowl-lines aria-hidden="true"></svg>
+      <div class="chero__head">
+        <p class="chero__spicy"><span class="flames" aria-hidden="true"><i></i><i></i><i></i></span> Spicy</p>
+        <p class="chero__jfc">Japanese Fried Chicken (JFC)</p>
+        <p class="chero__tag">Choose your bowl.</p>
+        <dl class="chero__bars" aria-hidden="true">
+          <div><dt>Flavor</dt><dd><span style="--v:96%"></span></dd></div>
+          <div><dt>Crunch</dt><dd><span style="--v:100%"></span></dd></div>
+          <div><dt>Heat</dt><dd><span style="--v:78%"></span></dd></div>
+        </dl>
+        <a class="btn-order" href="#order">Order now</a>
+      </div>
+      <figure class="cbowl" data-cbowl>
+        <h2 class="cbowl__logo" id="combat-title">
+          <img src="assets/wm-combat.webp" alt="Karaage Combat Bowl" width="1600" height="460">
+        </h2>
+        <div class="cbowl__stage" data-cbowl-stage>
+          <img class="cbowl__img" src="assets/bowl-combat.webp" alt="Karaage Combat Bowl: three crispy karaage over sushi rice with fried onions, pickled jalapeños, shredded cheese, scallions, purple cabbage, carrots, cucumber and Sus Hi sauce." width="1391" height="1126" loading="lazy">
+          <ul class="cbowl__tags" id="cbowl-tags" aria-hidden="true">
+            <li class="ctag ctag--l" data-k="scallions" style="--ty:2%"><img src="assets/f-scallions.webp" alt="" width="40" height="40" loading="lazy"><span>Scallions<i>In the bowl</i></span></li>
+            <li class="ctag ctag--l" data-k="fire-sauce" style="--ty:18%"><img src="assets/f-fire-sauce.webp" alt="" width="40" height="40" loading="lazy"><span>Fire Sauce<i>In the bowl</i></span></li>
+            <li class="ctag ctag--l" data-k="white-sauce" style="--ty:34%"><img src="assets/f-white-sauce.webp" alt="" width="40" height="40" loading="lazy"><span>White Sauce<i>In the bowl</i></span></li>
+            <li class="ctag ctag--l" data-k="purple-cabbage" style="--ty:50%"><img src="assets/f-purple-cabbage.webp" alt="" width="40" height="40" loading="lazy"><span>Purple Cabbage<i>In the bowl</i></span></li>
+            <li class="ctag ctag--l" data-k="pickled-jalapenos" style="--ty:66%"><img src="assets/f-pickled-jalapenos.webp" alt="" width="40" height="40" loading="lazy"><span>Pickled Jalapeños<i>In the bowl</i></span></li>
+            <li class="ctag ctag--l" data-k="fried-onions" style="--ty:82%"><img src="assets/f-fried-onions.webp" alt="" width="40" height="40" loading="lazy"><span>Fried Onion<i>In the bowl</i></span></li>
+            <li class="ctag ctag--r" data-k="nori-seasoning" style="--ty:2%"><img src="assets/f-nori-seasoning.webp" alt="" width="40" height="40" loading="lazy"><span>Nori Seasoning<i>In the bowl</i></span></li>
+            <li class="ctag ctag--r" data-k="chili-powder" style="--ty:18%"><img src="assets/f-chili-powder.webp" alt="" width="40" height="40" loading="lazy"><span>Chili Powder<i>In the bowl</i></span></li>
+            <li class="ctag ctag--r" data-k="sus-hi-sauce" style="--ty:34%"><img src="assets/f-sus-hi-sauce.webp" alt="" width="40" height="40" loading="lazy"><span>Sus Hi Sauce<i>In the bowl</i></span></li>
+            <li class="ctag ctag--r" data-k="pickled-carrots" style="--ty:50%"><img src="assets/f-pickled-carrots.webp" alt="" width="40" height="40" loading="lazy"><span>Pickled Carrots<i>In the bowl</i></span></li>
+            <li class="ctag ctag--r" data-k="melted-cheese" style="--ty:66%"><img src="assets/f-melted-cheese.webp" alt="" width="40" height="40" loading="lazy"><span>Cheese<i>In the bowl</i></span></li>
+            <li class="ctag ctag--r" data-k="cucumber" style="--ty:82%"><img src="assets/f-cucumber.webp" alt="" width="40" height="40" loading="lazy"><span>Cucumber<i>In the bowl</i></span></li>
+          </ul>
+        </div>
+        <ul class="sr-only" aria-label="Twelve ingredients, all in your bowl">
+          <li>Fire Sauce</li><li>Fried Onion</li><li>White Sauce</li><li>Nori Seasoning</li><li>Chili Powder</li><li>Cucumber</li>
+          <li>Scallions</li><li>Sus Hi Sauce</li><li>Purple Cabbage</li><li>Pickled Jalapeños</li><li>Melted Cheese</li><li>Pickled Carrots</li>
+        </ul>
+        <figcaption class="cbowl__floor">
+          <span class="cbowl__cap">Every fighter is in your bowl.</span>
+          <button type="button" class="cbowl__toggle" aria-pressed="false" aria-controls="cbowl-tags" data-cbowl-toggle>Show the roster</button>
+        </figcaption>
+      </figure>
+      <div class="cfloor" id="combat-floor" data-floor>
+        <div class="cfloor__hud" data-floor-hud hidden>
+          <div class="hud" aria-hidden="true">
+            <div class="hud__side hud__side--p1"><p class="hud__name" data-hud-p1-name>P1</p><div class="hud__bar"><span data-hp-p1></span></div></div>
+            <p class="hud__round">Round 1</p>
+            <div class="hud__side hud__side--p2"><p class="hud__name">Ninja Karaage</p><div class="hud__bar hud__bar--p2"><span data-hp-p2></span></div></div>
+          </div>
+        </div>
+        <div class="cfloor__board">
+        <form class="cfloor__pick cfloor__wall" data-screen="select">
+          <p class="cfloor__pick-title" id="select-head">Choose your fighter</p>
+          <fieldset class="cfloor__set">
+            <legend class="sr-only">Choose one of twelve ingredient fighters, all in your bowl. Use arrow keys, then press Fight.</legend>
+            <div class="cfloor__grid" data-roster></div>
+          </fieldset>
+          <button type="submit" class="pix-btn pix-btn--go">Fight!</button>
+        </form>
+        <div class="cfloor__ring arena" data-arena>
+          <div class="cfloor__glow" aria-hidden="true"></div>
+          <p class="cfloor__insert" aria-hidden="true">Insert coin · Choose your fighter</p>
+          <div class="fighter fighter--p1 is-idle is-preview" data-f1>
+            <img src="assets/f-fire-sauce.webp" alt="Fire Sauce" width="80" height="80" data-f1-img>
+          </div>
+          <div class="fighter fighter--p2 is-idle is-wait" data-f2>
+            <img src="assets/f-ninja.webp" alt="Ninja Karaage waits on the dojo floor" width="80" height="80">
+          </div>
+          <div class="fx" data-fx aria-hidden="true"></div>
+          <p class="combo" data-combo aria-hidden="true"><span data-combo-n>2</span> hit combo</p>
+          <p class="fight-call" data-call aria-hidden="true">Fight!</p>
+          <div class="cfloor__plate" data-p1-plate>
+            <p class="cfloor__plate-name" data-p1-name>Fire Sauce</p>
+            <p class="cfloor__plate-in" data-p1-in>In the bowl</p>
+            <p class="cfloor__plate-bio" data-p1-bio></p>
+            <p class="cfloor__plate-sp">Special: <span data-p1-special></span></p>
+          </div>
+          <p class="cfloor__prompt" data-floor-prompt>Ninja Karaage is waiting. Choose your fighter.</p>
+        </div>
+        </div>
+        <div class="cfloor__pad pad" role="group" aria-label="Fight controls. Keys: J punch, K kick, L special." hidden data-floor-pad>
+          <button type="button" class="pad__btn" data-move="punch"><kbd>J<span class="sr-only"> key</span></kbd> Punch</button>
+          <button type="button" class="pad__btn" data-move="kick"><kbd>K<span class="sr-only"> key</span></kbd> Kick</button>
+          <button type="button" class="pad__btn pad__btn--special" data-move="special" aria-describedby="sp-meter-label" disabled><kbd>L<span class="sr-only"> key</span></kbd> Special</button>
+          <div class="sp-meter" aria-hidden="true"><span data-sp></span></div>
+          <span class="sr-only" id="sp-meter-label" data-sp-label>Special meter charging</span>
+          <button type="button" class="pad__btn pad__btn--pause" data-fight-pause aria-pressed="false">Pause fight</button>
+        </div>
+        <div class="cfloor__result" data-floor-ko hidden>
+          <p class="ko__mark">K.O.</p>
+          <p class="ko__win" data-ko-win tabindex="-1">You win!</p>
+          <p class="ko__score" data-ko-score aria-hidden="true">Score 000000</p>
+          <p class="ko__back">Every fighter is in your bowl.</p>
+          <div class="ko__actions">
+            <a class="btn-order" href="#order">Order now</a>
+            <button type="button" class="pix-btn" data-rematch>Rematch</button>
+            <button type="button" class="pix-btn" data-reselect>New fighter</button>
+          </div>
+        </div>
+        <p class="cfloor__keys"><span><kbd>J</kbd> Punch</span> <span><kbd>K</kbd> Kick</span> <span><kbd>L</kbd> Special</span></p>
+        <p class="sr-only" aria-live="polite" data-combat-live></p>
+      </div>
+    </div><!-- /chero -->
+  </section>
+
+  <div class="wipe" data-from="combat" data-to="enter" aria-hidden="true"><svg viewBox="0 0 1600 200" preserveAspectRatio="none"><path class="wipe__stroke" d="M-40 100 L 300 70 L 520 120 L 860 60 L 1180 110 L 1660 70 L1660 220 L-40 220 Z"/><path class="wipe__stroke wipe__stroke--2" d="M-40 150 L 400 120 L 760 160 L 1100 125 L 1660 150 L1660 220 L-40 220 Z"/></svg></div>
+
+  <!-- ============ ENTER ============ -->
+  <section class="en" id="k-enter" data-chapter="enter" aria-labelledby="enter-title">
+    <div class="en__stripes en__stripes--l" aria-hidden="true"><i></i><i></i></div>
+    <div class="en__stripes en__stripes--r" aria-hidden="true"><i></i><i></i></div>
+    <div class="en__poster">
+      <p class="en__presents">Sus Hi Eatstation presents</p>
+      <h2 class="en__title" id="enter-title"><img class="en__logo" src="assets/wm-enter.webp" alt="Enter the Karaage Bowl" width="1600" height="511"></h2>
+      <div class="en__stage">
+        <div class="en__sun" aria-hidden="true"></div>
+        <img class="en__bowl" src="assets/bowl-enter.webp" alt="Enter the Karaage Bowl: three crispy karaage drizzled with white sauce and sweet soy over sushi rice, with cheese, carrots, cucumber and scallions." width="1000" height="829" loading="lazy">
+      </div>
+      <p class="en__jfc">Japanese Fried Chicken (JFC)</p>
+      <p class="en__tag">Become one with the taste.</p>
+      <a class="btn-order" href="#order">Order now</a>
+    </div>
+
+    <div role="group" class="en-w" aria-labelledby="enw-title" data-rig>
+      <h3 class="en-w__title" id="enw-title">Break five boards, <span>earn your belt</span></h3>
+      <p class="en-w__round" data-round-label>Board <span data-round>1</span> of 5</p>
+      <ol class="en-w__hits" data-hits aria-label="Board results"></ol>
+      <div class="en-w__board">
+        <div class="board" data-board>
+          <canvas class="board__half board__half--l" data-half-l></canvas>
+          <canvas class="board__half board__half--r" data-half-r></canvas>
+          <svg class="board__cracks" data-cracks viewBox="0 0 600 260" preserveAspectRatio="none" aria-hidden="true"></svg>
+        </div>
+        <span class="en-w__block en-w__block--l" aria-hidden="true"></span><span class="en-w__block en-w__block--r" aria-hidden="true"></span>
+        <div class="splinters" data-splinters aria-hidden="true"></div>
+        <p class="chop-word" data-chop-word aria-hidden="true"></p>
+      </div>
+      <div class="en-w__chi" role="meter" aria-label="Chop power" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" data-chi><span class="en-w__fill" data-chi-fill></span><span class="en-w__sweet" aria-hidden="true"></span></div>
+      <button type="button" class="en-w__btn" data-chop aria-describedby="chop-help">Hold to chop</button>
+      <p class="en-w__help" id="chop-help">Hold, then let go in the red zone. Keyboard: hold Space or Enter, then release. The zone gets smaller each board.</p>
+      <p class="en-w__rank"><span data-rank-name>White belt</span><span class="sr-only">, </span><span class="sr-only" data-rank-count>0 boards broken</span><span class="belts" aria-hidden="true" data-belts></span></p>
+      <div class="en-slip" data-fortune hidden>
+        <p class="en-slip__k">Your belt</p>
+        <p class="en-slip__belt" data-final-belt></p>
+        <p class="en-slip__k en-slip__k--sub">Your fortune</p>
+        <p class="en-slip__text" data-fortune-text></p>
+        <button type="button" class="en-slip__again" data-next-board>Try again</button>
+      </div>
+      <span data-after hidden></span>
+    </div>
+    <img class="en__mascot" src="assets/m-gi.webp" alt="" width="678" height="900" loading="lazy" data-gi>
+    <p class="sr-only" aria-live="polite" data-enter-live></p>
+  </section>
+
+  <div class="wipe" data-from="enter" data-to="soba" aria-hidden="true"><svg viewBox="0 0 1600 200" preserveAspectRatio="none"><path class="wipe__stroke" d="M-40 140 C 160 60, 380 90, 560 120 C 760 150, 900 40, 1120 70 C 1320 95, 1480 130, 1660 90 L1660 220 L-40 220 Z"/><path class="wipe__stroke wipe__stroke--2" d="M-40 170 C 260 140, 520 190, 820 160 C 1100 135, 1380 175, 1660 150 L1660 220 L-40 220 Z"/></svg></div>
+
+  <!-- ============ SOBA ============ -->
+  <section class="soba" id="k-soba" data-chapter="soba" aria-labelledby="soba-title">
+    <canvas class="soba__ink" data-ink aria-hidden="true"></canvas>
+    <div class="bamboo bamboo--l" aria-hidden="true" data-bamboo="l"></div>
+    <div class="bamboo bamboo--r" aria-hidden="true" data-bamboo="r"></div>
+    <button type="button" class="egg" data-egg aria-label="A hidden ink seal is in the painting. Activate to find it.">
+      <svg class="egg__seal" viewBox="0 0 64 64" aria-hidden="true" focusable="false"><rect x="6" y="6" width="52" height="52" rx="4" fill="#9b1c16"/><rect x="11" y="11" width="42" height="42" rx="2" fill="none" stroke="#f3e2c8" stroke-width="2"/><text x="32" y="40" text-anchor="middle" font-size="22" font-family="serif" fill="#f3e2c8">寿</text></svg>
+    </button>
+
+    <div class="soba__inner">
+      <div class="moon" data-moon>
+        <div class="soba__duo" aria-hidden="true">
+          <img class="soba__chicken" src="assets/char-soba-chicken.webp" alt="" width="1153" height="1028" loading="lazy">
+          <img class="soba__heroine" src="assets/char-soba-heroine.webp" alt="" width="1200" height="767" loading="lazy">
+        </div>
+        <svg class="moon__enso" viewBox="0 0 600 600" aria-hidden="true"><path data-enso d="M300 36 C 450 30, 566 150, 562 300 C 558 450, 440 566, 296 562 C 150 558, 36 446, 40 296 C 44 168, 140 62, 262 42"/></svg>
+        <div class="moon__window">
+          <img class="moon__bowl" src="assets/bowl-soba.webp" alt="Soba Noodle Hidden Karaage Bowl: crispy karaage over chilled soba noodles with kimchi, scallions, carrots and cucumber." width="1228" height="1236" loading="lazy">
+          <canvas class="moon__mist" data-mist aria-hidden="true"></canvas>
+          <p class="moon__hint" data-mist-hint aria-hidden="true">Paint the mist</p>
+        </div>
+        <div class="seal" data-seal aria-hidden="true"><span>寿</span><span>Sus Hi</span></div>
+      </div>
+
+      <div class="soba__copy">
+        <svg class="soba__kanji" viewBox="0 0 1000 1000" aria-hidden="true" focusable="false"><path data-kanji d="M435.1670568206001 145.52564375399015Q388.9125345818259 164.63077250478818 347.1829112577144 201.33273036816337Q305.4532879336029 238.03468823153855 281.32049372206853 289.31687593104914Q301.43115556501385 305.4054054054054 324.05565013832734 328.02989997871884Q346.68014471164076 350.65439455203233 364.7797403702915 378.8093211321558Q382.8793360289423 406.9642477122792 389.91806767397316 440.1468397531389Q392.93466695041496 455.2298361353479 393.9402000425622 475.8432645243669Q394.9457331347095 496.4566929133858 392.4319004043413 517.5728878484783Q389.91806767397316 538.6890827835709 382.3765694828687 552.7665460736326Q374.8350712917642 566.8440093636943 359.75207490955523 568.8550755479889Q351.7078101723771 569.8606086401362 334.6137476058736 564.8329431793999Q317.5196850393701 559.8052777186635 298.41455628857204 552.7665460736326Q279.309427537774 545.7278144286017 263.7236646094914 538.1863162374973Q248.13790168120877 530.6448180463929 242.10470312832518 525.6171525856564Q234.06043839114704 518.5784209406256 226.51894020004255 503.9981911044903Q218.97744200893806 489.41796126835493 208.92211108746542 477.35156416258775Q201.88337944243455 524.6116194935092 200.87784635028729 581.9270057459034Q199.87231325814003 639.2423919982975 198.86678016599276 694.546712066397Q197.8612470738455 749.8510321344967 189.81698233666737 793.0889550968291Q190.82251542881463 798.1166205575654 191.32528197488827 802.1387529261544Q191.82804852096191 806.1608852947435 192.83358161310917 810.1830176633326Q198.86678016599276 837.3324111513087 201.38061289636093 858.9513726324749Q203.8944456267291 880.5703341136411 200.87784635028729 917.77505852309Q163.67312194083848 906.7141945094701 139.03756118323048 882.5814002979357Q114.40200042562248 858.4486060864014 103.34113641200256 818.2272824005107Q130.49052989997872 761.9174292402638 135.51819536071503 673.9332836773781Q140.54586082145136 585.9491381144924 140.54586082145136 485.3958288997659Q141.55139391359864 456.2353692274952 141.55139391359864 426.57214300915086Q141.55139391359864 396.90891679080653 142.5569270057459 367.74845711853584Q142.5569270057459 363.72632474994674 142.5569270057459 359.7041923813577Q142.5569270057459 355.68206001276866 143.56246009789317 351.65992764417956Q144.56799319004043 310.43307086614175 144.0652266439668 272.22281336454563Q143.56246009789317 234.0125558629495 131.49606299212599 201.83549691423707Q118.42413279421154 199.8244307299425 112.89370078740158 200.32719727601614Q107.36326878059162 200.82996382208978 95.29687167482444 198.8188976377952Q92.28027239838264 189.76909980846983 86.24707384549905 181.2220685252181Q80.21387529261546 172.67503724196638 74.18067673973187 163.6252394126409Q61.10874654181741 146.53117684613744 53.064481804639286 129.43711427963393Q45.02021706746116 112.34305171313042 58.092147265375615 92.2323898701851Q64.1253458182592 93.23792296233239 70.66131091721643 94.74622260055327Q77.19727601617365 96.25452223877414 84.23600766120452 98.26558842306872Q100.32453713556075 102.28772079165776 117.9213662481379 105.80708661417322Q135.51819536071505 109.32645243668867 155.62885720366035 108.32091934454138Q184.78931687593104 107.31538625239409 218.97744200893806 101.78495424558412Q253.1655671419451 96.25452223877414 280.31496062992125 88.210257501596Q307.4643541178974 80.16599276441787 314.50308576292827 71.1161949350925Q357.7410087252607 75.13832730368165 391.4263673121941 95.24898914662691Q425.11172589912746 115.35965098957217 435.1670568206001 145.52564375399015ZM892.6846137476059 384.84251968503935Q888.6624813790169 389.8701851457757 885.1431155565015 390.37295169184927Q881.623749733986 390.8757182379229 878.6071504575442 390.8757182379229Q875.5905511811023 390.8757182379229 872.071185358587 390.8757182379229Q868.5518195360715 390.8757182379229 863.5241540753352 392.88678442221743Q835.3692274952117 402.9421153436901 823.3028303894446 430.09150883166626Q811.2364332836773 457.24090231964243 804.1977016386465 490.4234943605022Q797.1589699936156 523.606086401362 784.0870397957012 552.7665460736326Q781.0704405192594 547.7388806128963 779.5621408810384 547.7388806128963Q778.0538412428176 547.7388806128963 775.0372419663759 549.7499467971909Q773.0261757820813 551.7610129814855 771.0151095977868 552.7665460736326Q772.020642689934 557.794211534369 773.5289423281549 560.8108108108108Q775.0372419663759 563.8274100872526 776.042775058523 566.8440093636943Q779.0593743349649 570.8661417322835 780.0649074271121 575.3910406469462Q781.0704405192594 579.9159395616089 778.0538412428176 587.960204298787Q762.9708448606086 591.982336667376 748.8933815705469 591.982336667376Q734.8159182804852 591.982336667376 719.7329218982762 591.982336667376Q711.6886571610981 591.982336667376 704.1471589699936 591.982336667376Q696.6056607788892 591.982336667376 687.5558629495638 591.982336667376Q667.4452011066185 591.982336667376 646.8317727175995 594.9989359438177Q626.2183443285805 598.0155352202596 605.1021493934879 601.0321344967014Q567.8974249840392 607.065333049585 531.195467120664 609.5791657799532Q494.4935092572888 612.0929985103213 462.81921685464994 604.0487337731431Q431.1449244520111 596.004469035965 408.01766333262395 568.8550755479889Q417.0674611619493 559.8052777186635 428.1283251755692 559.8052777186635Q439.18918918918916 559.8052777186635 452.26111938710363 561.816343902958Q458.29431793998725 562.8218769951053 464.3275164928708 563.324643541179Q470.36071504575443 563.8274100872526 476.393913598638 563.8274100872526Q523.6539689295595 561.816343902958 579.9638220898064 556.285911896148Q636.2736752500532 550.7554798893382 676.4949989359438 540.7001489678655Q679.5115982123856 540.7001489678655 683.030964034901 540.7001489678655Q686.5503298574165 540.7001489678655 689.5669291338583 540.7001489678655Q696.6056607788892 540.7001489678655 702.6388593317727 540.7001489678655Q708.6720578846563 540.7001489678655 712.6941902532453 543.7167482443073Q717.7218557139817 529.6392849542456 721.7439880825707 515.0590551181102Q725.7661204511598 500.4788252819749 727.7771866354543 484.3902958076186Q691.5779953181528 479.36263034688227 656.3843370929985 480.36816343902956Q621.1906788678442 481.3736965311768 584.9914875505426 486.4013619919131Q574.9361566290701 487.4068950840604 564.8808257075974 489.9207278144286Q554.8254947861248 492.43456054479674 545.7756969567993 495.45115982123855Q528.6816343902958 499.4732921898276 512.5931049159395 502.48989146626934Q496.5045754415833 505.50649074271115 478.4049797829325 501.4843583741221Q468.3496488614599 498.4677590976803 453.7694190253245 490.4234943605022Q439.18918918918916 482.3792296233241 428.63109172164286 470.3128325175569Q418.0729942540966 458.2464354117897 419.0785273462439 444.16897212172796Q451.25558629495634 453.2187699510534 491.4769099808469 449.69940412853794Q531.6982336667376 446.18003830602254 572.9250904447755 441.1523728452862Q618.1740795914025 434.11364120025536 659.903702915514 431.5998084698872Q701.6333262396255 429.08597573951903 730.7937859118962 443.16343902958073Q738.8380506490743 435.1191742924026 739.8435837412216 423.55554373270905Q740.8491168333688 411.9919131730155 739.8435837412216 399.92551606724834Q739.8435837412216 393.8923175143647 739.3408171951479 387.3563524154075Q738.8380506490743 380.82038731645025 739.8435837412216 373.7816556714194Q705.6554586082145 370.7650563949776 658.3954032772931 370.7650563949776Q611.1353479463716 370.7650563949776 565.8863587997446 377.30102149393485Q520.6373696531177 383.83698659289206 490.4713768886997 400.93104915939557Q470.36071504575443 396.90891679080653 448.7417535645882 391.8812513300702Q427.122792083422 386.85358586933387 413.0453287933603 375.7927218557139Q398.9678655032986 364.73185784209403 398.9678655032986 343.6156629070014Q411.03426260906576 339.5935305384124 422.5978931687593 338.58799744626515Q434.16152372845283 337.58246435411786 446.2279208342201 336.57693126197057Q453.2666524792509 336.57693126197057 459.8026175782081 336.57693126197057Q466.33858267716533 336.57693126197057 473.3773143221962 335.57139816982334Q433.1559906363056 326.5216003404979 414.0508618855075 295.3500744839327Q394.9457331347095 264.1785486273675 377.851670568206 229.99042349436047Q397.9623324111513 224.96275803362414 420.5868269844648 232.001489678655Q443.21132155777826 239.04022132368584 461.8136837625027 254.12321770589483Q480.4160459672271 269.2062140881038 489.46584379655246 289.31687593104914Q498.51564162587783 309.42753777399446 489.46584379655246 331.54926580123424Q522.6484358374122 326.5216003404979 563.87529261545 325.01330070227704Q605.1021493934879 323.50500106405616 646.3290061715259 320.48840178761435Q687.5558629495638 317.47180251117254 719.7329218982762 311.4386039582889Q717.7218557139817 303.39433922111084 708.6720578846563 300.8805064907427Q699.6222600553309 298.3666737603745 690.0696956799319 299.8749733985954Q680.5171313045329 301.38327303681626 677.5005320280911 305.4054054054054Q688.561396041711 285.2947435624601 709.6775909768036 258.6481166205576Q730.7937859118962 232.00148967865505 743.8657161098106 206.8631623749734Q740.8491168333688 196.80783145350074 733.8103851883379 191.27739944669077Q726.7716535433071 185.7469674398808 721.2412215364972 179.21100234092359Q715.7107895296872 172.67503724196638 714.7052564375399 159.60310704405185Q751.9099808469887 156.5865077676101 787.103639072143 170.6639710576718Q822.2972972972973 184.7414343477335 838.3858267716536 212.8963609278569Q830.3415620344754 233.00702277080222 814.2530325601192 245.0734198765694Q798.1645030857629 257.1398169823366 782.5787401574803 268.7034475420302Q766.9929772291977 280.26707810172377 757.9431793998723 300.3777399446691Q799.1700361779102 304.39987231325813 833.3581613109172 327.02436688657156Q867.5462864439243 349.64886145988504 892.6846137476059 384.84251968503935ZM950.0 834.315811874867Q929.8893381570547 877.5537348371994 888.6624813790168 896.1560970419238Q847.4356246009789 914.7584592466482 794.1423707171739 914.7584592466482Q740.8491168333688 914.7584592466482 684.5392636731219 903.6975952330283Q669.4562672909129 900.6809959565865 659.4009363694403 898.1671632262182Q649.3456054479676 895.6533304958501 635.2681421579059 894.6477974037028Q631.2460097893169 894.6477974037028 628.7321770589488 893.139497765482Q626.2183443285805 891.6311981272611 623.2017450521388 890.6256650351138Q568.9029580761865 871.5205362843158 533.2065333049585 829.2881464141306Q497.5101085337306 787.0557565439454 474.3828474143435 732.2542030219195Q451.25558629495634 677.4526494998936 434.16152372845283 623.1538625239413Q466.33858267716533 636.2257927218557 487.95754415833153 661.3641200255373Q509.5765056394978 686.502447329219 527.6761012981485 716.1656735475633Q545.7756969567993 745.8288997659076 564.3780591615237 773.983826346031Q582.9804213662482 802.1387529261544 609.1242817620771 822.2494147690998Q614.1519472228134 822.2494147690998 618.6768461374761 822.7521813151734Q623.2017450521388 823.254947861247 629.2349436050223 824.2604809533943Q651.3566716322622 826.2715471376888 678.0032985741648 828.2826133219833Q704.6499255160672 830.2936795062778 728.7827197276016 827.7798467759097Q752.915513939136 825.2660140455416 767.998510321345 815.210683124069Q783.0815067035539 805.1553522025963 784.0870397957012 785.044690359651Q784.0870397957012 781.0225579910618 779.0593743349649 766.4423281549265Q774.0317088742286 751.8620983187911 773.0261757820813 750.856565226644Q766.9929772291977 738.7901681208767 754.9265801234305 729.7403702915514Q742.8601830176633 720.690572462226 731.7993190040434 708.6241753564589Q720.7384549904235 696.5577782506916 717.7218557139817 675.441583315599Q761.9653117684613 692.5356458821025 806.7115343690147 714.6573739093424Q851.457756969568 736.7791019365823 889.668014471164 765.4367950627793Q927.8782719727602 794.0944881889764 950.0 834.315811874867ZM764.9819110449032 92.2323898701851Q760.9597786763142 122.39838263460308 743.362949563737 130.44264737178122Q725.7661204511598 138.48691210895936 697.6111938710363 142.5090444775484Q663.4230687380293 147.53670993828473 628.7321770589488 165.63630559693547Q594.0412853798681 183.7359012555862 565.8863587997446 192.7856990849117Q569.9084911683337 196.80783145350074 574.4333900829964 201.33273036816342Q578.9582889976591 205.8576292828261 583.9859544583954 209.87976165141515Q604.0966163013408 228.98489040221318 621.6934454139179 252.1121515216003Q639.290274526495 275.23941264098744 628.2294105128751 309.42753777399446Q597.0578846563099 315.46073632687796 580.46658863588 299.8749733985954Q563.8752926154501 284.2892104703128 554.8254947861246 258.14535007448393Q545.7756969567993 232.00148967865505 540.7480314960629 204.85209619067882Q539.7424984039158 203.84656309853153 539.7424984039158 202.84103000638424Q517.6207703766759 203.84656309853153 505.0516067248351 208.37146201319422Q492.4824430729943 212.8963609278569 481.4215790593743 220.9406256650351Q474.3828474143435 210.88529474356244 454.27218557139815 203.8465630985316Q434.16152372845283 196.80783145350074 426.11725899127475 187.75803362417537Q461.310917216429 170.6639710576718 503.0405405405405 148.54224303043196Q544.7701638646521 126.42051500319212 594.0412853798681 122.39838263460308Q599.0689508406044 112.34305171313042 608.6215152160034 103.29325388380505Q618.1740795914025 94.24345605447968 626.2183443285805 81.17152585656515Q625.2128112364333 80.16599276441787 623.2017450521388 77.14939348797611Q618.1740795914025 73.12726111938707 614.654713768887 67.09406256650345Q611.1353479463716 61.060864013619835 612.1408810385188 50.0Q625.2128112364333 52.011066184294464 638.2847414343478 53.5193658225154Q651.3566716322622 55.02766546073633 664.4286018301766 55.02766546073633Q695.6001276867419 58.04426473717808 722.2467546286443 63.574696743988056Q748.8933815705469 69.10512875079803 764.9819110449032 92.2323898701851ZM418.0729942540966 893.6422643115557Q395.9512662268568 891.6311981272611 383.38210257501595 878.5592679293466Q370.8129389231751 865.4873377314321 352.7133432645244 849.398808257076Q345.67461161949353 842.3600766120451 330.59161523728454 832.3047456905724Q315.50861885507555 822.2494147690998 313.49755267078103 815.210683124069Q311.48648648648646 809.1774845711853 315.5086188550755 801.6359863800808Q319.5307512236646 794.0944881889764 323.5528835922537 787.0557565439454Q326.56948286869545 782.0280910832091 329.0833155990636 778.0059587146201Q331.5971483294318 773.983826346031 332.60268142157906 769.961693977442Q338.6358799744626 750.856565226644 339.6414130666099 727.7293041072569Q340.6469461587572 704.6020429878697 340.6469461587572 680.4692487763353Q340.6469461587572 662.3696531176846 340.6469461587572 645.7783570972547Q340.6469461587572 629.1870610768249 343.66354543519896 614.1040646946158Q375.84060438391145 640.2479250904447 389.4153011278995 677.9554160459672Q402.9899978718876 715.6629070014897 403.9955309640349 765.939561608853Q395.9512662268568 785.044690359651 397.9623324111513 807.1664183868909Q399.9733985954458 829.2881464141307 403.9955309640349 847.3877420727814Q405.00106405618214 851.4098744413704 405.00106405618214 852.4154075335177Q407.0121302404767 855.4320068099595 412.039795701213 861.4652053628431Q417.0674611619493 868.503937007874 420.08406043839113 875.0399021068313Q423.10065971483294 881.5758672057884 418.0729942540966 893.6422643115557ZM312.49201957863374 476.34603107044046Q317.5196850393701 428.08044264737174 301.4311555650138 386.85358586933387Q285.3426260906576 345.626729091296 259.1987656948287 321.4939348797616Q247.13236858906149 334.5658650776761 237.57980421366247 333.0575654394552Q228.02723983826345 331.54926580123424 215.96084273249627 324.51053415620345Q211.9387103639072 322.49946797190887 209.92764417961268 321.4939348797616Q207.91657799531814 343.6156629070014 206.40827835709723 368.2512236646094Q204.89997871887635 392.88678442221743 204.89997871887635 419.03064481804637Q221.99404128537986 444.16897212172796 248.6406682272824 462.77133432645235Q275.2872951691849 481.3736965311768 312.49201957863374 476.34603107044046ZM925.8672057884656 713.6518408171951Q899.7233453926367 722.7016386465205 876.093317727176 712.1435411789741Q852.4632900617153 701.585443711428 829.3360289423282 686.502447329219Q817.269631836561 678.4581825920409 805.7060012768675 671.41945094701Q794.1423707171739 664.3807193019791 782.0759736114067 660.35858693339Q781.0704405192594 653.3198552883591 777.551074696744 648.2921898276229Q774.0317088742286 643.2645243668866 772.020642689934 636.2257927218557Q756.937646307725 635.2202596297084 748.3906150244733 627.1759948925303Q739.8435837412216 619.1317301553522 729.7882528197489 612.0929985103213Q773.0261757820813 596.004469035965 815.2585656522665 601.0321344967014Q857.4909555224516 606.0597999574377 888.1597148329431 633.2091934454138Q918.8284741434347 660.35858693339 925.8672057884656 713.6518408171951ZM666.4396680144712 765.939561608853Q646.3290061715259 753.8731645030857 627.7266439668015 739.2929346669504Q609.1242817620771 724.712704830815 597.5606512023835 704.0992764417961Q585.9970206426899 683.4858480527771 587.0025537348372 652.314322196212Q585.9970206426899 641.253458182592 578.9582889976591 637.231325814003Q571.9195573526282 633.2091934454139 570.9140242604809 622.148329431794Q600.0744839327516 617.1206639710576 625.7155777825069 630.6953607150457Q651.3566716322622 644.2700574590338 667.4452011066185 667.9000851244946Q683.5337305809746 691.5301127899553 685.0420302191956 718.1767397318579Q686.5503298574165 744.8233666737603 666.4396680144712 765.939561608853ZM292.3813577356884 151.55884230687377Q261.2098318791232 152.56437539902106 233.05490529899978 158.09480740583098Q204.89997871887635 163.6252394126409 179.7616514151947 176.69716961055542Q189.81698233666737 185.7469674398808 196.3529474356246 191.27739944669077Q202.88891253458183 196.80783145350074 208.4193445413918 205.35486273675247Q213.94977654820175 213.9018940200042 218.97744200893806 232.00148967865505Q209.92764417961268 238.03468823153855 209.42487763353904 252.6149180676739Q208.92211108746542 267.19514790380924 206.91104490317088 273.22834645669286Q233.05490529899978 247.08448606086392 252.66280059587143 214.90742711215148Q272.2706958927431 182.73036816343904 292.3813577356884 151.55884230687377Z"/></svg>
+        <h2 class="soba__title" id="soba-title"><img class="soba__logo" src="assets/wm-soba.webp" alt="Soba Noodle Hidden Karaage Bowl" width="1600" height="445"></h2>
+        <p class="soba__jfc">Japanese Fried Chicken (JFC)</p>
+        <p class="soba__tag">Chill noodles. Bold moves.</p>
+        <p class="soba__prompt" data-soba-prompt>Mist gathers at the rim of the bowl. Paint it away with your brush to find what else is hiding.</p>
+        <div class="soba__actions">
+          <button type="button" class="btn-ink" data-reveal>Clear the mist</button>
+          <a class="btn-order" href="#order">Order now</a>
+        </div>
+        <p class="egg__line" data-egg-line role="status"></p>
+        <p class="sr-only" aria-live="polite" data-soba-live></p>
+      </div>
+    </div>
+  </section>
+
+  <div class="wipe" data-from="soba" data-to="hustle" aria-hidden="true"><svg viewBox="0 0 1600 200" preserveAspectRatio="none"><path class="wipe__stroke" d="M-40 130 L 140 60 L 260 120 L 420 30 L 560 110 L 720 50 L 860 120 L 1040 40 L 1180 115 L 1340 55 L 1480 120 L 1660 70 L1660 220 L-40 220 Z"/><path class="wipe__stroke wipe__stroke--2" d="M-40 170 L 200 130 L 380 175 L 640 135 L 900 172 L 1200 130 L 1660 165 L1660 220 L-40 220 Z"/></svg></div>
+
+  <!-- ============ HUSTLE ============ -->
+  <section class="hu" id="k-hustle" data-chapter="hustle" aria-labelledby="hustle-title">
+    <svg class="hu__city" viewBox="0 0 1600 400" preserveAspectRatio="xMidYMax slice" aria-hidden="true"><g class="b"><rect x="0" y="212" width="151" height="188"/><rect class="w" x="16" y="234" width="16" height="22"/><rect class="w" x="50" y="234" width="16" height="22"/><rect class="w" x="84" y="234" width="16" height="22"/><rect class="w" x="118" y="234" width="16" height="22"/><rect class="w" x="16" y="274" width="16" height="22"/><rect class="w" x="50" y="274" width="16" height="22"/><rect class="w" x="84" y="274" width="16" height="22"/><rect class="w" x="118" y="274" width="16" height="22"/><rect class="w" x="16" y="314" width="16" height="22"/><rect class="w" x="50" y="314" width="16" height="22"/><rect class="w" x="84" y="314" width="16" height="22"/><rect class="w" x="118" y="314" width="16" height="22"/><rect class="w" x="16" y="354" width="16" height="22"/><rect class="w" x="50" y="354" width="16" height="22"/><rect class="w" x="84" y="354" width="16" height="22"/><rect class="w" x="118" y="354" width="16" height="22"/><rect x="157" y="238" width="193" height="162"/><rect class="w" x="173" y="260" width="16" height="22"/><rect class="w" x="207" y="260" width="16" height="22"/><rect class="w" x="241" y="260" width="16" height="22"/><rect class="w" x="275" y="260" width="16" height="22"/><rect class="w" x="309" y="260" width="16" height="22"/><rect class="w" x="173" y="300" width="16" height="22"/><rect class="w" x="207" y="300" width="16" height="22"/><rect class="w" x="241" y="300" width="16" height="22"/><rect class="w" x="275" y="300" width="16" height="22"/><rect class="w" x="309" y="300" width="16" height="22"/><rect class="w" x="173" y="340" width="16" height="22"/><rect class="w" x="207" y="340" width="16" height="22"/><rect class="w" x="241" y="340" width="16" height="22"/><rect class="w" x="275" y="340" width="16" height="22"/><rect class="w" x="309" y="340" width="16" height="22"/><rect class="w" x="173" y="380" width="16" height="22"/><rect class="w" x="207" y="380" width="16" height="22"/><rect class="w" x="241" y="380" width="16" height="22"/><rect class="w" x="275" y="380" width="16" height="22"/><rect class="w" x="309" y="380" width="16" height="22"/><rect x="351" y="226" width="178" height="174"/><rect class="w" x="367" y="248" width="16" height="22"/><rect class="w" x="401" y="248" width="16" height="22"/><rect class="w" x="435" y="248" width="16" height="22"/><rect class="w" x="469" y="248" width="16" height="22"/><rect class="w" x="503" y="248" width="16" height="22"/><rect class="w" x="367" y="288" width="16" height="22"/><rect class="w" x="401" y="288" width="16" height="22"/><rect class="w" x="435" y="288" width="16" height="22"/><rect class="w" x="469" y="288" width="16" height="22"/><rect class="w" x="503" y="288" width="16" height="22"/><rect class="w" x="367" y="328" width="16" height="22"/><rect class="w" x="401" y="328" width="16" height="22"/><rect class="w" x="435" y="328" width="16" height="22"/><rect class="w" x="469" y="328" width="16" height="22"/><rect class="w" x="503" y="328" width="16" height="22"/><rect class="w" x="367" y="368" width="16" height="22"/><rect class="w" x="401" y="368" width="16" height="22"/><rect class="w" x="435" y="368" width="16" height="22"/><rect class="w" x="469" y="368" width="16" height="22"/><rect class="w" x="503" y="368" width="16" height="22"/><rect x="534" y="236" width="184" height="164"/><rect class="w" x="550" y="258" width="16" height="22"/><rect class="w" x="584" y="258" width="16" height="22"/><rect class="w" x="618" y="258" width="16" height="22"/><rect class="w" x="652" y="258" width="16" height="22"/><rect class="w" x="686" y="258" width="16" height="22"/><rect class="w" x="550" y="298" width="16" height="22"/><rect class="w" x="584" y="298" width="16" height="22"/><rect class="w" x="618" y="298" width="16" height="22"/><rect class="w" x="652" y="298" width="16" height="22"/><rect class="w" x="686" y="298" width="16" height="22"/><rect class="w" x="550" y="338" width="16" height="22"/><rect class="w" x="584" y="338" width="16" height="22"/><rect class="w" x="618" y="338" width="16" height="22"/><rect class="w" x="652" y="338" width="16" height="22"/><rect class="w" x="686" y="338" width="16" height="22"/><rect class="w" x="550" y="378" width="16" height="22"/><rect class="w" x="584" y="378" width="16" height="22"/><rect class="w" x="618" y="378" width="16" height="22"/><rect class="w" x="652" y="378" width="16" height="22"/><rect class="w" x="686" y="378" width="16" height="22"/><rect x="726" y="241" width="137" height="159"/><rect class="w" x="742" y="263" width="16" height="22"/><rect class="w" x="776" y="263" width="16" height="22"/><rect class="w" x="810" y="263" width="16" height="22"/><rect class="w" x="742" y="303" width="16" height="22"/><rect class="w" x="776" y="303" width="16" height="22"/><rect class="w" x="810" y="303" width="16" height="22"/><rect class="w" x="742" y="343" width="16" height="22"/><rect class="w" x="776" y="343" width="16" height="22"/><rect class="w" x="810" y="343" width="16" height="22"/><rect class="w" x="742" y="383" width="16" height="22"/><rect class="w" x="776" y="383" width="16" height="22"/><rect class="w" x="810" y="383" width="16" height="22"/><rect x="864" y="143" width="165" height="257"/><rect class="w" x="880" y="165" width="16" height="22"/><rect class="w" x="914" y="165" width="16" height="22"/><rect class="w" x="948" y="165" width="16" height="22"/><rect class="w" x="982" y="165" width="16" height="22"/><rect class="w" x="880" y="205" width="16" height="22"/><rect class="w" x="914" y="205" width="16" height="22"/><rect class="w" x="948" y="205" width="16" height="22"/><rect class="w" x="982" y="205" width="16" height="22"/><rect class="w" x="880" y="245" width="16" height="22"/><rect class="w" x="914" y="245" width="16" height="22"/><rect class="w" x="948" y="245" width="16" height="22"/><rect class="w" x="982" y="245" width="16" height="22"/><rect class="w" x="880" y="285" width="16" height="22"/><rect class="w" x="914" y="285" width="16" height="22"/><rect class="w" x="948" y="285" width="16" height="22"/><rect class="w" x="982" y="285" width="16" height="22"/><rect class="w" x="880" y="325" width="16" height="22"/><rect class="w" x="914" y="325" width="16" height="22"/><rect class="w" x="948" y="325" width="16" height="22"/><rect class="w" x="982" y="325" width="16" height="22"/><rect class="w" x="880" y="365" width="16" height="22"/><rect class="w" x="914" y="365" width="16" height="22"/><rect class="w" x="948" y="365" width="16" height="22"/><rect class="w" x="982" y="365" width="16" height="22"/><rect x="1030" y="227" width="140" height="173"/><rect class="w" x="1046" y="249" width="16" height="22"/><rect class="w" x="1080" y="249" width="16" height="22"/><rect class="w" x="1114" y="249" width="16" height="22"/><rect class="w" x="1046" y="289" width="16" height="22"/><rect class="w" x="1080" y="289" width="16" height="22"/><rect class="w" x="1114" y="289" width="16" height="22"/><rect class="w" x="1046" y="329" width="16" height="22"/><rect class="w" x="1080" y="329" width="16" height="22"/><rect class="w" x="1114" y="329" width="16" height="22"/><rect class="w" x="1046" y="369" width="16" height="22"/><rect class="w" x="1080" y="369" width="16" height="22"/><rect class="w" x="1114" y="369" width="16" height="22"/><rect x="1178" y="235" width="164" height="165"/><rect class="w" x="1194" y="257" width="16" height="22"/><rect class="w" x="1228" y="257" width="16" height="22"/><rect class="w" x="1262" y="257" width="16" height="22"/><rect class="w" x="1296" y="257" width="16" height="22"/><rect class="w" x="1194" y="297" width="16" height="22"/><rect class="w" x="1228" y="297" width="16" height="22"/><rect class="w" x="1262" y="297" width="16" height="22"/><rect class="w" x="1296" y="297" width="16" height="22"/><rect class="w" x="1194" y="337" width="16" height="22"/><rect class="w" x="1228" y="337" width="16" height="22"/><rect class="w" x="1262" y="337" width="16" height="22"/><rect class="w" x="1296" y="337" width="16" height="22"/><rect class="w" x="1194" y="377" width="16" height="22"/><rect class="w" x="1228" y="377" width="16" height="22"/><rect class="w" x="1262" y="377" width="16" height="22"/><rect class="w" x="1296" y="377" width="16" height="22"/><rect x="1351" y="193" width="125" height="207"/><rect class="w" x="1367" y="215" width="16" height="22"/><rect class="w" x="1401" y="215" width="16" height="22"/><rect class="w" x="1435" y="215" width="16" height="22"/><rect class="w" x="1367" y="255" width="16" height="22"/><rect class="w" x="1401" y="255" width="16" height="22"/><rect class="w" x="1435" y="255" width="16" height="22"/><rect class="w" x="1367" y="295" width="16" height="22"/><rect class="w" x="1401" y="295" width="16" height="22"/><rect class="w" x="1435" y="295" width="16" height="22"/><rect class="w" x="1367" y="335" width="16" height="22"/><rect class="w" x="1401" y="335" width="16" height="22"/><rect class="w" x="1435" y="335" width="16" height="22"/><rect class="w" x="1367" y="375" width="16" height="22"/><rect class="w" x="1401" y="375" width="16" height="22"/><rect class="w" x="1435" y="375" width="16" height="22"/><rect x="1486" y="101" width="190" height="299"/><rect class="w" x="1502" y="123" width="16" height="22"/><rect class="w" x="1536" y="123" width="16" height="22"/><rect class="w" x="1570" y="123" width="16" height="22"/><rect class="w" x="1604" y="123" width="16" height="22"/><rect class="w" x="1638" y="123" width="16" height="22"/><rect class="w" x="1502" y="163" width="16" height="22"/><rect class="w" x="1536" y="163" width="16" height="22"/><rect class="w" x="1570" y="163" width="16" height="22"/><rect class="w" x="1604" y="163" width="16" height="22"/><rect class="w" x="1638" y="163" width="16" height="22"/><rect class="w" x="1502" y="203" width="16" height="22"/><rect class="w" x="1536" y="203" width="16" height="22"/><rect class="w" x="1570" y="203" width="16" height="22"/><rect class="w" x="1604" y="203" width="16" height="22"/><rect class="w" x="1638" y="203" width="16" height="22"/><rect class="w" x="1502" y="243" width="16" height="22"/><rect class="w" x="1536" y="243" width="16" height="22"/><rect class="w" x="1570" y="243" width="16" height="22"/><rect class="w" x="1604" y="243" width="16" height="22"/><rect class="w" x="1638" y="243" width="16" height="22"/><rect class="w" x="1502" y="283" width="16" height="22"/><rect class="w" x="1536" y="283" width="16" height="22"/><rect class="w" x="1570" y="283" width="16" height="22"/><rect class="w" x="1604" y="283" width="16" height="22"/><rect class="w" x="1638" y="283" width="16" height="22"/><rect class="w" x="1502" y="323" width="16" height="22"/><rect class="w" x="1536" y="323" width="16" height="22"/><rect class="w" x="1570" y="323" width="16" height="22"/><rect class="w" x="1604" y="323" width="16" height="22"/><rect class="w" x="1638" y="323" width="16" height="22"/><rect class="w" x="1502" y="363" width="16" height="22"/><rect class="w" x="1536" y="363" width="16" height="22"/><rect class="w" x="1570" y="363" width="16" height="22"/><rect class="w" x="1604" y="363" width="16" height="22"/><rect class="w" x="1638" y="363" width="16" height="22"/></g><path class="l" d="M240 136 Q 480 176 720 140"/><rect class="c" x="260" y="145" width="27" height="31"/><rect class="c" x="312" y="148" width="24" height="22"/><rect class="c" x="364" y="141" width="21" height="22"/><rect class="c" x="416" y="144" width="26" height="35"/><rect class="c" x="468" y="147" width="20" height="26"/><rect class="c" x="520" y="140" width="24" height="24"/><rect class="c" x="572" y="143" width="26" height="23"/><rect class="c" x="624" y="146" width="27" height="26"/><rect class="c" x="676" y="149" width="26" height="35"/></svg>
+    <div class="hu__dots" aria-hidden="true"></div>
+    <div class="hu__inner">
+      <div class="hu__cap">
+        <h2 class="hu__name" id="hustle-title"><img class="hu__logo" src="assets/wm-hustle.webp" alt="Karaage Hustle Burrito" width="1600" height="625"></h2>
+        <p class="hu__jfc">Japanese Fried Chicken (JFC)</p>
+      </div>
+      <div class="hu__splash">
+        <div class="hu__panel" aria-hidden="true"><span class="hu__rays"></span></div>
+        <div class="hu__speed" aria-hidden="true"></div>
+        <img class="hu__burrito" src="assets/burrito.webp" alt="Karaage Hustle Burrito cut in half: one half still wrapped, one half open, showing crispy karaage, slaw, carrots and sauce." width="941" height="947" loading="lazy">
+        <p class="hu__new" aria-hidden="true">New!</p>
+      </div>
+      <p class="hu__title"><span>The chicken</span> <span>the other chicken</span> <span>fears.</span></p>
+      <a class="btn-order hu__order" href="#order">Order now</a>
+      <div class="hu__talk">
+        <img class="hu__mascot" src="assets/m-jacket.webp" alt="" width="466" height="900" loading="lazy">
+        <div class="hu-bubble" data-bubble>
+          <p class="hu-bubble__k"><span>Karaage wisdom</span> <span class="hu-bubble__n" data-fact-count>#1</span></p>
+          <p class="hu-bubble__text" data-fact-text aria-live="polite" aria-atomic="true"></p>
+          <span class="hu-bubble__pow" data-pow aria-hidden="true">Pow!</span>
+          <div class="hu-bubble__row">
+            <button type="button" class="hu-hit" data-hit>Hit me again</button>
+            <div class="hu-react" role="group" aria-label="React to this fact">
+              <button type="button" class="hu-react__btn" aria-pressed="false" data-react="fire"><span aria-hidden="true">&#128293;</span><span class="sr-only">Fire</span> <span class="hu-react__n" data-react-n="fire">0</span></button>
+              <button type="button" class="hu-react__btn" aria-pressed="false" data-react="lol"><span aria-hidden="true">&#128514;</span><span class="sr-only">LOL</span> <span class="hu-react__n" data-react-n="lol">0</span></button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FIGHTERS ============ -->
+  <section class="fighters" id="k-fighters" data-chapter="fighters" aria-labelledby="fighters-title">
+    <div class="fighters__head">
+      <h2 class="fighters__title" id="fighters-title">Choose your fighter</h2>
+      <p class="fighters__sub">Japanese Fried Chicken (JFC), five ways. Same crispy Chicken Karaage.</p>
+    </div>
+    <ul class="roster-cards">
+      <li class="rc rc--combat" data-rc><img src="assets/bowl-combat.webp" alt="" width="1391" height="1126" loading="lazy">
+        <h3 class="rc__name">Karaage Combat Bowl</h3>
+        <dl class="rc__facts"><div><dt>Spicy</dt><dd class="hot">Yes</dd></div><div><dt>Base</dt><dd>Sushi rice</dd></div><div><dt>Price</dt><dd>$--</dd></div></dl>
+        <a class="btn-order btn-order--sm" href="#order">Order<span class="sr-only"> Karaage Combat Bowl</span></a></li>
+      <li class="rc rc--enter" data-rc><img src="assets/bowl-enter.webp" alt="" width="1000" height="829" loading="lazy">
+        <h3 class="rc__name">Enter the Karaage Bowl</h3>
+        <dl class="rc__facts"><div><dt>Base</dt><dd>Sushi rice</dd></div><div><dt>Price</dt><dd>$--</dd></div></dl>
+        <a class="btn-order btn-order--sm" href="#order">Order<span class="sr-only"> Enter the Karaage Bowl</span></a></li>
+      <li class="rc rc--soba" data-rc><img src="assets/bowl-soba.webp" alt="" width="1228" height="1236" loading="lazy">
+        <h3 class="rc__name">Soba Noodle Hidden Karaage Bowl</h3>
+        <dl class="rc__facts"><div><dt>Spicy</dt><dd>No</dd></div><div><dt>Base</dt><dd>Chilled soba</dd></div><div><dt>Price</dt><dd>$--</dd></div></dl>
+        <a class="btn-order btn-order--sm" href="#order">Order<span class="sr-only"> Soba Noodle Hidden Karaage Bowl</span></a></li>
+      <li class="rc rc--hustle" data-rc><img src="assets/burrito.webp" alt="" width="941" height="947" loading="lazy">
+        <h3 class="rc__name">Karaage Hustle Burrito</h3>
+        <dl class="rc__facts"><div><dt>Spicy</dt><dd>No</dd></div><div><dt>Base</dt><dd>Tortilla</dd></div><div><dt>Price</dt><dd>$--</dd></div></dl>
+        <a class="btn-order btn-order--sm" href="#order">Order<span class="sr-only"> Karaage Hustle Burrito</span></a></li>
+      <li class="rc rc--app" data-rc><img src="assets/appetizer.webp" alt="" width="1200" height="1086" loading="lazy">
+        <h3 class="rc__name">Chicken Karaage, 4 pcs</h3>
+        <dl class="rc__facts"><div><dt>Spicy</dt><dd>No</dd></div><div><dt>Base</dt><dd>Just chicken</dd></div><div><dt>Price</dt><dd>$--</dd></div></dl>
+        <a class="btn-order btn-order--sm" href="#order">Order<span class="sr-only"> Chicken Karaage, 4 pieces</span></a></li>
+    </ul>
+    <p class="cyo">Or build your own:
+      <a class="cyo__opt" href="#order"><span class="cyo__ico" aria-hidden="true">🌯</span> burrito</a>,
+      <a class="cyo__opt" href="#order"><span class="cyo__ico" aria-hidden="true">🍜</span> noodle</a>,
+      or <a class="cyo__opt" href="#order"><span class="cyo__ico" aria-hidden="true">🍚</span> sushi rice bowl</a>.
+      <a class="cyo__go" href="#order">Build yours</a></p>
+  </section>
+
+  <!-- ============ APPETIZER ============ -->
+  <section class="app" id="k-app" data-chapter="app" aria-labelledby="app-title">
+    <div class="app__copy">
+      <p class="app__kicker">Appetizer</p>
+      <h2 class="app__title" id="app-title">Chicken Karaage, 4&nbsp;pcs</h2>
+      <p class="app__jfc">Japanese Fried Chicken (JFC)</p>
+      <p class="app__tag">Big chunky crispy chicken</p>
+      <p class="app__nudge">Four pieces. Dip them in Sus Hi sauce. Add them to any bowl.</p>
+      <a class="btn-order" href="#order">Add to any bowl</a>
+    </div>
+    <div class="app__stage">
+      <button type="button" class="app__plate" data-crunch aria-describedby="crunch-count">
+        <img src="assets/appetizer.webp" alt="" width="1200" height="1086" loading="lazy">
+        <span class="sr-only">Take a bite</span>
+      </button>
+      <div class="app__cup" aria-hidden="true">
+        <span class="app__cup-bowl"></span>
+        <span class="app__cup-sauce"></span>
+        <span class="app__cup-label">Sus Hi sauce</span>
+      </div>
+      <canvas class="app__crumbs" data-crumbs aria-hidden="true"></canvas>
+      <p class="app__word" data-crunch-word aria-hidden="true">Crunch!</p>
+    </div>
+    <p class="app__count" id="crunch-count" aria-live="polite"><span data-crunch-n>Tap a piece to dip it</span></p>
+  </section>
+
+</div><!-- /karaage-promo -->
+
+<section class="ph ph--hero" aria-label="Existing homepage: Create your own sushi hero"><span class="ph__label">Existing: Create your own sushi &middot; 7 Florida Dojos (hero)</span></section>
+<section class="ph" aria-label="Existing homepage: Five ways to Sus Hi"><span class="ph__label">Existing: Five ways to Sus Hi</span></section>
+<section class="ph" aria-label="Existing homepage: Let the ninja pick"><span class="ph__label">Existing: Can't decide? Let the ninja pick</span></section>
+<section class="ph" aria-label="Existing homepage: Fan favorites"><span class="ph__label">Existing: Fan favorites</span></section>
+<section class="ph" aria-label="Existing homepage: Find your Dojo"><span class="ph__label">Existing: Find your Dojo (7 locations)</span></section>
+<section class="ph" aria-label="Existing homepage: Sus Hi Rewards"><span class="ph__label">Existing: Sus Hi Rewards</span></section>
+<section class="ph" aria-label="Existing homepage: Partial proceeds"><span class="ph__label">Existing: Partial proceeds</span></section>
+</main>
+<footer class="ph ph--footer"><span class="ph__label">Existing site footer</span></footer>
+
+<script src="js/data.js" defer></script>
+<script src="js/core.js" defer></script>
+<script src="js/combat.js" defer></script>
+<script src="js/enter.js" defer></script>
+<script src="js/soba.js" defer></script>
+<script src="js/hustle.js" defer></script>
+</body>
+</html>
