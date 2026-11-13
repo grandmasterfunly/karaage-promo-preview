@@ -8,19 +8,19 @@
 <meta name="description" content="New at Sus Hi Eatstation: Chicken Karaage, Japanese Fried Chicken, in four styles.">
 <link rel="preload" href="fonts/anton-0.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/hero-poster.webp" media="(min-width: 700px)">
-<link rel="stylesheet" href="css/fonts.css?v=20261113o">
-<link rel="stylesheet" href="css/site.css?v=20261113o">
-<link rel="stylesheet" href="css/v3.css?v=20261113o">
-<link rel="stylesheet" href="css/v4.css?v=20261113o">
-<link rel="stylesheet" href="css/v5.css?v=20261113o">
-<link rel="stylesheet" href="css/v6.css?v=20261113o">
+<link rel="stylesheet" href="css/fonts.css?v=20261113p">
+<link rel="stylesheet" href="css/site.css?v=20261113p">
+<link rel="stylesheet" href="css/v3.css?v=20261113p">
+<link rel="stylesheet" href="css/v4.css?v=20261113p">
+<link rel="stylesheet" href="css/v5.css?v=20261113p">
+<link rel="stylesheet" href="css/v6.css?v=20261113p">
 <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('kp-motion')==='off')document.documentElement.classList.add('motion-off');if(localStorage.getItem('kp-promo')==='off')document.documentElement.classList.add('promo-off');}catch(e){}(function(){var r=document.documentElement,w=window.innerWidth;function l(){r.style.setProperty('--frame-h',window.innerHeight+'px')}l();window.addEventListener('resize',function(){var n=window.innerWidth;if(n!==w){w=n;l()}},{passive:true});})();</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="inkrough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9"/></filter></defs></svg>
 
-<div class="preview-bar" data-v="20261113o" role="region" aria-label="Preview controls">
+<div class="preview-bar" data-v="20261113p" role="region" aria-label="Preview controls">
   <span class="preview-bar__tag">Preview</span>
   <button type="button" class="preview-switch" role="switch" aria-checked="true" id="promo-switch">
     <span class="preview-switch__label">Karaage promo</span>
@@ -257,6 +257,7 @@
       <h3 class="en-w__title" id="enw-title">Break five boards, <span>earn your belt</span></h3>
       <p class="en-w__round" data-round-label>Board <span data-round>1</span> of 5</p>
       <ol class="en-w__hits" data-hits aria-label="Board results"></ol>
+      <img class="en__mascot" src="assets/m-gi.webp" alt="" width="678" height="900" loading="lazy" data-gi>
       <div class="en-w__board">
         <div class="board" data-board>
           <canvas class="board__half board__half--l" data-half-l></canvas>
@@ -289,7 +290,6 @@
         <p class="en-boss__title">Crazy Karaage Mode</p>
       </div>
     </div>
-    <img class="en__mascot" src="assets/m-gi.webp" alt="" width="678" height="900" loading="lazy" data-gi>
     <p class="sr-only" aria-live="polite" data-enter-live></p>
     </div><!-- /enter play -->
   </section>
@@ -349,9 +349,14 @@
   <!-- ============ HUSTLE ============ -->
   <div class="hu-band">
   <section class="hu" id="k-hustle" data-chapter="hustle" aria-labelledby="hustle-title">
+    <div class="hu-comics__side hu-comics__side--paper" aria-hidden="true">
+      <img class="hu-comics__panel" src="assets/hu-panel-cabbage.webp" width="900" height="675" alt="" loading="lazy">
+      <img class="hu-comics__panel" src="assets/hu-panel-onion.webp" width="900" height="675" alt="" loading="lazy">
+      <img class="hu-comics__panel hu-comics__panel--wide" src="assets/hu-panel-fire.webp" width="900" height="675" alt="" loading="lazy">
+    </div>
+
     <div class="mframe mframe--food">
-      <div class="hu-poster" data-hu-poster>
-        <span class="hu-poster__corner hu-poster__corner--tl" aria-hidden="true"></span>
+      <div class="hu-poster" data-hu-poster>        <span class="hu-poster__corner hu-poster__corner--tl" aria-hidden="true"></span>
         <span class="hu-poster__corner hu-poster__corner--tr" aria-hidden="true"></span>
         <span class="hu-poster__corner hu-poster__corner--bl" aria-hidden="true"></span>
         <span class="hu-poster__corner hu-poster__corner--br" aria-hidden="true"></span>
@@ -375,6 +380,21 @@
   </section>
 
   <section class="hu-wise" id="k-wisdom" data-chapter="hustle" aria-labelledby="wisdom-title">
+      <div class="hu-comics__side hu-comics__side--wise" aria-hidden="true">
+        <img class="hu-comics__panel" src="assets/hu-panel-cabbage.webp" width="900" height="675" alt="" loading="lazy">
+        <img class="hu-comics__panel" src="assets/hu-panel-onion.webp" width="900" height="675" alt="" loading="lazy">
+        <img class="hu-comics__panel" src="assets/hu-panel-fire.webp" width="900" height="675" alt="" loading="lazy">
+        <img class="hu-comics__panel" src="assets/hu-panel-cheese.webp" width="900" height="675" alt="" loading="lazy">
+        <img class="hu-comics__panel" src="assets/hu-panel-roll.webp" width="900" height="675" alt="" loading="lazy">
+        <img class="hu-comics__panel" src="assets/hu-panel-kick.webp" width="900" height="675" alt="" loading="lazy">
+      </div>
+
+      <div class="hu-comics__side hu-comics__side--ink" aria-hidden="true">
+        <img class="hu-comics__panel" src="assets/hu-panel-cheese.webp" width="900" height="675" alt="" loading="lazy">
+        <img class="hu-comics__panel" src="assets/hu-panel-roll.webp" width="900" height="675" alt="" loading="lazy">
+        <img class="hu-comics__panel hu-comics__panel--wide" src="assets/hu-panel-kick.webp" width="900" height="675" alt="" loading="lazy">
+      </div>
+
     <div class="mframe mframe--play">
       <div class="hu-wise__inner">
         <h2 class="hu-wise__title" id="wisdom-title">Karaage wisdom</h2>
@@ -493,13 +513,13 @@
 </main>
 <footer class="ph ph--footer"><span class="ph__label">Existing site footer</span></footer>
 
-<script src="js/data.js?v=20261113o" defer></script>
-<script src="js/core.js?v=20261113o" defer></script>
-<script src="js/combat.js?v=20261113o" defer></script>
-<script src="js/enter.js?v=20261113o" defer></script>
-<script src="js/soba.js?v=20261113o" defer></script>
-<script src="js/hustle.js?v=20261113o" defer></script>
-<script src="js/lineup.js?v=20261113o" defer></script>
-<script>if(/[?&]debug=1(?:&|$)/.test(location.search)){var s=document.createElement('script');s.src='js/debug.js?v=20261113o';s.defer=true;document.body.appendChild(s);}</script>
+<script src="js/data.js?v=20261113p" defer></script>
+<script src="js/core.js?v=20261113p" defer></script>
+<script src="js/combat.js?v=20261113p" defer></script>
+<script src="js/enter.js?v=20261113p" defer></script>
+<script src="js/soba.js?v=20261113p" defer></script>
+<script src="js/hustle.js?v=20261113p" defer></script>
+<script src="js/lineup.js?v=20261113p" defer></script>
+<script>if(/[?&]debug=1(?:&|$)/.test(location.search)){var s=document.createElement('script');s.src='js/debug.js?v=20261113p';s.defer=true;document.body.appendChild(s);}</script>
 </body>
 </html>

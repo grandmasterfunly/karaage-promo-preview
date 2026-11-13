@@ -18,6 +18,9 @@
 /* Wrapper is invisible on mobile so Hustle + Wisdom stay separate frames. */
 .hu-band{display:contents}
 
+/* Desktop-only Hustle comic backdrop; never show on mobile. */
+.hu-sil,.hu-comics,.hu-comics__side{display:none}
+
 @media (min-width:900px){
 
   /* ---------- Combat: title + bowl + compact menu LEFT, fight RIGHT ---------- */
@@ -63,36 +66,62 @@
   .cfloor{grid-area:play;width:100%;max-width:none}
 
   /* ---------- Enter: bowl on the right, board on the left.
-     Desktop: double black stripes become a slim full-bleed edge frame
-     (brand look, no longer cutting through content). Board is capped
-     to sit in proportion with the bowl. Title is centered on the board.
-     Fortune/belt slip stacks above the mascot so the win message stays visible. ---------- */
+     Desktop: hide presents/JFC; Order sits under the tagline; chicken
+     perches on the lowered board; stripes stay an edge frame. ---------- */
   .en{
     display:grid;
-    grid-template-columns:minmax(0,1.1fr) minmax(0,1fr);
+    grid-template-columns:minmax(0,1.05fr) minmax(0,1fr);
     grid-template-areas:"widget poster";
-    column-gap:clamp(20px,3.5vw,56px);
+    column-gap:clamp(16px,3vw,48px);
     align-items:center;
-    padding:clamp(28px,4.5vh,56px) clamp(72px,7.5vw,104px);
-    min-height:0;
+    padding:clamp(12px,2.2vh,28px) clamp(64px,7vw,96px);
+    box-sizing:border-box;
+    min-height:calc(100vh - var(--bar-offset));
+    min-height:calc(100svh - var(--bar-offset));
   }
   .en__stripes{z-index:0;width:clamp(36px,3.2vw,52px)!important}
   .en__stripes--l{left:0!important}
   .en__stripes--r{right:0!important}
   .en-w,.en__poster{position:relative;z-index:2}
-  .en__poster{grid-area:poster;width:100%}
+  .en__presents,
+  .en__jfc{display:none}
+  .en__poster{
+    grid-area:poster;
+    width:100%;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    gap:6px;
+  }
   .en__logo{width:min(100%,100%);height:auto;margin:0 auto}
   .en__bowl{
     display:block;
     width:auto;
     height:auto;
     max-width:100%;
-    max-height:min(52vh,520px);
-    max-height:min(52svh,520px);
+    max-height:min(36vh,340px);
+    max-height:min(36svh,340px);
     object-fit:contain;
     object-position:center;
     aspect-ratio:1000 / 829;
     margin:0 auto;
+  }
+  .en__tag{
+    width:100%;
+    box-sizing:border-box;
+    margin:4px 0 0;
+    padding-left:.25em;
+    padding-right:88px;
+    font-size:clamp(1.35rem,2.05vw,2.1rem);
+    text-align:center;
+    position:relative;
+    z-index:4;
+  }
+  .en__poster .btn-order{
+    position:relative;
+    z-index:5;
+    margin:4px auto 0;
   }
   .en-w{
     grid-area:widget;
@@ -104,6 +133,7 @@
     grid-template-areas:
       ". round ."
       ". hits ."
+      ". gi ."
       ". board ."
       ". chi ."
       ". btn ."
@@ -113,11 +143,12 @@
       ". slip ."
       ". boss .";
     justify-items:stretch;
-    row-gap:6px;
+    align-items:end;
+    row-gap:4px;
   }
-  .en-w__round{grid-area:round}
-  .en-w__hits{grid-area:hits}
-  .en-w__board{grid-area:board;position:relative;width:100%}
+  .en-w__round{grid-area:round;align-self:end}
+  .en-w__hits{grid-area:hits;align-self:end}
+  .en-w__board{grid-area:board;position:relative;width:100%;z-index:2}
   .en .board{width:100%;max-width:none}
   .en-w__title{
     grid-area:board;
@@ -127,7 +158,7 @@
     width:min(92%,16em);
     text-align:center;
     pointer-events:none;
-    font-size:clamp(1.35rem,2.1vw,1.9rem);
+    font-size:clamp(1.3rem,2vw,1.85rem);
     color:#111;
     text-shadow:0 1px 0 #f6ecd0,1px 0 0 #f6ecd0,-1px 0 0 #f6ecd0,0 -1px 0 #f6ecd0,0 0 10px rgba(246,226,122,.95);
   }
@@ -137,72 +168,188 @@
   .en-w__help{grid-area:help;padding-left:0;box-sizing:border-box}
   .en-w__rank{grid-area:rank;padding-left:0;box-sizing:border-box}
   .en-slip{grid-area:slip;position:relative;z-index:6}
-  .en-boss{grid-area:boss}
-  /* Mascot stands at the lower-left of the bowl, above the tagline and CTA,
-     so it never covers "Become one with the taste," Order, or the fortune slip. */
-  .en__mascot{
-    grid-area:poster;
-    justify-self:start;
-    align-self:end;
-    width:clamp(96px,9vw,136px);
-    z-index:3;
-    pointer-events:none;
-    /* Sit in the column gap, not over the Trifecta cup or the tagline. */
-    margin:0 0 10.5rem -6.5rem;
-  }
-  /* The title lives on the board; hide it once the board has split away. */
-  .en-w.is-split .en-w__title,
-  #k-enter:has(.en-slip:not([hidden])) .en-w__title{visibility:hidden}
-  .en__jfc,.en__tag,.en__poster .btn-order{
-    position:relative;
-    z-index:4;
-  }
-  .en__tag{
-    width:100%;
-    box-sizing:border-box;
-    padding-left:.25em;
-    padding-right:88px; /* clear the chapter chip on the right edge */
-    font-size:clamp(1.4rem,2.15vw,2.2rem);
-    text-align:center;
-  }
   .en-slip,.en-slip__text{
     position:relative;
     z-index:6;
     overflow-wrap:anywhere;
     max-width:100%;
   }
+  .en-boss{grid-area:boss}
+  /* Perch the chicken on the top edge of the board, body above the wood
+     so the on-board title, chop button, and fortune slip stay clear. */
+  .en__mascot{
+    grid-area:gi;
+    justify-self:center;
+    align-self:end;
+    width:clamp(120px,14vw,176px);
+    height:auto;
+    z-index:4;
+    pointer-events:none;
+    margin:0 0 -24px;
+    transform-origin:50% 100%;
+  }
+  .en-w.is-split .en-w__title,
+  #k-enter:has(.en-slip:not([hidden])) .en-w__title{visibility:hidden}
 
-  /* ---------- Hustle + wisdom: poster LEFT, Karaage wisdom RIGHT ---------- */
+  /* ---------- Hustle: unboxed comic poster LEFT, wisdom RIGHT.
+     Cream field, oversized red brush under the wordmark, starburst badge,
+     floating green bursts. One chicken bridges the cream/black seam. ---------- */
   .hu-band{
     display:grid;
-    grid-template-columns:minmax(0,1.05fr) minmax(300px,.95fr);
+    grid-template-columns:minmax(0,1.08fr) minmax(300px,.92fr);
     align-items:stretch;
     background:#111;
+    overflow:visible;
+    box-sizing:border-box;
+    min-height:calc(100vh - var(--bar-offset));
+    min-height:calc(100svh - var(--bar-offset));
   }
   .hu{
     min-height:0;
-    padding:28px 20px 28px clamp(20px,3vw,40px);
+    padding:clamp(10px,1.8vh,22px) clamp(16px,2.4vw,28px) clamp(10px,1.8vh,22px) clamp(20px,3vw,40px);
     display:flex;
     align-items:center;
     justify-content:center;
+    overflow:visible;
+    background:var(--paper,#f2e8d5);
+    z-index:1;
   }
-  .hu-poster{width:100%;max-width:560px}
+  .hu-poster{
+    width:100%;
+    max-width:none;
+    background:none;
+    border:0;
+    box-shadow:none;
+    overflow:visible;
+    padding:8px 4px 8px;
+    gap:6px;
+  }
+  .hu-poster__corner{
+    width:clamp(44px,5vw,64px);
+    height:clamp(44px,5vw,64px);
+    z-index:1;
+  }
+  .hu-poster__corner--tl{top:8px;left:4px}
+  .hu-poster__corner--tr{top:12px;right:8px}
+  .hu-poster__corner--bl{bottom:12px;left:10px}
+  .hu-poster__corner--br{bottom:8px;right:14px}
+  .hu-poster__badge{width:clamp(96px,10vw,132px);margin:0 auto 0;z-index:3}
+  .hu-poster__name{
+    position:relative;
+    z-index:2;
+    margin:0;
+    width:100%;
+  }
+  .hu-poster__name::before{
+    content:"";
+    position:absolute;
+    left:50%;
+    top:50%;
+    width:118%;
+    height:92%;
+    transform:translate(-50%,-46%) rotate(-7deg);
+    z-index:0;
+    pointer-events:none;
+    background:#c8102e;
+    clip-path:polygon(
+      1% 58%, 6% 38%, 14% 44%, 22% 28%, 34% 40%, 46% 22%,
+      58% 34%, 70% 18%, 82% 32%, 92% 24%, 100% 42%,
+      97% 68%, 88% 78%, 76% 66%, 64% 80%, 50% 70%,
+      38% 82%, 24% 68%, 12% 78%, 0 64%
+    );
+  }
+  .hu-poster__wm{
+    position:relative;
+    z-index:1;
+    width:min(100%,560px);
+    filter:drop-shadow(3px 3px 0 #111);
+  }
+  .hu-poster__stage{
+    max-width:none;
+    width:100%;
+    justify-content:center;
+  }
   .hu-poster__food{
-    width:min(100%,460px);
+    width:min(100%,520px);
     height:auto;
-    max-height:min(48vh,440px);
-    max-height:min(48svh,440px);
+    max-height:min(36vh,340px);
+    max-height:min(36svh,340px);
     object-fit:contain;
     object-position:center;
     aspect-ratio:1325 / 1117;
   }
+  /* Faint comic-page backdrop, clipped to each half so cream and ink
+     stay in their own column under the poster / wisdom content. */
+  .hu,.hu-wise{position:relative;isolation:isolate}
+  .hu-wise{z-index:2}
+  .hu-comics__side{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    gap:10px 12px;
+    padding:16px 18px;
+    pointer-events:none;
+    z-index:0;
+    position:absolute;
+    inset:0;
+    overflow:hidden;
+  }
+  .hu-poster,.hu-wise__inner{position:relative;z-index:1}
+  .hu-wise{background:transparent}
+  .hu-comics__panel{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    border:3px solid #111;
+    box-sizing:border-box;
+    background:#f3ead8;
+    opacity:.1;
+    mix-blend-mode:multiply;
+  }
+  .hu-comics__side--ink .hu-comics__panel{
+    border-color:#f3ead8;
+    background:transparent;
+    opacity:.16;
+    mix-blend-mode:screen;
+    filter:grayscale(.2) contrast(1.2);
+  }
+  .hu-comics__panel--wide{grid-column:1 / -1}
+  .hu-comics__side--wise{display:none}
+
+  /* Desktop: only the wisdom chicken remains. */
+  .hu-poster__hit,
+  .hu-poster__pow{display:none}
+  .hu-poster__tag{
+    margin:2px 12px 0;
+    font-size:clamp(1.35rem,2.3vw,2.05rem);
+  }
+  .hu-poster__order{margin-top:8px;z-index:3}
   .hu-wise{
     min-height:0;
-    padding:28px clamp(20px,3vw,40px) 28px 20px;
+    padding:clamp(10px,1.8vh,22px) clamp(20px,3vw,40px) clamp(10px,1.8vh,22px) clamp(72px,8vw,120px);
     display:flex;
     align-items:center;
+    overflow:visible;
   }
   .hu-wise__inner{width:100%;max-width:none;margin:0}
+  .hu-wise__row{
+    grid-template-columns:clamp(110px,13vw,168px) minmax(0,1fr);
+    gap:8px 4px;
+    align-items:center;
+    overflow:visible;
+  }
+  /* Bridge the cream poster and the black wisdom panel at mid-height
+     so the chicken sits on the seam without covering Order or the badge. */
+  .hu-wise__mascot{
+    width:clamp(110px,13vw,168px);
+    height:auto;
+    margin-left:clamp(-170px,-12.5vw,-110px);
+    position:relative;
+    z-index:5;
+    justify-self:start;
+  }
 
   /* ---------- Lineup: picker + CYO LEFT, bowl photo RIGHT ---------- */
   .lineup{padding:clamp(28px,4.5vh,52px) clamp(20px,3.5vw,64px)}
@@ -310,4 +457,85 @@
     min-height:calc(var(--frame-h) - var(--bar-offset));
     box-sizing:border-box;
   }
+}
+
+/* Mobile only: Karaage Wisdom is its own full-width comic section,
+   visually separated from Select Your Bowl. Desktop rules above 900px stay as designed. */
+@media (max-width:899px){
+  .hu-wise{
+    position:relative;
+    isolation:isolate;
+    width:100%;
+    max-width:100%;
+    box-sizing:border-box;
+    margin:28px 0;
+    padding:28px 0 32px;
+    background:#111;
+    overflow:hidden;
+    border-top:0;
+    border-bottom:0;
+  }
+  /* Torn-paper cream edges at the top and bottom of the section. */
+  .hu-wise::before,
+  .hu-wise::after{
+    content:"";
+    position:absolute;
+    left:0;
+    right:0;
+    height:16px;
+    z-index:3;
+    pointer-events:none;
+    background:#f3ead8;
+  }
+  .hu-wise::before{
+    top:0;
+    clip-path:polygon(0 0,100% 0,100% 42%,96% 100%,92% 48%,87% 100%,82% 40%,76% 100%,70% 52%,64% 100%,58% 44%,52% 100%,46% 50%,40% 100%,34% 42%,28% 100%,22% 48%,16% 100%,10% 44%,5% 100%,0 48%);
+  }
+  .hu-wise::after{
+    bottom:0;
+    clip-path:polygon(0 58%,5% 0,10% 56%,16% 0,22% 52%,28% 0,34% 58%,40% 0,46% 50%,52% 0,58% 56%,64% 0,70% 48%,76% 0,82% 60%,87% 0,92% 52%,96% 0,100% 58%,100% 100%,0 100%);
+  }
+  /* Full-width faint comic-page backdrop (same locked Hustle chicken + Combat roster). */
+  .hu-wise .hu-comics__side--wise{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr 1fr;
+    gap:8px 8px;
+    padding:22px 10px 24px;
+    position:absolute;
+    inset:0;
+    z-index:0;
+    pointer-events:none;
+    overflow:hidden;
+  }
+  .hu-wise .hu-comics__side--paper,
+  .hu-wise .hu-comics__side--ink{display:none}
+  .hu-wise .hu-comics__panel{
+    display:block;
+    width:100%;
+    height:100%;
+    object-fit:cover;
+    object-position:center;
+    border:3px solid #f3ead8;
+    box-sizing:border-box;
+    background:transparent;
+    opacity:.12;
+    mix-blend-mode:screen;
+    filter:grayscale(.15) contrast(1.15);
+  }
+  .hu-wise .mframe--play,
+  .hu-wise__inner{
+    position:relative;
+    z-index:1;
+  }
+  .hu-wise .mframe--play{
+    padding:28px 14px 32px;
+    min-height:0;
+    justify-content:center;
+    box-sizing:border-box;
+  }
+  /* Keep content inside the torn edges; no horizontal overflow. */
+  .hu-wise__inner{width:100%;max-width:100%;padding:8px 16px 4px;box-sizing:border-box}
+  .hu-wise__mascot{max-width:100%;height:auto}
+  .hu-wise .hu-bubble{max-width:100%;box-sizing:border-box}
 }
