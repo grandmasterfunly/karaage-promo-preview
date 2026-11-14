@@ -20,6 +20,7 @@
 
   function setState(s) {
     state = s; sec.dataset.state = s;
+    if (s === 'idle' || s === 'select') resetFighterSprites();
     var wait = (s === 'idle' || s === 'select');
     if (hud) hud.hidden = (s !== 'fight');
     if (pad) pad.hidden = (s !== 'fight');
@@ -80,7 +81,7 @@
     var img = $('[data-f1-img]');
     if (img) { img.src = 'assets/f-' + f.id + '.webp'; img.alt = f.name; }
     if (state === 'idle' || state === 'select') {
-      if (f1 && /is-out/.test(f1.className)) f1.className = 'fighter fighter--p1 is-idle is-preview';
+      resetFighterSprites();
     }
     if (!preview) KP.say(live, f.name + ', in the bowl. ' + f.bio + ' Special move: ' + f.special + '.');
   }
@@ -98,10 +99,44 @@
     var c = grid.querySelector('input:checked'); if (c) c.focus({ preventScroll: true });
   }
   if (startBtn) startBtn.addEventListener('click', function (e) { focusFloor({ skipScroll: e.defaultPrevented }); });
+  function clearFighterInline(el) {
+    if (!el) return;
+    el.removeAttribute('hidden');
+    el.style.transform = '';
+    el.style.opacity = '';
+    el.style.visibility = '';
+    el.style.removeProperty('--kb');
+    el.style.removeProperty('--kr');
+    var img = el.querySelector('img');
+    if (img) {
+      img.style.transform = '';
+      img.style.opacity = '';
+      img.style.visibility = '';
+    }
+  }
+  /* After a KO the loser keeps is-ko / is-hop-in (hopin ends at opacity 0
+     with forwards fill). Always restore both sprites on select and rematch. */
+  function resetFighterSprites() {
+    if (f1) {
+      f1.className = 'fighter fighter--p1 is-idle is-preview';
+      clearFighterInline(f1);
+    }
+    if (f2) {
+      f2.className = 'fighter fighter--p2 is-idle is-wait';
+      clearFighterInline(f2);
+      var nimg = f2.querySelector('img');
+      if (nimg && nimg.getAttribute('src') !== 'assets/f-ninja.webp') {
+        nimg.src = 'assets/f-ninja.webp';
+        nimg.alt = 'Ninja Karaage waits on the dojo floor';
+      }
+    }
+    if (typeof call !== 'undefined' && call) { call.classList.remove('is-on'); call.textContent = ''; }
+    if (typeof comboEl !== 'undefined' && comboEl) comboEl.classList.remove('is-on');
+    if (fx) fx.innerHTML = '';
+  }
   function resetToWait() {
     clearTimers(); fighting = false; clearTimeout(cpuT); clearTimeout(narrT);
-    if (f1) f1.className = 'fighter fighter--p1 is-idle is-preview';
-    if (f2) f2.className = 'fighter fighter--p2 is-idle is-wait';
+    resetFighterSprites();
     setState('idle');
     if (prompt) prompt.textContent = 'Ninja Karaage is waiting. Choose your ingredient.';
   }
@@ -240,6 +275,8 @@
     enterAndFight();
   });
   function enterAndFight() {
+    clearTimers(); fighting = false; clearTimeout(cpuT); clearTimeout(narrT);
+    resetFighterSprites();
     setState('entrance');
     if (prompt) prompt.hidden = true;
     $('[data-f1-img]').src = 'assets/f-' + chosen.id + '.webp';

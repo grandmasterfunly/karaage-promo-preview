@@ -683,3 +683,79 @@
   .hu-wise__mascot{max-width:100%;height:auto}
   .hu-wise .hu-bubble{max-width:100%;box-sizing:border-box}
 }
+
+
+/* ===== t: mobile fight spacing, mobile hero title, restore Ninja after KO ===== */
+
+/* All widths: never leave Ninja Karaage invisible on the select floor
+   after a KO hop-out (is-hop-in ends at opacity 0, forwards). */
+#k-combat[data-state="idle"] .cfloor .fighter--p2,
+#k-combat[data-state="select"] .cfloor .fighter--p2{
+  opacity:1;
+  visibility:visible;
+  transform:none;
+  animation:none;
+}
+#k-combat[data-state="idle"] .cfloor .fighter--p2 img,
+#k-combat[data-state="select"] .cfloor .fighter--p2 img{
+  opacity:1;
+  visibility:visible;
+}
+#k-combat[data-state="idle"] .fight-call,
+#k-combat[data-state="select"] .fight-call{
+  display:none!important;
+  animation:none;
+  opacity:0;
+}
+
+@media (max-width:899px){
+  /* Fight/entrance: shrink both fighters ~25% and park them on the
+     floor ellipse with a clear center gap for VS, below the HUD. */
+  #k-combat[data-state="fight"] .cfloor .fighter,
+  #k-combat[data-state="entrance"] .cfloor .fighter{
+    /* Beat v4's height:auto !important so the box, not the intrinsic image, sets size. */
+    height:clamp(128px,36vw,150px) !important;
+    max-height:clamp(128px,36vw,150px) !important;
+    width:auto !important;
+    max-width:38% !important;
+  }
+  #k-combat[data-state="fight"] .cfloor .fighter--p1,
+  #k-combat[data-state="entrance"] .cfloor .fighter--p1{
+    left:2% !important;
+    right:auto !important;
+  }
+  #k-combat[data-state="fight"] .cfloor .fighter--p2,
+  #k-combat[data-state="entrance"] .cfloor .fighter--p2{
+    right:2% !important;
+    left:auto !important;
+  }
+  #k-combat[data-state="fight"] .cfloor .fighter img,
+  #k-combat[data-state="entrance"] .cfloor .fighter img{
+    height:clamp(128px,36vw,150px) !important;
+    max-height:clamp(128px,36vw,150px) !important;
+    width:auto !important;
+    max-width:100% !important;
+    object-fit:contain;
+    object-position:center bottom;
+  }
+  /* Shorter lunges so punches, kicks and specials do not close the gap. */
+  #k-combat .fighter--p1.is-punch{transform:translateX(10%)}
+  #k-combat .fighter--p1.is-kick{transform:translateX(14%) rotate(-8deg)}
+  #k-combat .fighter--p1.is-special{transform:translateX(16%) scale(1.04)}
+  #k-combat .fighter--p2.is-attack{transform:translateX(-14%)}
+  #k-combat[data-state="fight"] .cfloor__vs,
+  #k-combat[data-state="entrance"] .cfloor__vs{
+    width:clamp(48px,14vw,64px);
+    top:52%;
+  }
+
+  /* Hero title: the wider line (KARAAGE.) fills ~87% of the viewport. */
+  .hero .hero__title{
+    font-size:clamp(3.25rem,24vw,7.5rem);
+    line-height:.82;
+    margin:8px 0 6px;
+    max-width:100%;
+    overflow:visible;
+  }
+  .hero .hero__line{max-width:100%}
+}
