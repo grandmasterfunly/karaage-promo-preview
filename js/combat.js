@@ -330,7 +330,7 @@
     if (combo >= 3) dmg += 2;
     hp2 = Math.max(0, hp2 - dmg);
     if (!blocked) score += dmg * 100 * Math.max(1, combo);
-    if (kind !== 'special') sp += Math.max(0, dmg) * 0.7;
+    if (kind !== 'special') sp += Math.max(0, dmg) * (0.7 / 0.75); /* meter fills in 75% of the damage it used to: special unlocks ~25% sooner */
     setTimeout(function () {
       var c = center(f2);
       if (blocked) {
