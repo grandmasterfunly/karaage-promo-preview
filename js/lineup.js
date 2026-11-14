@@ -23,7 +23,7 @@
       b.classList.toggle('is-on', on);
       b.setAttribute('aria-checked', on ? 'true' : 'false');
     });
-    if (order) order.setAttribute('aria-label', 'Order ' + NAMES[id]);
+    if (order) order.setAttribute('aria-label', 'Order Now, ' + NAMES[id]);
     if (announce && live) KP.say(live, NAMES[id] + ' selected.');
   }
 

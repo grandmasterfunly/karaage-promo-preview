@@ -331,38 +331,51 @@
   .hu-poster__order{margin-top:8px;z-index:3}
   .hu-wise{
     min-height:0;
-    padding:clamp(10px,1.8vh,22px) clamp(20px,3vw,40px) clamp(10px,1.8vh,22px) clamp(72px,8vw,120px);
+    padding:clamp(10px,1.8vh,22px) clamp(20px,3vw,36px) clamp(10px,1.8vh,22px) clamp(24px,2.4vw,32px);
     display:flex;
     align-items:center;
     overflow:visible;
   }
   .hu-wise__inner{width:100%;max-width:none;margin:0}
   .hu-wise__row{
-    grid-template-columns:clamp(110px,13vw,168px) minmax(0,1fr);
-    gap:8px 4px;
+    /* Mascot is pulled onto the cream/black seam, so only reserve the
+       slice that still sits in this column (~84px + a gap). */
+    grid-template-columns:clamp(80px,6.5vw,96px) minmax(0,1fr);
+    gap:8px 16px;
     align-items:center;
     overflow:visible;
   }
   /* Bridge the cream poster and the black wisdom panel at mid-height
      so the chicken sits on the seam without covering Order or the badge. */
   .hu-wise__mascot{
+    /* Pin the chicken to the cream/black seam (left edge of this section)
+       so padding changes for the bigger bubble cannot drag it off center. */
+    position:absolute;
+    left:0;
+    top:50%;
+    /* Step back over .hu-wise's left padding so the chicken centers on the seam. */
+    margin-left:calc(-1 * clamp(24px,2.4vw,32px));
+    transform:translate(-50%,-50%);
     width:clamp(110px,13vw,168px);
+    max-width:none;
     height:auto;
-    margin-left:clamp(-215px,-15.5vw,-160px);
-    position:relative;
     z-index:5;
-    justify-self:start;
   }
-  /* Desktop: wisdom bubble ~17% larger; text must stay unclipped. */
+  /* Desktop: clearly larger Wisdom box (~30–40% more area via width,
+     not padding alone). Stay clear of the seam chicken. */
   .hu-wise .hu-bubble{
-    padding:19px 22px 17px;
-    border-radius:30px;
+    grid-column:2;
+    width:100%;
+    max-width:min(560px,100%);
+    min-height:0;
+    padding:22px 26px 20px;
+    border-radius:32px;
     box-sizing:border-box;
-    max-width:100%;
     overflow:visible;
+    justify-self:stretch;
   }
   .hu-wise .hu-bubble__text{
-    font-size:clamp(1.45rem,1.9vw,1.75rem);
+    font-size:clamp(1.65rem,2.2vw,2rem);
     line-height:1.2;
     overflow-wrap:anywhere;
   }
@@ -427,7 +440,9 @@
      Keep the Limited Time .seal (stamps the bowl after the mist is cleared). */
   #k-soba > .egg{display:none}
 
-  /* Select Your Karaage: full-width flyer deck, CYO stays under the cards. */
+  /* Select Your Karaage: spread the four flyers across the desktop width.
+     Modest ~12% overlap, slight tilt. The button is a stable hit area;
+     only the inner .lineup__hit transforms, so hover cannot flicker. */
   .lineup .mframe--lineup{
     display:flex;
     flex-direction:column;
@@ -438,10 +453,85 @@
     margin:0 auto;
   }
   .lineup__title{text-align:center;margin:0}
-  .lineup__deck{width:min(100%,980px);height:clamp(520px,64vh,660px)}
-  .lineup__card{width:min(48%,420px)}
+  .lineup__deck{
+    position:relative;
+    display:flex;
+    flex-direction:row;
+    align-items:flex-end;
+    justify-content:center;
+    width:100%;
+    max-width:1240px;
+    height:auto;
+    min-height:0;
+    overflow:visible;
+    padding:28px 8px 12px;
+    box-sizing:border-box;
+  }
+  .lineup__card{
+    position:relative;
+    inset:auto;
+    left:auto;top:auto;
+    flex:1 1 0;
+    width:auto;
+    min-width:0;
+    max-width:none;
+    aspect-ratio:900/1125;
+    padding:0;
+    border:0;
+    background:transparent;
+    box-shadow:none;
+    overflow:visible;
+    transform:none;
+    transform-origin:center bottom;
+    margin:0;
+    z-index:calc(2 + var(--i));
+    cursor:pointer;
+  }
+  .lineup__card.is-on,
+  .lineup__card:hover,
+  .lineup__card:focus-visible{
+    position:relative;
+    left:auto;top:auto;
+    transform:none;
+  }
+  .lineup__card + .lineup__card{margin-left:calc(100% / 4 * -0.12)}
+  .lineup__hit{
+    display:block;
+    width:100%;
+    height:100%;
+    border:3px solid #111;
+    background:#f4efe4;
+    box-shadow:8px 14px 0 rgba(17,17,17,.35);
+    box-sizing:border-box;
+    overflow:hidden;
+    transform:rotate(calc((var(--i) - 1.5) * 3deg));
+    transform-origin:center bottom;
+    transition:transform .28s cubic-bezier(.2,.7,.2,1), box-shadow .28s;
+  }
+  .lineup__card:hover,
+  .lineup__card:focus-visible,
+  .lineup__card.is-on{z-index:8}
+  .lineup__card:hover .lineup__hit,
+  .lineup__card:focus-visible .lineup__hit,
+  .lineup__card.is-on .lineup__hit{
+    transform:rotate(0deg) translateY(-16px) scale(1.05);
+    box-shadow:12px 18px 0 rgba(17,17,17,.4);
+  }
+  .lineup__card:focus-visible{outline:none}
+  .lineup__card:focus-visible .lineup__hit{outline:3px solid #f3c64a;outline-offset:4px}
   .cyo{margin:12px 0 0;max-width:720px;align-items:center;text-align:center}
   .cyo__label,.cyo__chips{justify-content:center}
+
+  /* Wider arena so fighter plates can actually use a readable column. */
+  #k-combat[data-state="idle"] .cfloor__board,
+  #k-combat[data-state="select"] .cfloor__board{
+    grid-template-columns:minmax(156px,.48fr) minmax(0,2fr);
+  }
+  #k-combat[data-state="idle"] .cfloor__ring.arena,
+  #k-combat[data-state="select"] .cfloor__ring.arena{
+    grid-template-columns:minmax(0,1fr) minmax(0,1fr);
+    column-gap:18px;
+  }
 }
 
 

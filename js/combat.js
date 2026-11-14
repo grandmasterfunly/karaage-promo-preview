@@ -70,6 +70,13 @@
     var inb = $('[data-p1-in]'); if (inb) inb.textContent = 'In the bowl';
     var bio = $('[data-p1-bio]'); if (bio) bio.textContent = f.bio || '';
     var sp = $('[data-p1-special]'); if (sp) sp.textContent = f.special || '';
+    var statsEl = $('[data-p1-stats]');
+    if (statsEl) {
+      var stats = f.stats || {};
+      statsEl.innerHTML = Object.keys(stats).map(function (k) {
+        return '<li><span class="cfloor__stat-k">' + k + '</span><span class="cfloor__stat-v">' + stats[k] + '</span></li>';
+      }).join('');
+    }
     var img = $('[data-f1-img]');
     if (img) { img.src = 'assets/f-' + f.id + '.webp'; img.alt = f.name; }
     if (state === 'idle' || state === 'select') {

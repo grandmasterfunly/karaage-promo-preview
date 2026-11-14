@@ -8,19 +8,19 @@
 <meta name="description" content="New at Sus Hi Eatstation: Chicken Karaage, Japanese Fried Chicken, in four styles.">
 <link rel="preload" href="fonts/anton-0.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="preload" as="image" href="assets/hero-poster.webp" media="(min-width: 700px)">
-<link rel="stylesheet" href="css/fonts.css?v=20261113r">
-<link rel="stylesheet" href="css/site.css?v=20261113r">
-<link rel="stylesheet" href="css/v3.css?v=20261113r">
-<link rel="stylesheet" href="css/v4.css?v=20261113r">
-<link rel="stylesheet" href="css/v5.css?v=20261113r">
-<link rel="stylesheet" href="css/v6.css?v=20261113r">
+<link rel="stylesheet" href="css/fonts.css?v=20261113s">
+<link rel="stylesheet" href="css/site.css?v=20261113s">
+<link rel="stylesheet" href="css/v3.css?v=20261113s">
+<link rel="stylesheet" href="css/v4.css?v=20261113s">
+<link rel="stylesheet" href="css/v5.css?v=20261113s">
+<link rel="stylesheet" href="css/v6.css?v=20261113s">
 <script>document.documentElement.classList.add('js');try{if(localStorage.getItem('kp-motion')==='off')document.documentElement.classList.add('motion-off');if(localStorage.getItem('kp-promo')==='off')document.documentElement.classList.add('promo-off');}catch(e){}(function(){var r=document.documentElement,w=window.innerWidth;function l(){r.style.setProperty('--frame-h',window.innerHeight+'px')}l();window.addEventListener('resize',function(){var n=window.innerWidth;if(n!==w){w=n;l()}},{passive:true});})();</script>
 </head>
 <body>
 <a class="skip-link" href="#main">Skip to main content</a>
 <svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><defs><filter id="inkrough" x="-10%" y="-10%" width="120%" height="120%"><feTurbulence type="fractalNoise" baseFrequency="0.035" numOctaves="3" seed="7" result="n"/><feDisplacementMap in="SourceGraphic" in2="n" scale="9"/></filter></defs></svg>
 
-<div class="preview-bar" data-v="20261113r" role="region" aria-label="Preview controls">
+<div class="preview-bar" data-v="20261113s" role="region" aria-label="Preview controls">
   <span class="preview-bar__tag">Preview</span>
   <button type="button" class="preview-switch" role="switch" aria-checked="true" id="promo-switch">
     <span class="preview-switch__label">Karaage promo</span>
@@ -197,11 +197,18 @@
             <p class="cfloor__plate-name" data-p1-name>Fire Sauce</p>
             <p class="cfloor__plate-in" data-p1-in>In the bowl</p>
             <p class="cfloor__plate-bio" data-p1-bio></p>
+            <ul class="cfloor__plate-stats" data-p1-stats></ul>
             <p class="cfloor__plate-sp">Special: <span data-p1-special></span></p>
           </div>
           <div class="cfloor__plate cfloor__plate--p2" data-p2-plate>
             <p class="cfloor__plate-name">Ninja Karaage</p>
             <p class="cfloor__plate-bio">Crispy, silent, undefeated.</p>
+            <ul class="cfloor__plate-stats" aria-hidden="true">
+              <li><span class="cfloor__stat-k">Crunch</span><span class="cfloor__stat-v">5</span></li>
+              <li><span class="cfloor__stat-k">Heat</span><span class="cfloor__stat-v">3</span></li>
+              <li><span class="cfloor__stat-k">Sauce</span><span class="cfloor__stat-v">2</span></li>
+              <li><span class="cfloor__stat-k">Speed</span><span class="cfloor__stat-v">4</span></li>
+            </ul>
             <p class="cfloor__plate-sp">Special: Golden Crunch Strike</p>
           </div>
           <p class="sr-only">Versus Ninja Karaage. Crispy, silent, undefeated. Special: Golden Crunch Strike.</p>
@@ -372,7 +379,7 @@
         </h2>
         <div class="hu-poster__stage">
           <img class="hu-poster__food" src="assets/burrito.webp" srcset="assets/burrito-sm.webp 800w, assets/burrito.webp 1325w" sizes="(max-width:760px) 86vw, 520px" width="1325" height="1117" alt="Karaage Hustle Burrito cut in half: two halves standing side by side, showing crispy karaage, slaw, carrots and sauce." loading="lazy">
-          <button type="button" class="hu-poster__hit" data-hu-pow aria-label="Tap the mascot for a comic burst">
+          <button type="button" class="hu-poster__hit" data-hu-pow aria-label="POW! Tap the mascot for a comic burst">
             <img class="hu-poster__mascot" src="assets/m-jacket.webp" width="466" height="900" alt="" data-hu-mascot>
             <span class="hu-poster__hit-label" aria-hidden="true">POW!</span>
           </button>
@@ -430,20 +437,16 @@
       <h2 class="lineup__title" id="lineup-title">Select Your Karaage</h2>
       <div class="lineup__deck" role="radiogroup" aria-label="Select your Karaage">
         <button type="button" class="lineup__card is-on" role="radio" aria-checked="true" data-lineup="combat" style="--i:0">
-          <img class="lineup__flyer" src="assets/flyer-combat.webp" width="900" height="1125" alt="Karaage Combat Bowl flyer: three crispy karaage in the bowl with the Trifecta sauce cup fully visible.">
-        </button>
+          <span class="lineup__hit"><img class="lineup__flyer" src="assets/flyer-combat.webp" width="900" height="1125" alt="Karaage Combat Bowl flyer: three crispy karaage in the bowl with the Trifecta sauce cup fully visible."></span></button>
         <button type="button" class="lineup__card" role="radio" aria-checked="false" data-lineup="enter" style="--i:1">
-          <img class="lineup__flyer" src="assets/flyer-enter.webp" width="900" height="1125" alt="Enter the Karaage Bowl flyer: three crispy karaage over sushi rice, Trifecta cup fully visible." loading="lazy">
-        </button>
+          <span class="lineup__hit"><img class="lineup__flyer" src="assets/flyer-enter.webp" width="900" height="1125" alt="Enter the Karaage Bowl flyer: three crispy karaage over sushi rice, Trifecta cup fully visible." loading="lazy"></span></button>
         <button type="button" class="lineup__card" role="radio" aria-checked="false" data-lineup="soba" style="--i:2">
-          <img class="lineup__flyer" src="assets/flyer-soba.webp" width="900" height="1125" alt="Soba Noodle Hidden Karaage Bowl flyer: crispy karaage over chilled soba noodles." loading="lazy">
-        </button>
+          <span class="lineup__hit"><img class="lineup__flyer" src="assets/flyer-soba.webp" width="900" height="1125" alt="Soba Noodle Hidden Karaage Bowl flyer: crispy karaage over chilled soba noodles." loading="lazy"></span></button>
         <button type="button" class="lineup__card" role="radio" aria-checked="false" data-lineup="hustle" style="--i:3">
-          <img class="lineup__flyer" src="assets/flyer-hustle.webp" width="900" height="1125" alt="Karaage Hustle Burrito flyer: two burrito halves showing crispy karaage, slaw and sauce." loading="lazy">
-        </button>
+          <span class="lineup__hit"><img class="lineup__flyer" src="assets/flyer-hustle.webp" width="900" height="1125" alt="Karaage Hustle Burrito flyer: two burrito halves showing crispy karaage, slaw and sauce." loading="lazy"></span></button>
       </div>
       <p class="lineup__tag" data-lineup-tag>Choose your Karaage.</p>
-      <a class="btn-order lineup__order" data-lineup-order href="https://order.incentivio.com/c/sushieatstation/" aria-label="Order Karaage Combat Bowl">Order Now</a>
+      <a class="btn-order lineup__order" data-lineup-order href="https://order.incentivio.com/c/sushieatstation/" aria-label="Order Now, Karaage Combat Bowl">Order Now</a>
       <p class="sr-only" data-lineup-live aria-live="polite">Karaage Combat Bowl selected.</p>
       <div class="cyo">
         <p class="cyo__label"><span class="cyo__star" aria-hidden="true"><svg viewBox="0 0 10 10" width="10" height="10" focusable="false"><path fill="currentColor" d="M5 0l1 3.5H10l-3 2.2 1.2 3.8L5 7.2 1.8 9.5 3 5.7 0 3.5h4z"/></svg></span> Bonus Stage: Build Your Own</p>
@@ -504,13 +507,13 @@
 </main>
 <footer class="ph ph--footer"><span class="ph__label">Existing site footer</span></footer>
 
-<script src="js/data.js?v=20261113r" defer></script>
-<script src="js/core.js?v=20261113r" defer></script>
-<script src="js/combat.js?v=20261113r" defer></script>
-<script src="js/enter.js?v=20261113r" defer></script>
-<script src="js/soba.js?v=20261113r" defer></script>
-<script src="js/hustle.js?v=20261113r" defer></script>
-<script src="js/lineup.js?v=20261113r" defer></script>
-<script>if(/[?&]debug=1(?:&|$)/.test(location.search)){var s=document.createElement('script');s.src='js/debug.js?v=20261113r';s.defer=true;document.body.appendChild(s);}</script>
+<script src="js/data.js?v=20261113s" defer></script>
+<script src="js/core.js?v=20261113s" defer></script>
+<script src="js/combat.js?v=20261113s" defer></script>
+<script src="js/enter.js?v=20261113s" defer></script>
+<script src="js/soba.js?v=20261113s" defer></script>
+<script src="js/hustle.js?v=20261113s" defer></script>
+<script src="js/lineup.js?v=20261113s" defer></script>
+<script>if(/[?&]debug=1(?:&|$)/.test(location.search)){var s=document.createElement('script');s.src='js/debug.js?v=20261113s';s.defer=true;document.body.appendChild(s);}</script>
 </body>
 </html>
