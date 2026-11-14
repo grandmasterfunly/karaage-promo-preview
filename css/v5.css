@@ -346,7 +346,8 @@ body{padding-top:var(--bar-offset)}
 }
 .en-boss__title{
   margin:6px 0 0;font-family:var(--f-display);font-weight:400;letter-spacing:.04em;text-transform:uppercase;
-  font-size:clamp(2.1rem,9vw,4.4rem);line-height:.9;color:#fff;max-width:12ch;
+  font-size:clamp(1.7rem,7vw,3.2rem);line-height:1.05;color:#fff;max-width:min(14ch,100%);
+  overflow:visible;overflow-wrap:anywhere;box-sizing:border-box;padding:0 8px;
   text-shadow:0 0 18px rgba(255,40,40,.7), 4px 4px 0 #7a1010;
 }
 .mframe--play{position:relative}
@@ -544,8 +545,10 @@ body{padding-top:var(--bar-offset)}
   border:3px solid #111;background:#fff;box-shadow:3px 3px 0 #7a1d14;
   max-width:36rem;box-sizing:border-box;
 }
-.soba__cta .soba__jfc{margin:0;font-size:.95rem}
-.soba__cta .soba__tag{margin:0;font-size:clamp(1.15rem,2vw,1.45rem)}
+.soba__cta .soba__desc{
+  margin:0;font-family:var(--f-mincho,'Shippori Mincho',Georgia,serif);font-weight:700;
+  font-size:clamp(1rem,1.7vw,1.2rem);line-height:1.45;color:#1b1916;overflow-wrap:anywhere;
+}
 .soba__cta .soba__actions{margin-top:6px;gap:10px}
 .soba__prompt{margin-top:14px}
 @media (max-width:760px){
@@ -721,4 +724,138 @@ body{padding-top:var(--bar-offset)}
     width:auto !important;
     max-width:100% !important;
   }
+}
+
+
+/* ===== r: Combat fighter size, Ninja bio, VS burst, flyer deck ===== */
+/* Same bounding box for every ingredient and Ninja Karaage; feet aligned. */
+#k-combat[data-state="idle"] .cfloor .fighter--p1 img,
+#k-combat[data-state="select"] .cfloor .fighter--p1 img,
+#k-combat[data-state="idle"] .cfloor .fighter--p2 img,
+#k-combat[data-state="select"] .cfloor .fighter--p2 img{
+  height:clamp(160px,24vh,240px)!important;
+  width:auto!important;
+  max-width:clamp(160px,24vh,240px)!important;
+  max-height:clamp(160px,24vh,240px)!important;
+  object-fit:contain;
+  object-position:center bottom;
+}
+#k-combat[data-state="fight"] .cfloor .fighter img,
+#k-combat[data-state="entrance"] .cfloor .fighter img{
+  height:clamp(140px,22vh,200px)!important;
+  width:auto!important;
+  max-width:clamp(140px,22vh,200px)!important;
+  max-height:clamp(140px,22vh,200px)!important;
+  object-fit:contain;
+  object-position:center bottom;
+}
+.cfloor__grid .rcell__box{
+  display:flex;align-items:flex-end;justify-content:center;
+}
+.cfloor__grid .rcell img{
+  width:100%;height:100%;object-fit:contain;object-position:center bottom;
+}
+
+/* Ninja Karaage bio plate mirrors the player's plate. */
+.cfloor__plate--p2{text-align:right}
+.cfloor__plate--p2 .cfloor__plate-name,
+.cfloor__plate--p2 .cfloor__plate-bio,
+.cfloor__plate--p2 .cfloor__plate-sp{margin:0}
+
+/* Comic VS burst between fighters. Pointer-events none so it never covers controls. */
+.cfloor__vs{
+  pointer-events:none;z-index:4;align-self:center;justify-self:center;
+  display:grid;place-items:center;width:clamp(72px,10vw,110px);aspect-ratio:1;
+}
+.cfloor__vs-mark{
+  display:grid;place-items:center;width:100%;height:100%;
+  font-family:var(--f-display);font-weight:400;letter-spacing:.04em;
+  font-size:clamp(1.6rem,3.2vw,2.4rem);color:#fff;line-height:1;
+  background:#b5121b;border:3px solid #111;
+  box-shadow:4px 4px 0 #111, 0 0 0 3px #f3c64a;
+  transform:rotate(-8deg);
+  clip-path:polygon(50% 0%,64% 14%,86% 10%,82% 30%,100% 42%,82% 54%,88% 76%,64% 72%,50% 100%,36% 72%,12% 76%,18% 54%,0 42%,18% 30%,14% 10%,36% 14%);
+  text-shadow:2px 2px 0 #111;
+}
+
+/* Select Your Karaage — flyer deck (shared). */
+.lineup__title{text-align:center;margin:0}
+.lineup__deck{
+  position:relative;width:min(100%,920px);height:clamp(420px,70vw,560px);
+  display:block;touch-action:pan-y;margin:8px auto 0;
+}
+.lineup__card{
+  position:absolute;inset:auto;left:50%;top:50%;
+  width:min(70%,300px);aspect-ratio:900/1125;
+  padding:0;border:3px solid #111;background:#111;cursor:pointer;
+  transform-origin:center bottom;
+  transform:translate(-50%,-50%) rotate(calc((var(--i) - 1.5) * 8deg)) translateX(calc((var(--i) - 1.5) * 18%)) scale(.88);
+  box-shadow:8px 14px 0 rgba(17,17,17,.35);
+  z-index:calc(2 + var(--i));
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),z-index 0s .1s,box-shadow .35s;
+  overflow:hidden;
+}
+.lineup__card.is-on{
+  z-index:8;transform:translate(-50%,-54%) rotate(0deg) scale(1);
+  box-shadow:12px 18px 0 rgba(17,17,17,.4);
+  transition:transform .35s cubic-bezier(.2,.7,.2,1),z-index 0s,box-shadow .35s;
+}
+.lineup__card:focus-visible{outline:3px solid #f3c64a;outline-offset:4px}
+.lineup__flyer{
+  width:100%;height:100%;object-fit:contain;object-position:center;display:block;pointer-events:none;
+  background:#f4efe4;
+}
+.lineup__tag{margin:8px 0 4px;text-align:center;height:auto;overflow:visible;font-family:var(--f-pixel2,Silkscreen,monospace);font-weight:400;font-size:clamp(1.05rem,2vw,1.3rem)}
+.lineup__order{margin-top:4px}
+
+/* Combat: VS burst + Ninja plate on the select/idle ring. */
+#k-combat[data-state="idle"] .cfloor__ring.arena,
+#k-combat[data-state="select"] .cfloor__ring.arena{
+  grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+  grid-template-areas:"insert insert insert" "p1 vs p2" "plate vs p2plate";
+}
+#k-combat[data-state="idle"] .cfloor__vs,
+#k-combat[data-state="select"] .cfloor__vs{
+  grid-area:vs;position:relative;left:auto;top:auto;transform:none;
+  align-self:center;justify-self:center;z-index:4;pointer-events:none;
+}
+#k-combat[data-state="idle"] .cfloor__plate--p2,
+#k-combat[data-state="select"] .cfloor__plate--p2{
+  grid-area:p2plate;position:relative;left:auto;right:auto;bottom:auto;
+  max-width:100%;margin:6px 0 0 4px;text-align:right;justify-self:end;
+}
+#k-combat[data-state="fight"] .cfloor__vs,
+#k-combat[data-state="entrance"] .cfloor__vs{
+  position:absolute;left:50%;top:46%;transform:translate(-50%,-50%);
+  z-index:4;pointer-events:none;margin:0;
+}
+#k-combat[data-state="ko"] .cfloor__vs{display:none}
+
+@media (max-width:760px){
+  #k-combat[data-state="idle"] .cfloor__ring.arena,
+  #k-combat[data-state="select"] .cfloor__ring.arena{
+    grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);
+    grid-template-areas:"insert insert insert" "p1 vs p2" "plate plate p2plate";
+  }
+  #k-combat[data-state="idle"] .cfloor .fighter--p1 img,
+  #k-combat[data-state="select"] .cfloor .fighter--p1 img,
+  #k-combat[data-state="idle"] .cfloor .fighter--p2 img,
+  #k-combat[data-state="select"] .cfloor .fighter--p2 img{
+    height:clamp(120px,28vw,160px)!important;
+    max-height:clamp(120px,28vw,160px)!important;
+    max-width:clamp(120px,28vw,160px)!important;
+  }
+  .cfloor__vs{width:clamp(56px,16vw,80px)}
+  .cfloor__vs-mark{font-size:clamp(1.2rem,5vw,1.7rem)}
+}
+
+/* Select Your Karaage deck: tighter on phones so the frame does not overflow. */
+@media (max-width:899px){
+  .lineup__deck{width:100%;max-width:100%;height:clamp(340px,78vw,430px);overflow:visible}
+  .lineup__card{width:min(72%,260px)}
+  .lineup__card{
+    transform:translate(-50%,-50%) rotate(calc((var(--i) - 1.5) * 6deg)) translateX(calc((var(--i) - 1.5) * 12%)) scale(.9);
+  }
+  .lineup__card.is-on{transform:translate(-50%,-52%) rotate(0deg) scale(1)}
+  .lineup__order{margin:6px auto 10px}
 }

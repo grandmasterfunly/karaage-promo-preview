@@ -174,7 +174,10 @@
     overflow-wrap:anywhere;
     max-width:100%;
   }
-  .en-boss{grid-area:boss}
+  /* Cover the full board column. grid-area:boss collapsed to 0 height
+   because the card is position:absolute, which clipped "Crazy Karaage Mode". */
+.en-boss{grid-column:2;grid-row:1 / -1;z-index:8;min-height:0;overflow:visible}
+.en-boss__eyebrow,.en-boss__title{position:relative;z-index:1}
   /* Perch the chicken on the top edge of the board, body above the wood
      so the on-board title, chop button, and fortune slip stay clear. */
   .en__mascot{
@@ -345,10 +348,23 @@
   .hu-wise__mascot{
     width:clamp(110px,13vw,168px);
     height:auto;
-    margin-left:clamp(-170px,-12.5vw,-110px);
+    margin-left:clamp(-215px,-15.5vw,-160px);
     position:relative;
     z-index:5;
     justify-self:start;
+  }
+  /* Desktop: wisdom bubble ~17% larger; text must stay unclipped. */
+  .hu-wise .hu-bubble{
+    padding:19px 22px 17px;
+    border-radius:30px;
+    box-sizing:border-box;
+    max-width:100%;
+    overflow:visible;
+  }
+  .hu-wise .hu-bubble__text{
+    font-size:clamp(1.45rem,1.9vw,1.75rem);
+    line-height:1.2;
+    overflow-wrap:anywhere;
   }
 
   /* ---------- Lineup: picker + CYO LEFT, bowl photo RIGHT ---------- */
@@ -406,6 +422,26 @@
      empty side space, without changing the circle, bamboo, mist, or bowl. */
   .soba__chicken{width:min(36.4%,266px)}
   .soba__heroine{width:min(42%,294px)}
+
+  /* Desktop only: hide the stray hidden-ink 寿 stamp on the mountain ridge.
+     Keep the Limited Time .seal (stamps the bowl after the mist is cleared). */
+  #k-soba > .egg{display:none}
+
+  /* Select Your Karaage: full-width flyer deck, CYO stays under the cards. */
+  .lineup .mframe--lineup{
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:12px 0;
+    max-width:1240px;
+    width:100%;
+    margin:0 auto;
+  }
+  .lineup__title{text-align:center;margin:0}
+  .lineup__deck{width:min(100%,980px);height:clamp(520px,64vh,660px)}
+  .lineup__card{width:min(48%,420px)}
+  .cyo{margin:12px 0 0;max-width:720px;align-items:center;text-align:center}
+  .cyo__label,.cyo__chips{justify-content:center}
 }
 
 
@@ -495,15 +531,24 @@
     bottom:0;
     clip-path:polygon(0 58%,5% 0,10% 56%,16% 0,22% 52%,28% 0,34% 58%,40% 0,46% 50%,52% 0,58% 56%,64% 0,70% 48%,76% 0,82% 60%,87% 0,92% 52%,96% 0,100% 58%,100% 100%,0 100%);
   }
-  /* Full-width faint comic-page backdrop (same locked Hustle chicken + Combat roster). */
+  /* Full-width faint 2x3 comic-page backdrop.
+     minmax(0,1fr) + min-height/min-width:0 stops lazy 900x675 images
+     (and Safari's min-height:auto) from blowing the grid up. */
   .hu-wise .hu-comics__side--wise{
     display:grid;
-    grid-template-columns:1fr 1fr;
-    grid-template-rows:1fr 1fr 1fr;
-    gap:8px 8px;
+    grid-template-columns:repeat(2, minmax(0,1fr));
+    grid-template-rows:repeat(3, minmax(0,1fr));
+    grid-auto-rows:minmax(0,1fr);
+    grid-auto-flow:row;
+    gap:8px;
     padding:22px 10px 24px;
     position:absolute;
     inset:0;
+    width:100%;
+    height:100%;
+    max-width:100%;
+    max-height:100%;
+    box-sizing:border-box;
     z-index:0;
     pointer-events:none;
     overflow:hidden;
@@ -514,11 +559,20 @@
     display:block;
     width:100%;
     height:100%;
+    max-width:100%;
+    max-height:100%;
+    min-width:0;
+    min-height:0;
+    aspect-ratio:unset;
     object-fit:cover;
     object-position:center;
+    align-self:stretch;
+    justify-self:stretch;
     border:3px solid #f3ead8;
     box-sizing:border-box;
     background:transparent;
+    background-size:cover;
+    background-position:center;
     opacity:.12;
     mix-blend-mode:screen;
     filter:grayscale(.15) contrast(1.15);
