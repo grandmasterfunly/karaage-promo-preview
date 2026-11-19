@@ -759,3 +759,18 @@
   }
   .hero .hero__line{max-width:100%}
 }
+
+/* ===== Hero v7 (2026-11-19): Funly bowl photo on top, title box always below, never overlapping the food ===== */
+.hero{display:block;min-height:0;overflow:visible;background:#0b0908}
+.hero .mframe--food{display:block;padding:0;margin:0;min-height:0;background:#0b0908}
+.hero .hero__media{position:relative;inset:auto;display:block;width:100%;max-width:1396px;height:auto;aspect-ratio:auto;margin:0 auto;overflow:hidden;background:#0b0908}
+.hero .hero__media::before,.hero .hero__media::after{content:none;display:none;animation:none}
+.hero .hero__media .hero__poster{position:static;display:block;width:100%;height:auto}
+.hero .hero__media img,.hero .hero__poster img{position:static;display:block;width:100%;height:auto;max-height:none;object-fit:contain;transform:none;animation:none}
+.js .hero .hero__poster img{animation:none;opacity:1;transform:none}
+.hero .hero__video,.hero .hero__embers{position:absolute;inset:0;width:100%;height:100%;pointer-events:none}
+.hero .hero__copy{position:relative;z-index:1;max-width:860px;margin:0 auto;padding:28px 20px 32px;text-align:center;background:#0b0908;-webkit-mask-image:none;mask-image:none}
+.hero .hero__eyebrow{justify-content:center}
+.hero .hero__ctas{justify-content:center}
+.hero .hero__title{font-size:clamp(3rem,9vw,7.5rem);line-height:.86}
+.hero .hero__tag{font-size:clamp(1.15rem,2.2vw,1.9rem)}
