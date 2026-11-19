@@ -774,3 +774,16 @@
 .hero .hero__ctas{justify-content:center}
 .hero .hero__title{font-size:clamp(3rem,9vw,7.5rem);line-height:.86}
 .hero .hero__tag{font-size:clamp(1.15rem,2.2vw,1.9rem)}
+
+/* Hero v7b: cap height on desktop/tablet, full photo via contain on black */
+@media (min-width:700px){
+  .hero .hero__media{max-width:none;width:100%;height:62vh;height:62svh;min-height:360px;background:#000}
+  .hero .hero__media .hero__poster{display:block;width:100%;height:100%}
+  .hero .hero__media img,.hero .hero__poster img{width:100%;height:100%;object-fit:contain;object-position:center}
+  .hero .hero__copy{padding:12px 20px 18px}
+  .hero .hero__eyebrow{margin:0}
+  .hero .hero__title{font-size:clamp(2.2rem,6vh,4.2rem);margin:4px 0 4px;white-space:nowrap}
+  .hero .hero__line{display:inline}
+  .hero .hero__tag{font-size:clamp(1rem,2.2vh,1.5rem)}
+  .hero .hero__ctas{margin-top:8px;gap:12px 26px}
+}
